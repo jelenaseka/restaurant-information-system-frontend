@@ -1,0 +1,26 @@
+.home-user-icon {
+    padding: 20px;
+}
+
+.home-user-icon img {
+    width: 13vw;
+    transition: 0.3s;
+}
+
+.home-user-icon h2 {
+    text-align: center;
+}
+
+.home-user-icon:hover {
+    cursor: pointer;
+    border: 1px solid grey;
+    border-radius: 30px;
+}
+
+.home-user-icon:hover img {
+    width: 15vw;
+}
+
+.home-container {
+    height: 100vh;
+}
