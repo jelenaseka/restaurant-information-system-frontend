@@ -1,0 +1,35 @@
+.login-container {
+  display: flex;
+  height: 100vh;
+  background-color: rgb(240, 240, 240);
+}
+
+.form-container {
+  width: 30vw;
+  height: 40vh;
+  margin: auto;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 3px black;
+}
+
+.form-container > mat-form-field {
+  width: 50%;
+  margin-bottom: 20px;
+  font-size: large;
+}
+
+button {
+  font-size: large;
+  margin-left: 30px;
+}
+
+.buttons-container {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { HomeComponent } from './home/home/home.component';
 import { LoginComponent } from './login/login/login.component';
 import { WaiterHomepageComponent } from './waiter/waiter-homepage/waiter-homepage.component';
@@ -16,16 +18,18 @@ import { MaterialModule } from './core/material.module';
     AppComponent,
     HomeComponent,
     LoginComponent,
-    WaiterHomepageComponent
+    WaiterHomepageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
