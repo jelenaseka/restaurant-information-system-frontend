@@ -5,47 +5,39 @@ import { WaiterHomepageComponent } from '../waiter/waiter-homepage/waiter-homepa
 import { ManagerHomepageComponent } from '../manager/manager-homepage/manager-homepage.component';
 import { AdminHomepageComponent } from '../admin/admin-homepage/admin-homepage.component';
 import { SystemAdminHomepageComponent } from '../system-admin/system-admin-homepage/system-admin-homepage.component';
-import { ManagerAuthGuard } from '../guards/manager-auth.guard';
-import { AdminAuthGuard } from '../guards/admin-auth.guard';
-import { SystemAdminAuthGuard } from '../guards/system-admin-auth.guard';
-import { LoginManagerAuthGuard } from '../guards/login-manager-auth.guard';
-import { LoginAdminAuthGuard } from '../guards/login-admin-auth.guard';
-import { LoginSystemAdminAuthGuard } from '../guards/login-system-admin-auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
+import { RoleGuard } from '../guards/role-guard';
 
 export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [
-      LoginManagerAuthGuard,
-      LoginAdminAuthGuard,
-      LoginSystemAdminAuthGuard,
-    ],
+    canActivate: [AuthGuard],
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [
-      LoginManagerAuthGuard,
-      LoginAdminAuthGuard,
-      LoginSystemAdminAuthGuard,
-    ],
+    canActivate: [AuthGuard],
   },
   { path: 'home/waiter', component: WaiterHomepageComponent },
   {
     path: 'home/manager',
     component: ManagerHomepageComponent,
-    canActivate: [ManagerAuthGuard],
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'MANAGER' } 
   },
   {
     path: 'home/admin',
     component: AdminHomepageComponent,
-    canActivate: [AdminAuthGuard],
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'ADMIN' } 
   },
   {
     path: 'home/system-admin',
     component: SystemAdminHomepageComponent,
-    canActivate: [SystemAdminAuthGuard],
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'SYSTEM_ADMIN' } 
   },
+  { path: '**', redirectTo: '/home' },
 ];
