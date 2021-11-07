@@ -10,8 +10,8 @@ import { JwtDecoderService } from 'src/app/autentification/services/jwt-decoder.
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  hide = true;
-  loginForm = new FormGroup({
+  hide : boolean = true;
+  loginForm : FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  validateEmail() {
+  validateEmail() : string {
     if (this.loginForm.get('email')?.hasError('required')) {
       return 'You must enter a value';
     }
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       : '';
   }
 
-  validatePassword() {
+  validatePassword() : string {
     if (this.loginForm.get('password')?.hasError('required')) {
       return 'You must enter a value';
     }
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     return '';
   }
 
-  loginUser() {
+  loginUser() : void {
     if (this.loginForm.invalid) {
       return;
     }

@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Credentials } from '../models/credentials.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private _loginUrl = 'http://localhost:8080/api/authenticate';
   constructor(private http: HttpClient) {}
 
-  public loginUser(user: any) {
-    return this.http.post<any>(this._loginUrl, user);
+  public loginUser(userCredentials: Credentials) : Observable<string> {
+    return this.http.post<string>("/authenticate", userCredentials);
   }
 
-  public isUserLoggedIn() {
+  public isUserLoggedIn() : boolean {
     return !!localStorage.getItem('token');
   }
 }
