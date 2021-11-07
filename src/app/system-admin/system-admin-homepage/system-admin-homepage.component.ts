@@ -14,6 +14,6 @@ export class SystemAdminHomepageComponent implements OnInit {
   send() : void {
     this.http.get<any>("/unregistered-user").subscribe( (useri) => {
       console.log(useri)
-    });
+    }, (err: any) => console.log(err));
   }
 }

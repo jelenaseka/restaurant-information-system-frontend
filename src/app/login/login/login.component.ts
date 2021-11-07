@@ -12,7 +12,7 @@ import { JwtDecoderService } from 'src/app/autentification/services/jwt-decoder.
 export class LoginComponent implements OnInit {
   hide : boolean = true;
   loginForm : FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [Validators.required]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
@@ -28,13 +28,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  validateEmail() : string {
-    if (this.loginForm.get('email')?.hasError('required')) {
+  validateUsername() : string {
+    if (this.loginForm.get('username')?.hasError('required')) {
       return 'You must enter a value';
     }
-    return this.loginForm.get('email')?.hasError('email')
-      ? 'Not a valid email'
-      : '';
+    return '';
   }
 
   validatePassword() : string {
