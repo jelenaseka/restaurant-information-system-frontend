@@ -5,11 +5,11 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root',
 })
 export class JwtDecoderService {
-  private _helper = new JwtHelperService();
+  private _helper : JwtHelperService = new JwtHelperService();
   constructor() {}
 
-  public getIdFromToken() {
-    const token = localStorage.getItem('token');
+  public getIdFromToken() : string | null {
+    const token : string | null = localStorage.getItem('token');
     if (token) {
       return this._helper.decodeToken(token)?.id;
     }
@@ -17,7 +17,7 @@ export class JwtDecoderService {
   }
 
   public getTypeFromToken() {
-    const token = localStorage.getItem('token');
+    const token : string | null = localStorage.getItem('token');
     if (token) {
       return this._helper.decodeToken(token)?.type;
     }
