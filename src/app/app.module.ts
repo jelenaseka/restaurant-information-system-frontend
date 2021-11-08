@@ -22,6 +22,7 @@ import { RoleGuard } from './guards/role-guard';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
 import { HeaderComponent } from './registered/header/header.component';
 import { EmployeesComponent } from './manager/employees/employees.component';
+import { EmployeesTableComponent } from './manager/employees-table/employees-table.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { EmployeesComponent } from './manager/employees/employees.component';
     SystemAdminHomepageComponent,
     HeaderComponent,
     EmployeesComponent,
+    EmployeesTableComponent,
   ],
   imports: [
     BrowserModule,
