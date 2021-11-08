@@ -3,12 +3,18 @@
   class="home-container"
   fxLayout.lt-md="column"
   fxLayout="row"
-  fxLayoutAlign="start start"
+  fxLayoutAlign.gt-sm="start start"
 >
-  <div fxFlex fxLayout="row" fxLayoutAlign="center center">
-    <app-item-list [title]="'ON HOLD'"></app-item-list>
-    <app-item-list [title]="'PREPARATION'"></app-item-list>
-    <app-item-list [title]="'READY'"></app-item-list>
+  <div fxFlex fxLayout="row">
+    <div fxFlex>
+      <app-item-list [title]="'ON HOLD'"></app-item-list>
+    </div>
+    <div fxFlex>
+      <app-item-list [title]="'PREPARATION'"></app-item-list>
+    </div>
+    <div fxFlex>
+      <app-item-list [title]="'READY'"></app-item-list>
+    </div>
   </div>
   <div
     fxFlex
