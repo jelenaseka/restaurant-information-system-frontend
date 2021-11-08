@@ -1,4 +1,4 @@
-<mat-list-option>
-  {{ item }}
-  <span>{{ initials }}</span>
+<mat-list-option [selected]="amISelected()" (click)="onItemClick()">
+  {{ getItemName() }}
+  <span>{{ item?.initials }}</span>
 </mat-list-option>

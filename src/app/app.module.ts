@@ -26,6 +26,8 @@ import { HeaderComponent } from './unregistered/header/header.component';
 import { ChefHomepageComponent } from './chef/chef-homepage/chef-homepage.component';
 import { ItemListComponent } from './unregistered/item-list/item-list.component';
 import { ItemComponent } from './unregistered/item/item.component';
+import { ItemDetailsComponent } from './unregistered/item-details/item-details.component';
+import { ItemService } from './bartender/services/item.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { ItemComponent } from './unregistered/item/item.component';
     ChefHomepageComponent,
     ItemListComponent,
     ItemComponent,
+    ItemDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,8 @@ import { ItemComponent } from './unregistered/item/item.component';
     JwtDecoderService,
     AuthGuard,
     RoleGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true },
+    ItemService
   ],
   bootstrap: [AppComponent],
 })

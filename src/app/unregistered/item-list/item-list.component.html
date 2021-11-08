@@ -2,9 +2,10 @@
   <h2 [ngStyle]="{ 'background-color': 'lightgrey' }">{{ title }}</h2>
   <mat-selection-list id="mat-list" [multiple]="false">
     <app-item
+      (itemClicked)="onItemClick($event)"
       *ngFor="let item of items"
       [item]="item"
-      [initials]="'JS'"
+      [indexSelected]="indexSelected"
     ></app-item>
   </mat-selection-list>
 </div>
