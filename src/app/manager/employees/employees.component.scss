@@ -1,0 +1,21 @@
+.demo-table {
+  width: 80%;
+}
+
+.mat-column-demo-position {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.mat-column-demo-name,
+.mat-column-demo-number,
+.mat-column-demo-type {
+  padding-left: 16px;
+  font-size: 1.5em;
+}
+
+.main-container {
+  height: 90vh;
+}

@@ -10,8 +10,8 @@ import { JwtDecoderService } from 'src/app/autentification/services/jwt-decoder.
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  hide : boolean = true;
-  loginForm : FormGroup = new FormGroup({
+  hide: boolean = true;
+  loginForm: FormGroup = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [
       Validators.required,
@@ -28,14 +28,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  validateUsername() : string {
+  validateUsername(): string {
     if (this.loginForm.get('username')?.hasError('required')) {
       return 'You must enter a value';
     }
     return '';
   }
 
-  validatePassword() : string {
+  validatePassword(): string {
     if (this.loginForm.get('password')?.hasError('required')) {
       return 'You must enter a value';
     }
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     return '';
   }
 
-  loginUser() : void {
+  loginUser(): void {
     if (this.loginForm.invalid) {
       return;
     }
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res.token);
         const type = this._jwt.getTypeFromToken();
         if (type === 'MANAGER') {
-          this._router.navigate(['/home/manager']);
+          this._router.navigate(['/home/manager/employees']);
         } else if (type === 'ADMIN') {
           this._router.navigate(['/home/admin']);
         } else if (type === 'SYSTEM_ADMIN') {

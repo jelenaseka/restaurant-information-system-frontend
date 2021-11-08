@@ -14,13 +14,14 @@ import { LoginComponent } from './login/login/login.component';
 import { WaiterHomepageComponent } from './waiter/waiter-homepage/waiter-homepage.component';
 import { MaterialModule } from './core/material.module';
 import { AuthService } from './autentification/services/auth.service';
-import { ManagerHomepageComponent } from './manager/manager-homepage/manager-homepage.component';
 import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.component';
 import { SystemAdminHomepageComponent } from './system-admin/system-admin-homepage/system-admin-homepage.component';
 import { JwtDecoderService } from './autentification/services/jwt-decoder.service';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role-guard';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
+import { HeaderComponent } from './registered/header/header.component';
+import { EmployeesComponent } from './manager/employees/employees.component';
 
 @NgModule({
   declarations: [
@@ -28,9 +29,10 @@ import { HeaderInterceptorService } from './autentification/services/header-inte
     HomeComponent,
     LoginComponent,
     WaiterHomepageComponent,
-    ManagerHomepageComponent,
     AdminHomepageComponent,
     SystemAdminHomepageComponent,
+    HeaderComponent,
+    EmployeesComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,11 @@ import { HeaderInterceptorService } from './autentification/services/header-inte
     JwtDecoderService,
     AuthGuard,
     RoleGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HeaderInterceptorService,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
