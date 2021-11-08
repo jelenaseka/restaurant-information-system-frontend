@@ -1,0 +1,10 @@
+<div class="list-container">
+  <h2 [ngStyle]="{ 'background-color': 'lightgrey' }">{{ title }}</h2>
+  <mat-selection-list #shoes [multiple]="false">
+    <app-item
+      *ngFor="let item of items"
+      [item]="item"
+      [initials]="'JS'"
+    ></app-item>
+  </mat-selection-list>
+</div>

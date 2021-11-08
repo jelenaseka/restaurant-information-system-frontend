@@ -1,0 +1,50 @@
+<app-header></app-header>
+<div
+  class="home-container"
+  fxLayout.lt-md="column"
+  fxLayout="row"
+  fxLayoutAlign="start start"
+>
+  <div fxFlex fxLayout="row" fxLayoutAlign="center center">
+    <app-item-list [title]="'ON HOLD'"></app-item-list>
+    <app-item-list [title]="'PREPARATION'"></app-item-list>
+    <app-item-list [title]="'READY'"></app-item-list>
+  </div>
+  <div
+    fxFlex
+    class="details-container"
+    fxLayout="column"
+    fxLayoutAlign="space-around center"
+  >
+    <button
+      class="close-button"
+      mat-fab
+      color="primary"
+      aria-label="Example icon button with a delete icon"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    <div>
+      <h2>ITEMS</h2>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Item 1</mat-list-item>
+        <mat-list-item role="listitem">Item 2</mat-list-item>
+        <mat-list-item role="listitem">Item 3</mat-list-item>
+      </mat-list>
+
+      <br />
+      <br />
+
+      <h2>NOTES</h2>
+      <div class="notes-container">
+        <h3>Ovo je sad popunjeno</h3>
+      </div>
+    </div>
+    <h3>Table: L8</h3>
+    <h3>Created at: 11:42</h3>
+    <h3>Bartender: Jovan Simic</h3>
+    <button class="accept-button" mat-raised-button color="primary">
+      Accept
+    </button>
+  </div>
+</div>
