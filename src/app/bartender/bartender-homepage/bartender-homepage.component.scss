@@ -1,24 +1,17 @@
 .home-container {
-  margin-left: 2vw;
-  margin-right: 2vw;
-  margin-top: 3vh;
-  margin-bottom: 3vh;
-}
-
-app-item-list {
-  margin-right: 1vw;
+  padding: 20px;
 }
 
 .details-container {
   background-color: lightgray;
-  padding: 2vw;
-  box-shadow: 0px 0px 5px gray;
+  margin: 0 10px;
+  box-shadow: 0px 0px 5px lightgray;
+  padding: 10px;
 }
 
 mat-list {
   border-radius: 1vh;
   background-color: white;
-  padding-top: 0px;
 }
 
 mat-list-item {
@@ -26,5 +19,26 @@ mat-list-item {
 }
 
 h2 {
-  padding-left: 16px;
+  padding: 10px;
+  margin-bottom: 0;
+}
+
+.notes-container {
+  border-radius: 1vh;
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.accept-button {
+  font-size: medium;
+  padding: 5px 20px;
+}
+
+.column3-container {
+  margin-bottom: 10px;
+}
+
+#mat-list-container {
+  padding-top: 0;
 }

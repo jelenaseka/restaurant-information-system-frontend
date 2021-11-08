@@ -1,11 +1,13 @@
-mat-selection-list {
-  width: 16vw;
-}
-
 h2 {
-  padding: 1vw;
+  padding: 10px;
+  margin-bottom: 0;
 }
 
 .list-container {
   box-shadow: 0px 0px 5px gray;
+  margin: 0px 10px;
+}
+
+#mat-list {
+  padding-top: 0;
 }
