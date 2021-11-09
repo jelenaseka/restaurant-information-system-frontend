@@ -2,11 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Credentials } from '../models/credentials.model';
-<<<<<<< HEAD
 import { Router } from '@angular/router';
-=======
 import { UnregisteredUser } from '../models/unregistered-user.model';
->>>>>>> develop
 
 @Injectable({
   providedIn: 'root',
