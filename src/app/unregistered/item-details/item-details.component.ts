@@ -31,25 +31,30 @@ export class ItemDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.pinCode = result;
+      if(this.pinCode !== undefined) {
       
-      if(this.pinCodeIsValid()) {
-        this.auth.checkPinCode(Number.parseInt(<string>this.pinCode), "bartender")
-          .subscribe(data => {
-              if(this.item?.state === "ON_HOLD")
-                this.emitAcceptButtonEvent(data.id);
-              else if(data.pinCode !== <string>this.pinCode)
-                this.toastService.error("That order is not yours!", 'Not updated');
-              else
-                this.emitAcceptButtonEvent(data.id);
-            }, (err: any) => this.toastService.error("You are not valid bartender!", 'Not updated'));
+        if(this.pinCodeIsValid()) {
+          this.auth.checkPinCode(Number.parseInt(<string>this.pinCode), "bartender")
+            .subscribe(data => {
+                if(this.item?.state === "ON_HOLD")
+                  this.emitAcceptButtonEvent(data.id);
+                else if(data.pinCode !== <string>this.pinCode)
+                  this.toastService.error("That order is not yours!", 'Not updated');
+                else
+                  this.emitAcceptButtonEvent(data.id);
+              }, (err: any) => this.toastService.error("You are not valid bartender!", 'Not updated'));
+        } else {
+          this.toastService.error("You are not valid bartender!", 'Not updated');
+        }
       }
-
     });
   }
 
   pinCodeIsValid(): boolean {
-    //TODO uzmi od simica validaciju
-    if(this.pinCode != undefined && this.pinCode.length === 4 && parseInt(<string>this.pinCode) !== NaN)
+    if(this.pinCode === undefined)
+      return false;
+    let data  = Number(this.pinCode);
+    if(this.pinCode.length === 4 && !isNaN(+data))
       return true;
     return false;
   }

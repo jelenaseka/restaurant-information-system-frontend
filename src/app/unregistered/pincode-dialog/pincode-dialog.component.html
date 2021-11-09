@@ -16,7 +16,8 @@
     *ngIf="
       data.pinCode == undefined ||
       (data.pinCode + '').length < 4 ||
-      (data.pinCode + '').length > 4
+      (data.pinCode + '').length > 4 ||
+      checkPinCode()
     "
     class="warning-paragraph"
   >
@@ -27,7 +28,10 @@
   <button mat-button (click)="onNoClick()">No Thanks</button>
   <button
     [disabled]="
-      data.pinCode == undefined || data.pinCode > 9999 || data.pinCode < 1000
+      data.pinCode == undefined ||
+      (data.pinCode + '').length < 4 ||
+      (data.pinCode + '').length > 4 ||
+      checkPinCode()
     "
     mat-button
     [mat-dialog-close]="data.pinCode"
