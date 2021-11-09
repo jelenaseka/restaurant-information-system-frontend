@@ -19,6 +19,6 @@ export class AuthService {
   }
 
   public checkPinCode(pinCode: number, userType : string) : Observable<UnregisteredUser> {
-    return this.http.get<UnregisteredUser>("/unregistered-user/pin-code/" + userType + "/" + pinCode);
+    return this.http.get<UnregisteredUser>(`/unregistered-user/pin-code/${pinCode}?usertype=${userType}`);
   }
 }

@@ -4,9 +4,9 @@
   <mat-form-field appearance="fill">
     <mat-label>Pin code</mat-label>
     <input
-      type="number"
-      max="9999"
-      min="1000"
+      type="password"
+      maxlength="4"
+      minlength="4"
       matInput
       [(ngModel)]="data.pinCode"
       cdkFocusInitial

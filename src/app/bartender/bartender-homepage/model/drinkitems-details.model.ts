@@ -1,4 +1,4 @@
-import { DrinkItem } from "./DrinkItem.model";
+import { DrinkItem } from "./drinkitem.model";
 
 export interface DrinkItemsDetails {
     id : number,

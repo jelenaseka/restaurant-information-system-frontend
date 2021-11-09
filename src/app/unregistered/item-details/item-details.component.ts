@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { DrinkItemsDetails } from 'src/app/bartender/bartender-homepage/model/DrinkItemsDetails.model';
+import { DrinkItemsDetails } from 'src/app/bartender/bartender-homepage/model/drinkitems-details.model';
 import {MatDialog} from '@angular/material/dialog';
 import { PincodeDialogComponent } from '../pincode-dialog/pincode-dialog.component';
 import { AuthService } from 'src/app/autentification/services/auth.service';
@@ -10,9 +10,9 @@ import { AuthService } from 'src/app/autentification/services/auth.service';
   styleUrls: ['./item-details.component.scss']
 })
 export class ItemDetailsComponent implements OnInit {
-  pinCode: number | undefined;
+  pinCode: string | undefined;
   @Input()
-  item : DrinkItemsDetails | null = null;
+  item : DrinkItemsDetails | undefined;
   @Output()
   closeEvent = new EventEmitter();
   @Output()
@@ -30,12 +30,13 @@ export class ItemDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.pinCode = result;
       
+      //TODO uzmi od simica one alertove i svuda stavi gde treba
       if(this.pinCodeIsValid()) {
-        this.auth.checkPinCode(<number>this.pinCode, "bartender")
+        this.auth.checkPinCode(Number.parseInt(<string>this.pinCode), "bartender")
           .subscribe(data => {
               if(this.item?.state === "ON_HOLD")
                 this.emitAcceptButtonEvent(data.id);
-              else if(data.pinCode !== this.pinCode)
+              else if(data.pinCode !== <string>this.pinCode)
                 alert("That order is not yours!");
               else
                 this.emitAcceptButtonEvent(data.id);
@@ -46,7 +47,9 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   pinCodeIsValid(): boolean {
-    if(this.pinCode != undefined && this.pinCode >= 1000 && this.pinCode <= 9999)
+    console.log(parseInt(<string>this.pinCode))
+    //TODO uzmi od simica validaciju
+    if(this.pinCode != undefined && this.pinCode.length === 4 && parseInt(<string>this.pinCode) !== NaN)
       return true;
     return false;
   }

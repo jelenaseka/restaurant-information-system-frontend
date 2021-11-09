@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { DrinkItems } from 'src/app/bartender/bartender-homepage/model/DrinkItems.model';
+import { DrinkItemsForListBox } from 'src/app/bartender/bartender-homepage/model/drinkitems-for-listbox.model';
 
 @Component({
   selector: 'app-item',
@@ -9,13 +9,12 @@ import { DrinkItems } from 'src/app/bartender/bartender-homepage/model/DrinkItem
 export class ItemComponent implements OnInit {
 
   @Input()
-  item: DrinkItems | null = null;
+  item: DrinkItemsForListBox | undefined;
   @Input()
-  indexSelected: number = 0;
-  constructor() { }
-
+  indexSelected: number | undefined;
   @Output()
   itemClicked : EventEmitter<number> = new EventEmitter();
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -30,11 +29,12 @@ export class ItemComponent implements OnInit {
   }
 
   onItemClick() : void {
-    this.itemClicked.emit(this.item?.id);
+    if(this.item)
+      this.itemClicked.emit(this.item.id);
   }
 
   amISelected() : boolean {
-    if(!this.item)
+    if(!this.item || !this.indexSelected)
       return false;
     return this.item.id === this.indexSelected;
   }

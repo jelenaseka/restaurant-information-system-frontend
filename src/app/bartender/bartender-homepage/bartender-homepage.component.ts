@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemService } from '../services/item.service';
-import { DrinkItems } from './model/DrinkItems.model';
-import { DrinkItemsDetails } from './model/DrinkItemsDetails.model';
+import { DrinkItemsService } from '../services/drink-items.service';
+import { DrinkItemsForListBox } from './model/drinkitems-for-listbox.model';
+import { DrinkItemsDetails } from './model/drinkitems-details.model';
 
 @Component({
   selector: 'app-bartender-homepage',
@@ -11,11 +11,11 @@ import { DrinkItemsDetails } from './model/DrinkItemsDetails.model';
 export class BartenderHomepageComponent implements OnInit {
 
   detailsAreDisplayed : boolean = false;
-  items : DrinkItems[] = [];
-  displayedItem : DrinkItemsDetails | null = null;
+  items : DrinkItemsForListBox[] = [];
+  displayedItem : DrinkItemsDetails | undefined;
   indexOfSelectedItem : number = 0;
 
-  constructor(private itemService: ItemService) { }
+  constructor(private itemService: DrinkItemsService) { }
 
   ngOnInit(): void {
     this.itemService.getActiveItems()
@@ -24,7 +24,7 @@ export class BartenderHomepageComponent implements OnInit {
       }, (err: any) => console.log(err));
   }
 
-  getFilteredItems(filter : string) : DrinkItems[] {
+  getFilteredItems(filter : string) : DrinkItemsForListBox[] {
     return this.items.filter(item => item.state === filter);
   }
 
@@ -47,8 +47,8 @@ export class BartenderHomepageComponent implements OnInit {
     this.itemService.getItem(itemId)
       .subscribe(data => {
         this.displayedItem = data;
-        this.detailsAreDisplayed = true;
         this.indexOfSelectedItem = data.id;
+        this.detailsAreDisplayed = true;
       }, (err: any) => console.log(err));
   }
 

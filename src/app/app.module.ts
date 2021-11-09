@@ -27,7 +27,7 @@ import { ChefHomepageComponent } from './chef/chef-homepage/chef-homepage.compon
 import { ItemListComponent } from './unregistered/item-list/item-list.component';
 import { ItemComponent } from './unregistered/item/item.component';
 import { ItemDetailsComponent } from './unregistered/item-details/item-details.component';
-import { ItemService } from './bartender/services/item.service';
+import { DrinkItemsService } from './bartender/services/drink-items.service';
 import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-dialog.component';
 
 @NgModule({
@@ -63,7 +63,7 @@ import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-di
     AuthGuard,
     RoleGuard,
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true },
-    ItemService
+    DrinkItemsService
   ],
   bootstrap: [AppComponent],
 })

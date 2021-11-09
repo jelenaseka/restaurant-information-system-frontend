@@ -1,4 +1,4 @@
-export interface DrinkItems {
+export interface DrinkItemsForListBox {
     id : number,
     initials : string,
     name: string,
