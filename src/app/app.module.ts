@@ -21,6 +21,14 @@ import { JwtDecoderService } from './autentification/services/jwt-decoder.servic
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role-guard';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
+import { BartenderHomepageComponent } from './bartender/bartender-homepage/bartender-homepage.component';
+import { HeaderComponent } from './unregistered/header/header.component';
+import { ChefHomepageComponent } from './chef/chef-homepage/chef-homepage.component';
+import { ItemListComponent } from './unregistered/item-list/item-list.component';
+import { ItemComponent } from './unregistered/item/item.component';
+import { ItemDetailsComponent } from './unregistered/item-details/item-details.component';
+import { DrinkItemsService } from './bartender/services/drink-items.service';
+import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +39,13 @@ import { HeaderInterceptorService } from './autentification/services/header-inte
     ManagerHomepageComponent,
     AdminHomepageComponent,
     SystemAdminHomepageComponent,
+    BartenderHomepageComponent,
+    HeaderComponent,
+    ChefHomepageComponent,
+    ItemListComponent,
+    ItemComponent,
+    ItemDetailsComponent,
+    PincodeDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +62,8 @@ import { HeaderInterceptorService } from './autentification/services/header-inte
     JwtDecoderService,
     AuthGuard,
     RoleGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true },
+    DrinkItemsService
   ],
   bootstrap: [AppComponent],
 })
