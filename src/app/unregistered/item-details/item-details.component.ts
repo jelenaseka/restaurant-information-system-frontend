@@ -3,6 +3,7 @@ import { DrinkItemsDetails } from 'src/app/bartender/bartender-homepage/model/dr
 import {MatDialog} from '@angular/material/dialog';
 import { PincodeDialogComponent } from '../pincode-dialog/pincode-dialog.component';
 import { AuthService } from 'src/app/autentification/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-item-details',
@@ -10,6 +11,7 @@ import { AuthService } from 'src/app/autentification/services/auth.service';
   styleUrls: ['./item-details.component.scss']
 })
 export class ItemDetailsComponent implements OnInit {
+
   pinCode: string | undefined;
   @Input()
   item : DrinkItemsDetails | undefined;
@@ -18,7 +20,7 @@ export class ItemDetailsComponent implements OnInit {
   @Output()
   acceptButtonEvent = new EventEmitter();
 
-  constructor(public dialog: MatDialog, private auth: AuthService) { }
+  constructor(public dialog: MatDialog, private auth: AuthService, private toastService: ToastrService) { }
 
   openDialog(): void {
     this.pinCode = undefined;
@@ -30,24 +32,22 @@ export class ItemDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.pinCode = result;
       
-      //TODO uzmi od simica one alertove i svuda stavi gde treba
       if(this.pinCodeIsValid()) {
         this.auth.checkPinCode(Number.parseInt(<string>this.pinCode), "bartender")
           .subscribe(data => {
               if(this.item?.state === "ON_HOLD")
                 this.emitAcceptButtonEvent(data.id);
               else if(data.pinCode !== <string>this.pinCode)
-                alert("That order is not yours!");
+                this.toastService.error("That order is not yours!", 'Not updated');
               else
                 this.emitAcceptButtonEvent(data.id);
-            }, (err: any) => alert("You are not valid bartender!"));
+            }, (err: any) => this.toastService.error("You are not valid bartender!", 'Not updated'));
       }
 
     });
   }
 
   pinCodeIsValid(): boolean {
-    console.log(parseInt(<string>this.pinCode))
     //TODO uzmi od simica validaciju
     if(this.pinCode != undefined && this.pinCode.length === 4 && parseInt(<string>this.pinCode) !== NaN)
       return true;

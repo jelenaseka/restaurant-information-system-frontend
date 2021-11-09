@@ -4,15 +4,14 @@ import { AuthService } from '../autentification/services/auth.service';
 import { JwtDecoderService } from '../autentification/services/jwt-decoder.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-
   constructor(
     private _auth: AuthService,
     private _router: Router,
     private _jwt: JwtDecoderService
-    ) { }
+  ) {}
 
   canActivate(): boolean {
     if (!this._auth.isUserLoggedIn()) {
@@ -21,13 +20,12 @@ export class AuthGuard implements CanActivate {
 
     const type = this._jwt.getTypeFromToken();
     if (type === 'MANAGER') {
-      this._router.navigate(['/home/manager']);
-    } else if(type === 'ADMIN') {
+      this._router.navigate(['/home/manager/employees']);
+    } else if (type === 'ADMIN') {
       this._router.navigate(['/home/admin']);
     } else {
       this._router.navigate(['/home/system-admin']);
     }
     return false;
   }
-
 }

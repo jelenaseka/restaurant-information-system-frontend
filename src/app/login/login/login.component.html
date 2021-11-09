@@ -2,7 +2,7 @@
   <form class="form-container" [formGroup]="loginForm" (ngSubmit)="loginUser()">
     <mat-form-field appearance="fill">
       <mat-label>Enter your username</mat-label>
-      <input matInput placeholder="pat" formControlName="username" required />
+      <input matInput formControlName="username" required />
       <mat-error *ngIf="loginForm.invalid">{{ validateUsername() }}</mat-error>
     </mat-form-field>
 

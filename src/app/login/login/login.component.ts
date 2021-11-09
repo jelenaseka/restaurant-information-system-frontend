@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/autentification/services/auth.service';
 import { Router } from '@angular/router';
 import { JwtDecoderService } from 'src/app/autentification/services/jwt-decoder.service';
+import { ToastrService } from 'ngx-toastr';
+import { convertResponseError } from 'src/app/error-converter.function';
 
 @Component({
   selector: 'app-login',
@@ -10,8 +12,8 @@ import { JwtDecoderService } from 'src/app/autentification/services/jwt-decoder.
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  hide : boolean = true;
-  loginForm : FormGroup = new FormGroup({
+  hide: boolean = true;
+  loginForm: FormGroup = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [
       Validators.required,
@@ -22,19 +24,20 @@ export class LoginComponent implements OnInit {
   constructor(
     private _auth: AuthService,
     private _router: Router,
-    private _jwt: JwtDecoderService
+    private _jwt: JwtDecoderService,
+    private _toastr: ToastrService
   ) {}
 
   ngOnInit(): void {}
 
-  validateUsername() : string {
+  validateUsername(): string {
     if (this.loginForm.get('username')?.hasError('required')) {
       return 'You must enter a value';
     }
     return '';
   }
 
-  validatePassword() : string {
+  validatePassword(): string {
     if (this.loginForm.get('password')?.hasError('required')) {
       return 'You must enter a value';
     }
@@ -47,7 +50,7 @@ export class LoginComponent implements OnInit {
     return '';
   }
 
-  loginUser() : void {
+  loginUser(): void {
     if (this.loginForm.invalid) {
       return;
     }
@@ -56,7 +59,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res.token);
         const type = this._jwt.getTypeFromToken();
         if (type === 'MANAGER') {
-          this._router.navigate(['/home/manager']);
+          this._router.navigate(['/home/manager/employees']);
         } else if (type === 'ADMIN') {
           this._router.navigate(['/home/admin']);
         } else if (type === 'SYSTEM_ADMIN') {
@@ -65,7 +68,7 @@ export class LoginComponent implements OnInit {
           this._router.navigate(['/login']);
         }
       },
-      (err: any) => console.log(err)
+      (err) => this._toastr.error(convertResponseError(err), "Don't exist!")
     );
   }
 }
