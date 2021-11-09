@@ -2,11 +2,11 @@
   <div
     class="buttons-container"
     fxLayout="row"
-    fxLayoutAlign="space-between center"
+    fxLayoutAlign="space-between start"
   >
     <mat-icon>restaurant</mat-icon>
-    <button mat-stroked-button color="primary">Employees</button>
-    <button mat-stroked-button color="primary">Report</button>
+    <button mat-stroked-button color="primary" [routerLink]="['/home/manager/employees']" [routerLinkActive]="'active-button'">Employees</button>
+    <button mat-stroked-button color="primary" [routerLink]="['/home/manager/report']" [routerLinkActive]="'active-button'">Report</button>
   </div>
   <button id="logout" mat-flat-button color="primary" (click)="logout()">
     Log out

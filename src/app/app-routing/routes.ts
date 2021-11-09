@@ -7,6 +7,7 @@ import { SystemAdminHomepageComponent } from '../system-admin/system-admin-homep
 import { AuthGuard } from '../guards/auth.guard';
 import { RoleGuard } from '../guards/role-guard';
 import { EmployeesComponent } from '../manager/employees/employees.component';
+import { ReportComponent } from '../manager/report/report.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,12 @@ export const routes: Routes = [
   {
     path: 'home/manager/employees',
     component: EmployeesComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'MANAGER' },
+  },
+  {
+    path: 'home/manager/report',
+    component: ReportComponent,
     canActivate: [RoleGuard],
     data: { expectedRole: 'MANAGER' },
   },

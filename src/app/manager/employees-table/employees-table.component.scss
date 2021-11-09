@@ -1,5 +1,5 @@
 .demo-table {
-  width: 65vw;
+  width: 100%;
 }
 
 .mat-column-demo-id {
@@ -28,4 +28,9 @@
 
 .demo-row-is-clicked {
   font-weight: bold;
+}
+
+.mat-form-field {
+  font-size: 1.5em;
+  width: 100%;
 }

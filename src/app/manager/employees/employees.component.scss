@@ -5,8 +5,8 @@
 .details-card {
   margin-top: 2.5vh;
   width: 30vw;
-  height: 82.5vh;
-  background-color: rgb(230, 230, 230);
+  height: 82vh;
+  background-color: var(--card-color);
 }
 
 form {
@@ -28,11 +28,26 @@ button {
 }
 
 mat-card {
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.table-button-container {
+  margin-top: 5vh;
+  position: relative;
+  width: 60vw;
 }
 
 .table-container {
   margin-top: 5vh;
-  height: 50vh;
-  overflow-y: scroll;
+  height: 78vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.add-button {
+  width: auto;
+  position: absolute;
+  right: 0px;
+  top: -10px;
 }

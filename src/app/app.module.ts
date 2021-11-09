@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ToastrModule } from 'ngx-toastr';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -23,6 +24,7 @@ import { HeaderInterceptorService } from './autentification/services/header-inte
 import { HeaderComponent } from './registered/header/header.component';
 import { EmployeesComponent } from './manager/employees/employees.component';
 import { EmployeesTableComponent } from './manager/employees-table/employees-table.component';
+import { ReportComponent } from './manager/report/report.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { EmployeesTableComponent } from './manager/employees-table/employees-tab
     HeaderComponent,
     EmployeesComponent,
     EmployeesTableComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { EmployeesTableComponent } from './manager/employees-table/employees-tab
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     AuthService,

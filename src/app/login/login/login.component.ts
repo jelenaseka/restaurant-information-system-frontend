@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/autentification/services/auth.service';
 import { Router } from '@angular/router';
 import { JwtDecoderService } from 'src/app/autentification/services/jwt-decoder.service';
+import { ToastrService } from 'ngx-toastr';
+import { convertResponseError } from 'src/app/error-converter.function';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +25,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private _auth: AuthService,
     private _router: Router,
-    private _jwt: JwtDecoderService
+    private _jwt: JwtDecoderService,
+    private _toastr: ToastrService
   ) {}
 
   ngOnInit(): void {}
@@ -66,7 +69,7 @@ export class LoginComponent implements OnInit {
           this._router.navigate(['/login']);
         }
       },
-      (err: any) => console.log(err)
+      (err) => this._toastr.error(convertResponseError(err), "Don't exist!")
     );
   }
 }
