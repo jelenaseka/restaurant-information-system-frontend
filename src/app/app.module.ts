@@ -25,6 +25,14 @@ import { HeaderComponent } from './registered/header/header.component';
 import { EmployeesComponent } from './manager/employees/employees.component';
 import { EmployeesTableComponent } from './manager/employees-table/employees-table.component';
 import { ReportComponent } from './manager/report/report.component';
+import { BartenderHomepageComponent } from './bartender/bartender-homepage/bartender-homepage.component';
+import { HeaderComponent as UnregisteredHeader } from './unregistered/header/header.component';
+import { ChefHomepageComponent } from './chef/chef-homepage/chef-homepage.component';
+import { ItemListComponent } from './unregistered/item-list/item-list.component';
+import { ItemComponent } from './unregistered/item/item.component';
+import { ItemDetailsComponent } from './unregistered/item-details/item-details.component';
+import { DrinkItemsService } from './bartender/services/drink-items.service';
+import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +46,14 @@ import { ReportComponent } from './manager/report/report.component';
     EmployeesComponent,
     EmployeesTableComponent,
     ReportComponent,
+    BartenderHomepageComponent,
+    HeaderComponent,
+    UnregisteredHeader,
+    ChefHomepageComponent,
+    ItemListComponent,
+    ItemComponent,
+    ItemDetailsComponent,
+    PincodeDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,11 +71,8 @@ import { ReportComponent } from './manager/report/report.component';
     JwtDecoderService,
     AuthGuard,
     RoleGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HeaderInterceptorService,
-      multi: true,
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true },
+    DrinkItemsService
   ],
   bootstrap: [AppComponent],
 })

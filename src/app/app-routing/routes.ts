@@ -8,6 +8,8 @@ import { AuthGuard } from '../guards/auth.guard';
 import { RoleGuard } from '../guards/role-guard';
 import { EmployeesComponent } from '../manager/employees/employees.component';
 import { ReportComponent } from '../manager/report/report.component';
+import { BartenderHomepageComponent } from '../bartender/bartender-homepage/bartender-homepage.component';
+import { ChefHomepageComponent } from '../chef/chef-homepage/chef-homepage.component';
 
 export const routes: Routes = [
   {
@@ -21,7 +23,9 @@ export const routes: Routes = [
     component: LoginComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'home/waiter', component: WaiterHomepageComponent },
+  { path: 'home/waiter', component: WaiterHomepageComponent, canActivate: [AuthGuard], },
+  { path: 'home/bartender', component: BartenderHomepageComponent, canActivate: [AuthGuard], },
+  { path: 'home/chef', component: ChefHomepageComponent, canActivate: [AuthGuard], },
   {
     path: 'home/manager/employees',
     component: EmployeesComponent,
