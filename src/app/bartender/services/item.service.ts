@@ -19,5 +19,11 @@ export class ItemService {
     return this.http.get<DrinkItemsDetails>("/drink-items/" + itemId);
   }
 
+  public moveItem(itemId : number, userId : number) : Observable<DrinkItems> {
+    return this.http.put<DrinkItems>("/drink-items", {
+      itemId,
+      userId
+    });
+  }
 
 }

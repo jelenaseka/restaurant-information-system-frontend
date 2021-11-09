@@ -28,6 +28,7 @@ import { ItemListComponent } from './unregistered/item-list/item-list.component'
 import { ItemComponent } from './unregistered/item/item.component';
 import { ItemDetailsComponent } from './unregistered/item-details/item-details.component';
 import { ItemService } from './bartender/services/item.service';
+import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ItemService } from './bartender/services/item.service';
     ItemListComponent,
     ItemComponent,
     ItemDetailsComponent,
+    PincodeDialogComponent,
   ],
   imports: [
     BrowserModule,

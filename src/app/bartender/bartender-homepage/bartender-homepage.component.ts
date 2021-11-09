@@ -24,19 +24,22 @@ export class BartenderHomepageComponent implements OnInit {
       }, (err: any) => console.log(err));
   }
 
-  getOnHoldItems() : DrinkItems[] {
-    return this.items.filter(item => item.state === "ON_HOLD");
+  getFilteredItems(filter : string) : DrinkItems[] {
+    return this.items.filter(item => item.state === filter);
   }
 
-  getPreparationItems() : DrinkItems[] {
-    return this.items.filter(item => item.state === "PREPARATION");
-  }
-
-  getReadyItems() : DrinkItems[] {
-    return this.items.filter(item => item.state === "READY");
+  onAcceptButtonEvent(userId : number) : void {
+    this.indexOfSelectedItem = 0;
+    this.detailsAreDisplayed = false;
+    this.itemService.moveItem(<number>this.displayedItem?.id, userId)
+      .subscribe(data => {
+        let list = this.items.filter(item => item.id !== data.id);
+        this.items = [...list, data]
+      }, (err: any) => console.log(err));
   }
 
   onCloseEvent() : void {
+    this.indexOfSelectedItem = 0;
     this.detailsAreDisplayed = false;
   }
 
@@ -45,9 +48,7 @@ export class BartenderHomepageComponent implements OnInit {
       .subscribe(data => {
         this.displayedItem = data;
         this.detailsAreDisplayed = true;
-
         this.indexOfSelectedItem = data.id;
-
       }, (err: any) => console.log(err));
   }
 

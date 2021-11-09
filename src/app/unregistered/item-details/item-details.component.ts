@@ -1,5 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { DrinkItemsDetails } from 'src/app/bartender/bartender-homepage/model/DrinkItemsDetails.model';
+import {MatDialog} from '@angular/material/dialog';
+import { PincodeDialogComponent } from '../pincode-dialog/pincode-dialog.component';
+import { AuthService } from 'src/app/autentification/services/auth.service';
 
 @Component({
   selector: 'app-item-details',
@@ -7,14 +10,46 @@ import { DrinkItemsDetails } from 'src/app/bartender/bartender-homepage/model/Dr
   styleUrls: ['./item-details.component.scss']
 })
 export class ItemDetailsComponent implements OnInit {
-
-
+  pinCode: number | undefined;
   @Input()
   item : DrinkItemsDetails | null = null;
   @Output()
   closeEvent = new EventEmitter();
+  @Output()
+  acceptButtonEvent = new EventEmitter();
 
-  constructor() { }
+  constructor(public dialog: MatDialog, private auth: AuthService) { }
+
+  openDialog(): void {
+    this.pinCode = undefined;
+    const dialogRef = this.dialog.open(PincodeDialogComponent, {
+      width: '250px',
+      data: {pinCode: this.pinCode},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.pinCode = result;
+      
+      if(this.pinCodeIsValid()) {
+        this.auth.checkPinCode(<number>this.pinCode, "bartender")
+          .subscribe(data => {
+              if(this.item?.state === "ON_HOLD")
+                this.emitAcceptButtonEvent(data.id);
+              else if(data.pinCode !== this.pinCode)
+                alert("That order is not yours!");
+              else
+                this.emitAcceptButtonEvent(data.id);
+            }, (err: any) => alert("You are not valid bartender!"));
+      }
+
+    });
+  }
+
+  pinCodeIsValid(): boolean {
+    if(this.pinCode != undefined && this.pinCode >= 1000 && this.pinCode <= 9999)
+      return true;
+    return false;
+  }
 
   ngOnInit(): void {
   }
@@ -39,6 +74,10 @@ export class ItemDetailsComponent implements OnInit {
 
   onClose() : void {
     this.closeEvent.emit();
+  }
+
+  emitAcceptButtonEvent(userId: number) : void {
+    this.acceptButtonEvent.emit(userId);
   }
 
 }
