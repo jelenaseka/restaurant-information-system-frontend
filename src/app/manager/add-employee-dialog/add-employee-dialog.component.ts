@@ -1,8 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ValidatorService } from 'src/app/services/validator.service';
-import { UnregistaredUserDetails } from '../employees/models/unregistered-user-details';
 
 @Component({
   selector: 'app-add-employee-dialog',
@@ -22,7 +21,7 @@ export class AddEmployeeDialogComponent implements OnInit {
       Validators.pattern("^[0-9]*$")]),
   });
 
-  constructor(public dialogRef: MatDialogRef<AddEmployeeDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: UnregistaredUserDetails, public validator: ValidatorService,) { 
+  constructor(public dialogRef: MatDialogRef<AddEmployeeDialogComponent>, public validator: ValidatorService,) { 
     this.validator.setForm(this.detailsForm);
   }
 

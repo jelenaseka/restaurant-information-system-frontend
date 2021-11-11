@@ -18,7 +18,6 @@ export class EmployeesComponent implements OnInit {
   selecteduserId: number;
   isEnabledEditing: boolean = false;
   user: UnregistaredUserDetails | null;
-  createdEmployee: UnregistaredUserDetails | null;
 
   @ViewChild(EmployeesTableComponent)
   child:EmployeesTableComponent | null;
@@ -36,15 +35,6 @@ export class EmployeesComponent implements OnInit {
 
   constructor(private _managerService: ManagerService, public validator: ValidatorService, private _toastr: ToastrService, private _dialog: MatDialog) {
     this.user = null;
-    this.createdEmployee = {
-      firstName : 'blaa',
-      lastName : 'blaa',
-      emailAddress : 'blaa',
-      phoneNumber : 'blaa',
-      salary : 3,
-      type : 'blaa',
-      pinCode: '3'
-    }
     this.validator.setForm(this.detailsForm);
     this.selecteduserId = -1;
     this.child = null;
@@ -97,9 +87,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   public addData(): void {
-    const dialogRef = this._dialog.open(AddEmployeeDialogComponent, {
-      data: this.createdEmployee
-    })
+    const dialogRef = this._dialog.open(AddEmployeeDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == null) {
