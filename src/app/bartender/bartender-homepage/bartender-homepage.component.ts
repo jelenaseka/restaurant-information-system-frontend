@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DrinkItemsService } from '../services/drink-items.service';
-import { DrinkItemsForListBox } from './model/drinkitems-for-listbox.model';
+import { ItemsForListBox } from './model/items-for-listbox.model';
 import { DrinkItemsDetails } from './model/drinkitems-details.model';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
@@ -13,7 +13,7 @@ import { convertResponseError } from 'src/app/error-converter.function';
 export class BartenderHomepageComponent implements OnInit {
 
   detailsAreDisplayed : boolean = false;
-  items : DrinkItemsForListBox[] = [];
+  items : ItemsForListBox[] = [];
   displayedItem : DrinkItemsDetails | undefined;
   indexOfSelectedItem : number = 0;
 
@@ -26,7 +26,7 @@ export class BartenderHomepageComponent implements OnInit {
       }, (err: any) => this.toastService.error(convertResponseError(err), "Don't exist!"));
   }
 
-  getFilteredItems(filter : string) : DrinkItemsForListBox[] {
+  getFilteredItems(filter : string) : ItemsForListBox[] {
     return this.items.filter(item => item.state === filter);
   }
 

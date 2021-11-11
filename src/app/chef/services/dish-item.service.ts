@@ -1,24 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ItemsForListBox } from '../bartender-homepage/model/items-for-listbox.model';
-import { DrinkItemsDetails } from '../bartender-homepage/model/drinkitems-details.model';
+import { ItemsForListBox } from 'src/app/bartender/bartender-homepage/model/items-for-listbox.model';
+import { DishItemDetails } from '../chef-homepage/model/dishitem-details.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DrinkItemsService {
+export class DishItemService {
 
   constructor(private http: HttpClient) { }
 
   public getActiveItems() : Observable<ItemsForListBox[]> {
-    return this.http.get<ItemsForListBox[]>("/drink-items/active");
+    return this.http.get<ItemsForListBox[]>("/dish-item/active");
   }
 
-  public getItem(itemId : number) : Observable<DrinkItemsDetails> {
-    return this.http.get<DrinkItemsDetails>("/drink-items/" + itemId);
+  public getItem(itemId : number) : Observable<DishItemDetails> {
+    return this.http.get<DishItemDetails>("/dish-item/" + itemId);
   }
 
+  //TODO razmisli sta ovde ide tj koja putanja
   public moveItem(itemId : number, userId : number) : Observable<ItemsForListBox> {
     return this.http.put<ItemsForListBox>("/drink-items", {
       itemId,

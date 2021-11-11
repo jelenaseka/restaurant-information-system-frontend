@@ -4,6 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { PincodeDialogComponent } from '../pincode-dialog/pincode-dialog.component';
 import { AuthService } from 'src/app/autentification/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { DishItemDetails } from 'src/app/chef/chef-homepage/model/dishitem-details.model';
 
 @Component({
   selector: 'app-item-details',
@@ -14,7 +15,7 @@ export class ItemDetailsComponent implements OnInit {
 
   pinCode: string | undefined;
   @Input()
-  item : DrinkItemsDetails | undefined;
+  item : DrinkItemsDetails | DishItemDetails | undefined;
   @Output()
   closeEvent = new EventEmitter();
   @Output()
@@ -50,6 +51,24 @@ export class ItemDetailsComponent implements OnInit {
     });
   }
 
+  getBartenderOrChefName() : string {
+    if(this.item === undefined)
+      return '';
+    if('bartender' in this.item)
+      return this.item?.bartender !== "" ? this.item?.bartender : "None";
+    return this.item?.chef !== "" ? this.item?.chef : "None";
+
+  }
+
+  getUserType() : string {
+    if(this.item === undefined)
+    return '';
+    if('bartender' in this.item)
+      return "Bartender";
+    return "Chef";
+  }
+
+
   pinCodeIsValid(): boolean {
     if(this.pinCode === undefined)
       return false;
@@ -67,6 +86,20 @@ export class ItemDetailsComponent implements OnInit {
       return "";
     let time : Date = new Date(Number.parseInt(this.item.createdAt));
     return `${time.getHours()}:${time.getMinutes()}`;
+  }
+
+  getIcon() : string {
+    if(!this.isThisBartenderPage())
+      return (this.item as DishItemDetails).icon;
+    return '';
+  }
+
+  isThisBartenderPage() : boolean {
+    if(this.item === undefined)
+    return true;
+    if('bartender' in this.item)
+      return true;
+    return false;
   }
 
   getTextForButton() : string {
