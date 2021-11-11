@@ -19,9 +19,8 @@ export class DishItemService {
     return this.http.get<DishItemDetails>("/dish-item/" + itemId);
   }
 
-  //TODO razmisli sta ovde ide tj koja putanja
   public moveItem(itemId : number, userId : number) : Observable<ItemsForListBox> {
-    return this.http.put<ItemsForListBox>("/drink-items", {
+    return this.http.put<ItemsForListBox>("/dish-item", {
       itemId,
       userId
     });

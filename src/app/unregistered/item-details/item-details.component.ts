@@ -34,8 +34,10 @@ export class ItemDetailsComponent implements OnInit {
       this.pinCode = result;
       if(this.pinCode !== undefined) {
       
+
+        let userType : string = this.getUserType().toLowerCase();
         if(this.pinCodeIsValid()) {
-          this.auth.checkPinCode(Number.parseInt(<string>this.pinCode), "bartender")
+          this.auth.checkPinCode(Number.parseInt(<string>this.pinCode), userType)
             .subscribe(data => {
                 if(this.item?.state === "ON_HOLD")
                   this.emitAcceptButtonEvent(data.id);
@@ -43,9 +45,9 @@ export class ItemDetailsComponent implements OnInit {
                   this.toastService.error("That order is not yours!", 'Not updated');
                 else
                   this.emitAcceptButtonEvent(data.id);
-              }, (err: any) => this.toastService.error("You are not valid bartender!", 'Not updated'));
+              }, (err: any) => this.toastService.error(`You are not valid ${userType}!`, 'Not updated'));
         } else {
-          this.toastService.error("You are not valid bartender!", 'Not updated');
+          this.toastService.error(`You are not valid ${userType}!`, 'Not updated');
         }
       }
     });
