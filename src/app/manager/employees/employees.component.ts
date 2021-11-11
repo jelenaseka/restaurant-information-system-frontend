@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { ManagerService } from 'src/app/services/manager.service';
 import { ValidatorService } from 'src/app/services/validator.service';
+import { AddEmployeeDialogComponent } from '../add-employee-dialog/add-employee-dialog.component';
 import { EmployeesTableComponent } from '../employees-table/employees-table.component';
 import { UnregistaredUserDetails } from './models/unregistered-user-details';
 
@@ -16,6 +18,7 @@ export class EmployeesComponent implements OnInit {
   selecteduserId: number;
   isEnabledEditing: boolean = false;
   user: UnregistaredUserDetails | null;
+  createdEmployee: UnregistaredUserDetails | null;
 
   @ViewChild(EmployeesTableComponent)
   child:EmployeesTableComponent | null;
@@ -31,8 +34,17 @@ export class EmployeesComponent implements OnInit {
       Validators.pattern("^[0-9]*$")]),
   });
 
-  constructor(private _managerService: ManagerService, public validator: ValidatorService, private _toastr: ToastrService) {
+  constructor(private _managerService: ManagerService, public validator: ValidatorService, private _toastr: ToastrService, private _dialog: MatDialog) {
     this.user = null;
+    this.createdEmployee = {
+      firstName : 'blaa',
+      lastName : 'blaa',
+      emailAddress : 'blaa',
+      phoneNumber : 'blaa',
+      salary : 3,
+      type : 'blaa',
+      pinCode: '3'
+    }
     this.validator.setForm(this.detailsForm);
     this.selecteduserId = -1;
     this.child = null;
@@ -85,7 +97,13 @@ export class EmployeesComponent implements OnInit {
   }
 
   public addData(): void {
+    const dialogRef = this._dialog.open(AddEmployeeDialogComponent, {
+      data: this.createdEmployee
+    })
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   /**
