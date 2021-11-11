@@ -13,11 +13,11 @@ mat-list {
 }
 
 mat-list-item {
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid var(--light-grey);
 }
 
 .details-container {
-  background-color: lightgray;
+  background-color: var(--light-grey);
   margin: 0 10px;
   box-shadow: 0px 0px 5px lightgray;
   padding: 10px;
