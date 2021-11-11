@@ -35,4 +35,19 @@ export class ManagerService {
       `/unregistered-user/${id}`, model
     );
   }
+
+  public addUser(form: FormGroup): Observable<UnregistaredUserDetails> {
+    const model: UnregistaredUserDetails = {
+      firstName: form.controls['firstName'].value,
+      lastName: form.controls['lastName'].value,
+      emailAddress: form.controls['emailAddress'].value,
+      phoneNumber: form.controls['phoneNumber'].value,
+      salary: form.controls['salary'].value,
+      type: form.controls['type'].value.toUpperCase(),
+      pinCode: form.controls['pinCode'].value,
+    }
+    return this.http.post<UnregistaredUserDetails>(
+      `/unregistered-user`, model
+    );
+  }
 }

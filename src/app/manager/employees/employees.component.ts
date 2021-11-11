@@ -102,7 +102,18 @@ export class EmployeesComponent implements OnInit {
     })
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      if (result == null) {
+        return;
+      }
+      this._managerService.addUser(result).subscribe(
+        () => {
+          this._toastr.success('New employee added to database!', 'Created');
+          this.child?.refreshTable();
+        },
+        (err) => {
+          this._toastr.error(convertResponseError(err), 'Not created!')
+        }
+      );
     });
   }
 
