@@ -20,7 +20,7 @@ export class DrinkItemsService {
   }
 
   public moveItem(itemId : number, userId : number) : Observable<ItemsForListBox> {
-    return this.http.put<ItemsForListBox>("/drink-items", {
+    return this.http.put<ItemsForListBox>("/drink-items/change-state", {
       itemId,
       userId
     });
