@@ -4,6 +4,7 @@ import { ItemsForListBox } from './model/items-for-listbox.model';
 import { DrinkItemsDetails } from './model/drinkitems-details.model';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
+import { SocketService } from 'src/app/sockets/socket.service';
 
 @Component({
   selector: 'app-bartender-homepage',
@@ -17,17 +18,14 @@ export class BartenderHomepageComponent implements OnInit {
   displayedItem : DrinkItemsDetails | undefined;
   indexOfSelectedItem : number = 0;
 
-  constructor(private itemService: DrinkItemsService, private toastService: ToastrService) { }
+  constructor(private itemService: DrinkItemsService, private toastService: ToastrService, private socketService: SocketService) { }
 
   ngOnInit(): void {
     this.itemService.getActiveItems()
       .subscribe(data => {
         this.items = data
       }, (err: any) => this.toastService.error(convertResponseError(err), "Don't exist!"));
-    this.itemService.connect();
-    setTimeout(() => this.itemService.sendMessage(), 2000);
-
-    //this.itemService.sendMessage();
+    this.socketService.connect("drink-items");
   }
 
   getFilteredItems(filter : string) : ItemsForListBox[] {
