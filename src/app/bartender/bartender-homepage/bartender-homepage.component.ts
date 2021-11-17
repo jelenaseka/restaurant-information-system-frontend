@@ -24,6 +24,10 @@ export class BartenderHomepageComponent implements OnInit {
       .subscribe(data => {
         this.items = data
       }, (err: any) => this.toastService.error(convertResponseError(err), "Don't exist!"));
+    this.itemService.connect();
+    setTimeout(() => this.itemService.sendMessage(), 2000);
+
+    //this.itemService.sendMessage();
   }
 
   getFilteredItems(filter : string) : ItemsForListBox[] {
