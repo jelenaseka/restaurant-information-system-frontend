@@ -25,22 +25,27 @@ export class BartenderHomepageComponent implements OnInit {
       .subscribe(data => {
         this.items = data
       }, (err: any) => this.toastService.error(convertResponseError(err), "Don't exist!"));
-    this.socketService.connect("drink-items");
+    this.socketService.connect("drink-items", this.handleChange);
   }
 
   getFilteredItems(filter : string) : ItemsForListBox[] {
     return this.items.filter(item => item.state === filter);
   }
 
+  handleChange = (data) => {
+    let list = this.items.filter(item => item.id !== data.id);
+    this.items = [...list, data];
+    this.toastService.success("Drink item has changed state!", 'Updated');
+  }
+
   onAcceptButtonEvent(userId : number) : void {
     this.indexOfSelectedItem = 0;
     this.detailsAreDisplayed = false;
-    this.itemService.moveItem(<number>this.displayedItem?.id, userId)
-      .subscribe(data => {
-        let list = this.items.filter(item => item.id !== data.id);
-        this.items = [...list, data];
-        this.toastService.success("Drink item has changed state!", 'Updated');
-      }, (err: any) => this.toastService.error(convertResponseError(err), "Don't exist!"));
+    let data = {
+      itemId: <number>this.displayedItem?.id,
+      userId
+    }
+    this.socketService.sendMessage("/drink-items/change-state", JSON.stringify(data))
   }
 
   onCloseEvent() : void {

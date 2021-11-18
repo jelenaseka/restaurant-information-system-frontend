@@ -14,10 +14,11 @@ export class SocketService {
     this.stompClient = Stomp.over(socket);
    }
 
-  public connect(topicName: string): void {
+  public connect(topicName: string, handleChange: any): void {
     this.stompClient.connect({}, () => {
       this.stompClient.subscribe(`/topic/${topicName}`, (data) => {
         console.log(data);
+        handleChange(JSON.parse(data.body));
       },
       error => {
         console.log( 'Subscribe: error: ' + error);
