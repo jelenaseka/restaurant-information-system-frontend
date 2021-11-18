@@ -12,12 +12,11 @@ export class SocketService {
   constructor() {
     let socket = new SockJS(env.socketUrl);
     this.stompClient = Stomp.over(socket);
-   }
+  }
 
   public connect(topicName: string, handleChange: any): void {
     this.stompClient.connect({}, () => {
       this.stompClient.subscribe(`/topic/${topicName}`, (data) => {
-        console.log(data);
         handleChange(JSON.parse(data.body));
       },
       error => {

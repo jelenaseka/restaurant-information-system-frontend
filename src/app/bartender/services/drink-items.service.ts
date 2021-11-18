@@ -17,11 +17,4 @@ export class DrinkItemsService {
   public getItem(itemId : number) : Observable<DrinkItemsDetails> {
     return this.http.get<DrinkItemsDetails>("/drink-items/active/" + itemId);
   }
-
-  public moveItem(itemId : number, userId : number) : Observable<ItemsForListBox> {
-    return this.http.put<ItemsForListBox>("/drink-items/change-state", {
-      itemId,
-      userId
-    });
-  }
 }
