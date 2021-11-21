@@ -7,7 +7,7 @@ import { environment as env } from '../../environments/environment';
   providedIn: 'root'
 })
 export class SocketService {
-  private stompClient: any;
+  private stompClient: any = null;
 
   constructor() {
     let socket = new SockJS(env.socketUrl);
@@ -16,13 +16,19 @@ export class SocketService {
 
   public connect(topicName: string, handleChange: any): void {
     this.stompClient.connect({}, () => {
-      this.stompClient.subscribe(`/topic/${topicName}`, (data) => {
+      this.stompClient.subscribe(`/topic/${topicName}`, data => {
         handleChange(JSON.parse(data.body));
       },
       error => {
         console.log( 'Subscribe: error: ' + error);
       });
     });
+  }
+
+  public disconnect() {
+    if (this.stompClient !== null)
+      this.stompClient.disconnect();
+    
   }
 
   public sendMessage(endpointName: string, message: string): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DrinkItemsService } from '../services/drink-items.service';
 import { ItemsForListBox } from './model/items-for-listbox.model';
 import { DrinkItemsDetails } from './model/drinkitems-details.model';
@@ -12,7 +12,7 @@ import { SocketResponse } from 'src/app/sockets/model/socket-response.model';
   templateUrl: './bartender-homepage.component.html',
   styleUrls: ['./bartender-homepage.component.scss']
 })
-export class BartenderHomepageComponent implements OnInit {
+export class BartenderHomepageComponent implements OnInit, OnDestroy {
 
   detailsAreDisplayed : boolean = false;
   items : ItemsForListBox[] = [];
@@ -26,6 +26,10 @@ export class BartenderHomepageComponent implements OnInit {
   ngOnInit(): void {
     this.getAllActiveItems();
     this.socketService.connect("drink-items", this.handleChange);
+  }
+
+  ngOnDestroy(): void {
+    this.socketService.disconnect();
   }
 
   getAllActiveItems() : void {
