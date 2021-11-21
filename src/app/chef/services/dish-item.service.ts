@@ -18,12 +18,4 @@ export class DishItemService {
   public getItem(itemId : number) : Observable<DishItemDetails> {
     return this.http.get<DishItemDetails>("/dish-item/" + itemId);
   }
-
-  public moveItem(itemId : number, userId : number) : Observable<ItemsForListBox> {
-    return this.http.put<ItemsForListBox>("/dish-item/change-state", {
-      itemId,
-      userId
-    });
-  }
-
 }
