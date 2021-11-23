@@ -1,0 +1,60 @@
+<div
+  fxFlex
+  class="details-container"
+  fxLayout="column"
+  fxLayoutAlign="space-around "
+>
+  <div style="text-align: end">
+    <button
+      class="close-button"
+      mat-mini-fab
+      color="primary"
+      (click)="onClose()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between center ">
+    <h2>{{ isThisBartenderPage() ? "ITEMS" : "ITEM" }}</h2>
+    <h2>AMOUNT</h2>
+  </div>
+
+  <mat-list id="mat-list-container" fxLayout="column">
+    <div fxFlex *ngFor="let component of item?.itemList">
+      <mat-list-item
+        >{{ component.itemName }}
+        <span>{{ component.amount }}</span></mat-list-item
+      >
+    </div>
+  </mat-list>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    *ngIf="!isThisBartenderPage()"
+  >
+    <img
+      style="display: block; margin-top: 30px; width: 200px; height: 200px"
+      [src]="getIcon()"
+    />
+  </div>
+  <h2>NOTES</h2>
+  <div class="notes-container">
+    <h3>{{ item?.notes !== null ? item?.notes : "Empty" }}</h3>
+  </div>
+  <h3>Created at: {{ getTime() }}</h3>
+  <h3>
+    {{ getUserType() }}:
+    {{ getBartenderOrChefName() }}
+  </h3>
+  <div style="text-align: center">
+    <button
+      [disabled]="item?.state === 'READY'"
+      class="accept-button"
+      mat-raised-button
+      color="primary"
+      (click)="openDialog()"
+    >
+      {{ getTextForButton() }}
+    </button>
+  </div>
+</div>

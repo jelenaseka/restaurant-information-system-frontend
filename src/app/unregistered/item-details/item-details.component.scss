@@ -1,0 +1,45 @@
+#mat-list-container {
+  padding-top: 0;
+}
+
+.accept-button {
+  font-size: medium;
+  padding: 5px 20px;
+}
+
+mat-list {
+  border-radius: 1vh;
+  background-color: white;
+}
+
+mat-list-item {
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.details-container {
+  background-color: var(--light-grey);
+  margin: 0 10px;
+  box-shadow: 0px 0px 5px lightgray;
+  padding: 10px;
+}
+
+h2 {
+  padding: 10px;
+  margin-bottom: 0;
+}
+
+.notes-container {
+  border-radius: 1vh;
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+span {
+  position: absolute;
+  right: 15px;
+}
+
+mat-list-item {
+  position: relative;
+}
