@@ -34,6 +34,7 @@ import { ItemDetailsComponent } from './unregistered/item-details/item-details.c
 import { DrinkItemsService } from './bartender/services/drink-items.service';
 import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-dialog.component';
 import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-employee-dialog.component';
+import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-em
     ItemDetailsComponent,
     PincodeDialogComponent,
     AddEmployeeDialogComponent,
+    RestaurantViewComponent,
   ],
   imports: [
     BrowserModule,

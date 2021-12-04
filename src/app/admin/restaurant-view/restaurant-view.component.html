@@ -1,0 +1,33 @@
+<div fxLayout="row" fxLayoutAlign.gt-sm="space-between center">
+  <mat-tab-group
+    [selectedIndex]="selected.value"
+    (selectedIndexChange)="selected.setValue($event)"
+  >
+    <mat-tab *ngFor="let room of rooms; let index = index" [label]="room.name">
+    </mat-tab>
+  </mat-tab-group>
+  <div>
+    <button
+      mat-raised-button
+      class="example-add-tab-button"
+      (click)="addRoom()"
+    >
+      Add
+    </button>
+    <button
+      mat-raised-button
+      class="example-add-tab-button"
+      (click)="renameRoom('Novi Naziv')"
+    >
+      Rename
+    </button>
+    <button
+      mat-raised-button
+      class="example-delete-tab-button"
+      [disabled]="rooms.length === 1"
+      (click)="removeRoom()"
+    >
+      Delete
+    </button>
+  </div>
+</div>
