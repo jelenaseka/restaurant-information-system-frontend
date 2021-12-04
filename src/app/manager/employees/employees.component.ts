@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { ManagerService } from 'src/app/services/manager.service';
 import { ValidatorService } from 'src/app/services/validator.service';
+import { AddEmployeeDialogComponent } from '../add-employee-dialog/add-employee-dialog.component';
 import { EmployeesTableComponent } from '../employees-table/employees-table.component';
 import { UnregistaredUserDetails } from './models/unregistered-user-details';
 
@@ -31,7 +33,7 @@ export class EmployeesComponent implements OnInit {
       Validators.pattern("^[0-9]*$")]),
   });
 
-  constructor(private _managerService: ManagerService, public validator: ValidatorService, private _toastr: ToastrService) {
+  constructor(private _managerService: ManagerService, public validator: ValidatorService, private _toastr: ToastrService, private _dialog: MatDialog) {
     this.user = null;
     this.validator.setForm(this.detailsForm);
     this.selecteduserId = -1;
@@ -85,7 +87,22 @@ export class EmployeesComponent implements OnInit {
   }
 
   public addData(): void {
+    const dialogRef = this._dialog.open(AddEmployeeDialogComponent);
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == null) {
+        return;
+      }
+      this._managerService.addUser(result).subscribe(
+        () => {
+          this._toastr.success('New employee added to database!', 'Created');
+          this.child?.refreshTable();
+        },
+        (err) => {
+          this._toastr.error(convertResponseError(err), 'Not created!')
+        }
+      );
+    });
   }
 
   /**

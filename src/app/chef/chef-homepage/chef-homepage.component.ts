@@ -6,8 +6,6 @@ import { DishItemDetails } from './model/dishitem-details.model';
 import { ItemsForListBox } from 'src/app/bartender/bartender-homepage/model/items-for-listbox.model';
 import { SocketService } from 'src/app/sockets/socket.service';
 import { SocketResponse } from 'src/app/sockets/model/socket-response.model';
-import { ThrowStmt } from '@angular/compiler';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-chef-homepage',
