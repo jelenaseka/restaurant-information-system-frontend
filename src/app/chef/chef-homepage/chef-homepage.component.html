@@ -1,2 +1,42 @@
 <app-unregistered-header></app-unregistered-header>
-<p>chef-homepage works!</p>
+<div
+  class="home-container"
+  fxLayout.lt-md="column"
+  fxLayout="row"
+  fxLayoutAlign.gt-sm="start start"
+>
+  <div class="column3-container" fxFlex fxLayout="row">
+    <div fxFlex>
+      <app-item-list
+        [items]="getFilteredItems('ON_HOLD')"
+        [title]="'ON HOLD'"
+        [indexSelected]="indexOfSelectedItem"
+        (itemClicked)="onItemClicked($event)"
+      ></app-item-list>
+    </div>
+    <div fxFlex>
+      <app-item-list
+        [items]="getFilteredItems('PREPARATION')"
+        [title]="'PREPARATION'"
+        [indexSelected]="indexOfSelectedItem"
+        (itemClicked)="onItemClicked($event)"
+      ></app-item-list>
+    </div>
+    <div fxFlex>
+      <app-item-list
+        [items]="getFilteredItems('READY')"
+        [title]="'READY'"
+        [indexSelected]="indexOfSelectedItem"
+        (itemClicked)="onItemClicked($event)"
+      ></app-item-list>
+    </div>
+  </div>
+
+  <div fxFlex *ngIf="detailsAreDisplayed">
+    <app-item-details
+      [item]="displayedItem"
+      (closeEvent)="onCloseEvent()"
+      (acceptButtonEvent)="onAcceptButtonEvent($event)"
+    ></app-item-details>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { DrinkItemsForListBox } from 'src/app/bartender/bartender-homepage/model/drinkitems-for-listbox.model';
+import { ItemsForListBox } from 'src/app/bartender/bartender-homepage/model/items-for-listbox.model';
 
 @Component({
   selector: 'app-item-list',
@@ -9,7 +9,7 @@ import { DrinkItemsForListBox } from 'src/app/bartender/bartender-homepage/model
 export class ItemListComponent implements OnInit {
 
   @Input()
-  items : DrinkItemsForListBox[] = [];
+  items : ItemsForListBox[] = [];
   @Input()
   title: string = "";
   @Input()
