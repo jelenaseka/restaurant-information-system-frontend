@@ -37,6 +37,8 @@ import { WorkersComponent } from './system-admin/workers/workers.component';
 import { MenuComponent } from './system-admin/menu/menu.component';
 import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
 import { AdministratorsComponent } from './admin/administrators/administrators.component';
+import { AddWorkerDialogComponent } from './system-admin/add-worker-dialog/add-worker-dialog.component';
+import { WorkersTableComponent } from './system-admin/workers-table/workers-table.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { AdministratorsComponent } from './admin/administrators/administrators.c
     MenuComponent,
     RestaurantViewComponent,
     AdministratorsComponent,
+    AddWorkerDialogComponent,
+    WorkersTableComponent,
   ],
   imports: [
     BrowserModule,

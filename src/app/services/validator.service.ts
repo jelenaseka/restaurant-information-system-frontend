@@ -49,6 +49,13 @@ export class ValidatorService {
     return '';
   }
 
+  validate3To30(control: string): string {
+    if (this.form?.get(control)?.errors != null) {
+      return 'Required length is 3 - 30!';
+    }
+    return '';
+  }
+
   /**
    * Compare data model and form.
    * @param model 

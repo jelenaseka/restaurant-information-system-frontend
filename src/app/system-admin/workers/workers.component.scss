@@ -1,0 +1,54 @@
+.main-container {
+    height: 90vh;
+  }
+  
+  .details-card {
+    margin-top: 2.5vh;
+    width: 30vw;
+    height: 82vh;
+    background-color: var(--card-color);
+  }
+  
+  form {
+    margin-top: 3vh;
+  }
+  
+  mat-form-field {
+    font-size: large;
+    width: 50%;
+  }
+  
+  button {
+    font-size: large;
+    width: 48%;
+  }
+  
+  .buttons-container {
+    width: 50%;
+  }
+  
+  mat-card {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .table-button-container {
+    margin-top: 5vh;
+    position: relative;
+    width: 60vw;
+  }
+  
+  .table-container {
+    margin-top: 5vh;
+    height: 78vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .add-button {
+    width: auto;
+    position: absolute;
+    right: 0px;
+    top: -10px;
+  }
+  
