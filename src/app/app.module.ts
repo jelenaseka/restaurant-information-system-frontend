@@ -15,8 +15,6 @@ import { LoginComponent } from './login/login/login.component';
 import { WaiterHomepageComponent } from './waiter/waiter-homepage/waiter-homepage.component';
 import { MaterialModule } from './core/material.module';
 import { AuthService } from './autentification/services/auth.service';
-import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.component';
-import { SystemAdminHomepageComponent } from './system-admin/system-admin-homepage/system-admin-homepage.component';
 import { JwtDecoderService } from './autentification/services/jwt-decoder.service';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role-guard';
@@ -34,6 +32,11 @@ import { ItemDetailsComponent } from './unregistered/item-details/item-details.c
 import { DrinkItemsService } from './bartender/services/drink-items.service';
 import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-dialog.component';
 import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-employee-dialog.component';
+import { ReportsComponent } from './system-admin/reports/reports.component';
+import { WorkersComponent } from './system-admin/workers/workers.component';
+import { MenuComponent } from './system-admin/menu/menu.component';
+import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
+import { AdministratorsComponent } from './admin/administrators/administrators.component';
 
 @NgModule({
   declarations: [
@@ -41,8 +44,6 @@ import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-em
     HomeComponent,
     LoginComponent,
     WaiterHomepageComponent,
-    AdminHomepageComponent,
-    SystemAdminHomepageComponent,
     HeaderComponent,
     EmployeesComponent,
     EmployeesTableComponent,
@@ -56,6 +57,11 @@ import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-em
     ItemDetailsComponent,
     PincodeDialogComponent,
     AddEmployeeDialogComponent,
+    ReportsComponent,
+    WorkersComponent,
+    MenuComponent,
+    RestaurantViewComponent,
+    AdministratorsComponent,
   ],
   imports: [
     BrowserModule,
