@@ -17,7 +17,7 @@ export class ManagerService {
 
   public getUnregisteredUserById(id: number): Observable<UnregistaredUserDetails> {
     return this.http.get<UnregistaredUserDetails>(
-      `/unregistered-user/details/${id}`
+      `/unregistered-user/${id}`
     );
   }
 
