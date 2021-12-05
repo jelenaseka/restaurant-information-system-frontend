@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+import { convertResponseError } from 'src/app/error-converter.function';
+import { RoomCreate } from '../model/room-create.model';
 import { RoomWithTables } from '../model/room-with-tables.model';
+import { RoomnameDialogComponent } from '../roomname-dialog/roomname-dialog/roomname-dialog.component';
 import { RoomService } from '../services/room.service';
 
 @Component({
@@ -14,25 +19,63 @@ export class RestaurantViewComponent implements OnInit {
 
   selected = new FormControl(0);
 
-  constructor(private roomService : RoomService) { }
+  newName : string | undefined;
+
+  constructor(private roomService : RoomService, private dialog: MatDialog, private toastService: ToastrService) { }
 
   ngOnInit(): void {
+    this.getRooms(false);
+  }
+
+  getRooms(lastIsSelected : boolean) : void {
     this.roomService.getActiveRooms().subscribe(data => {
-        this.rooms = data;
-    })
+      this.rooms = data;
+      if(lastIsSelected)
+        this.selected.setValue(this.rooms.length - 1);
+  })
   }
+
+  openDialog(adding : boolean): void {
+    this.newName = undefined;
+    const dialogRef = this.dialog.open(RoomnameDialogComponent, {
+      width: '250px',
+      data: {newName: this.newName},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.newName = result;
+      if(this.newNameIsValid()) {
+        if(adding)
+          this.addRoom();
+        else
+          this.renameRoom();
+      }  
+    });
+  }
+
+  newNameIsValid() : boolean {
+    return this.newName !== undefined && this.newName !== "";
+  }
+
   
-  addRoom() {
-    let room  = new RoomWithTables(0, "New", []);
-    this.rooms.push(room);
+  addRoom() : void {
+    let room  = new RoomCreate(this.newName as string);
+
+    this.roomService.addRoom(room).subscribe(() => {
+      this.getRooms(true);
+    }, error => this.toastService.error(convertResponseError(error), 'Error'));
+
   }
 
-  renameRoom(newName : string) {
-    this.rooms[this.selected.value].name = newName;
+  renameRoom() : void {
+    this.rooms[this.selected.value].name = this.newName as string;
   }
 
-  removeRoom() {
-    this.rooms.splice(this.selected.value, 1);
+  removeRoom() : void {
+    let selectedId = this.rooms[this.selected.value].id;
+    this.roomService.removeRoom(selectedId).subscribe(() => {
+      this.getRooms(false);
+    }, error => this.toastService.error(convertResponseError(error), 'Error'));
   }
 
 }

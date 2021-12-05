@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Enter name of the room</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Room name</mat-label>
+    <input type="text" matInput [(ngModel)]="data.newName" cdkFocusInitial />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button
+    [disabled]="!checkNewName()"
+    mat-button
+    [mat-dialog-close]="data.newName"
+  >
+    > Ok
+  </button>
+</div>
