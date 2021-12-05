@@ -68,7 +68,10 @@ export class RestaurantViewComponent implements OnInit {
   }
 
   renameRoom() : void {
-    this.rooms[this.selected.value].name = this.newName as string;
+    let selectedId = this.rooms[this.selected.value].id;
+    this.roomService.updateRoomName(selectedId, this.newName as string).subscribe(() => {
+      this.getRooms(false);
+    }, error => this.toastService.error(convertResponseError(error), 'Error'));
   }
 
   removeRoom() : void {

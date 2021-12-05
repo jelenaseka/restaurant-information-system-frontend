@@ -19,6 +19,9 @@ export class RoomService {
     return this.http.post<string>("/room", room);
   }
 
+  public updateRoomName(id : number, newName : string) : Observable<void> {
+    return this.http.put<void>("/room/"+id+"/name", newName);
+  }
   
   public removeRoom(id : number) : Observable<void> {
     return this.http.delete<void>("/room/"+id);
