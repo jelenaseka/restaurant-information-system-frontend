@@ -12,6 +12,7 @@
     </mat-tab-group>
     <div>
       <button
+        color="primary"
         mat-raised-button
         class="example-add-tab-button"
         (click)="openDialog(true)"
@@ -26,6 +27,7 @@
         Rename
       </button>
       <button
+        color="warn"
         mat-raised-button
         class="example-delete-tab-button"
         [disabled]="rooms.length === 1"
@@ -87,10 +89,12 @@
         class="example-delete-tab-button"
         (click)="applyChanges()"
         [disabled]="!editMode || checkDifference() || detailsForm.invalid"
+        style="margin-bottom: 50px"
       >
         Apply layout changes
       </button>
       <button
+        color="primary"
         mat-raised-button
         class="example-delete-tab-button"
         (click)="save()"
@@ -99,6 +103,7 @@
         Save
       </button>
       <button
+        color="warn"
         mat-raised-button
         class="example-delete-tab-button"
         (click)="cancel()"
