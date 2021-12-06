@@ -10,6 +10,7 @@ import { EmployeesComponent } from '../manager/employees/employees.component';
 import { ReportComponent } from '../manager/report/report.component';
 import { BartenderHomepageComponent } from '../bartender/bartender-homepage/bartender-homepage.component';
 import { ChefHomepageComponent } from '../chef/chef-homepage/chef-homepage.component';
+import { TableDetailsComponent } from '../waiter/table-details/table-details.component';
 
 export const routes: Routes = [
   {
@@ -23,7 +24,8 @@ export const routes: Routes = [
     component: LoginComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'home/waiter', component: WaiterHomepageComponent, canActivate: [AuthGuard], },
+  { path: 'home/waiter', component: WaiterHomepageComponent, canActivate: [AuthGuard] },
+  { path: 'home/waiter/:table', component: TableDetailsComponent, canActivate: [AuthGuard] },
   { path: 'home/bartender', component: BartenderHomepageComponent, canActivate: [AuthGuard], },
   { path: 'home/chef', component: ChefHomepageComponent, canActivate: [AuthGuard], },
   {
@@ -50,5 +52,6 @@ export const routes: Routes = [
     canActivate: [RoleGuard],
     data: { expectedRole: 'SYSTEM_ADMIN' },
   },
+  
   { path: '**', redirectTo: '/home' },
 ];

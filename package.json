@@ -24,7 +24,7 @@
     "@auth0/angular-jwt": "^5.0.2",
     "@auth0/auth0-angular": "^1.8.0",
     "net": "^1.0.2",
-    "ngx-toastr": "^14.1.4",
+    "ngx-toastr": "^14.2.1",
     "rxjs": "~6.6.0",
     "sockjs-client": "^1.5.1",
     "stomp-websocket": "^2.3.4-next",

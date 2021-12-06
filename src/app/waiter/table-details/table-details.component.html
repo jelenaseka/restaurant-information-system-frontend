@@ -1,0 +1,71 @@
+<app-unregistered-header></app-unregistered-header>
+<div fxLayout="row" class="table-details-component" [ngClass]="{'hidden': !isWaiter}">
+  <div fxLayout="column" fxLayoutAlign="space-between none" fxFlex="20" class="table-information">
+    <div class="primary-information">
+      <div class="primary-information-section">
+        <div fxLayout="row">
+          <mat-icon>date_range</mat-icon>
+          <span class="primary-information-label">CREATED AT</span>
+        </div>
+        <p class="primary-information-p">15.11.2021</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="primary-information-section">
+        <div fxLayout="row">
+          <mat-icon>person</mat-icon>
+          <span class="primary-information-label">WAITER</span>
+        </div>
+        <p class="primary-information-p">Milorad</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="primary-information-section">
+        <div fxLayout="row">
+          <mat-icon>attach_money</mat-icon>
+          <span class="primary-information-label">TOTAL PRICE</span>
+        </div>
+        <p class="primary-information-p">20$</p>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between start" class="primary-information-actions">
+      <button mat-raised-button color="accent">Discard</button>
+      <button mat-raised-button color="primary">Charge</button>
+    </div>
+  </div>
+  <div fxFlex fxLayout="column" fxLayoutAlign="space-between ">
+    <div fxLayout="row">
+      <div fxFlex class="table-details-list">
+        <h2>Drinks</h2>
+        <mat-list role="list" class="table-details-mat-list">
+          <mat-list-item role="listitem">Item 1</mat-list-item>
+          <mat-list-item role="listitem">Item 2</mat-list-item>
+          <mat-list-item role="listitem">Item 3</mat-list-item>
+        </mat-list>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="action-buttons">
+          <button mat-button color="primary">Deliver all</button>
+          <button mat-button>
+            <mat-icon color="primary">add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div fxFlex class="table-details-list">
+        <h2>Dishes</h2>
+        <mat-list role="list" class="table-details-mat-list">
+          <mat-list-item role="listitem">Item 1</mat-list-item>
+          <mat-list-item role="listitem">Item 2</mat-list-item>
+          <mat-list-item role="listitem">Item 3</mat-list-item>
+        </mat-list>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="action-buttons">
+          <button mat-button color="primary">Deliver all</button>
+          <button mat-button>
+            <mat-icon color="primary">add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: end; margin: 0 10px 10px 0;">
+      <button mat-raised-button color="accent">Back to room</button>
+    </div>
+  </div>
+  
+</div>

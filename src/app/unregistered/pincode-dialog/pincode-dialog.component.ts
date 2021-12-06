@@ -1,8 +1,9 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, Input, ViewChild } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface DialogData {
   pinCode: string;
+  heading: string;
 }
 
 @Component({
@@ -14,7 +15,7 @@ export class PincodeDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<PincodeDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
   onNoClick(): void {
