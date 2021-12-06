@@ -40,6 +40,7 @@ import { AdministratorsComponent } from './admin/administrators/administrators.c
 import { AddWorkerDialogComponent } from './system-admin/add-worker-dialog/add-worker-dialog.component';
 import { WorkersTableComponent } from './system-admin/workers-table/workers-table.component';
 import { ChangePasswordDialogComponent } from './system-admin/change-password-dialog/change-password-dialog.component';
+import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add-manager-dialog.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { ChangePasswordDialogComponent } from './system-admin/change-password-di
     AddWorkerDialogComponent,
     WorkersTableComponent,
     ChangePasswordDialogComponent,
+    AddManagerDialogComponent,
   ],
   imports: [
     BrowserModule,

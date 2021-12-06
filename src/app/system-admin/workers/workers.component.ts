@@ -3,9 +3,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
+import { AddEmployeeDialogComponent } from 'src/app/manager/add-employee-dialog/add-employee-dialog.component';
 import { UnregistaredUserDetails } from 'src/app/manager/employees/models/unregistered-user-details';
 import { ManagerService } from 'src/app/services/manager.service';
 import { ValidatorService } from 'src/app/services/validator.service';
+import { AddManagerDialogComponent } from '../add-manager-dialog/add-manager-dialog.component';
 import { AddWorkerDialogComponent } from '../add-worker-dialog/add-worker-dialog.component';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { ManagerDetails } from '../models/manager-details.model';
@@ -141,8 +143,8 @@ export class WorkersComponent implements OnInit {
     this._enableFormEditing(true);
   }
 
-  public addData(): void {
-    const dialogRef = this._dialog.open(AddWorkerDialogComponent);
+  public addEmployee(): void {
+    const dialogRef = this._dialog.open(AddEmployeeDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == null) {
@@ -151,6 +153,25 @@ export class WorkersComponent implements OnInit {
       this._managerService.addUser(result).subscribe(
         () => {
           this._toastr.success('New employee added to database!', 'Created');
+          this.child?.refreshTable();
+        },
+        (err) => {
+          this._toastr.error(convertResponseError(err), 'Not created!')
+        }
+      );
+    });
+  }
+
+  public addManager(): void {
+    const dialogRef = this._dialog.open(AddManagerDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == null) {
+        return;
+      }
+      this._managerService.addManager(result).subscribe(
+        () => {
+          this._toastr.success('New manager added to database!', 'Created');
           this.child?.refreshTable();
         },
         (err) => {

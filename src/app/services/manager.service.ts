@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { UnregistaredUserTable } from '../manager/employees/models/unregistared-user-table.model';
 import { UnregistaredUserDetails } from '../manager/employees/models/unregistered-user-details';
+import { ManagerCreate } from '../system-admin/models/manager-create.model';
 import { ManagerDetails } from '../system-admin/models/manager-details.model';
 import { PasswordUpdate } from '../system-admin/models/password-update.model';
 
@@ -37,7 +38,7 @@ export class ManagerService {
   }
 
   public updateManager(id: number, form: FormGroup): Observable<ManagerDetails> {
-    const model = this._mapFormToManagerModel(form);
+    const model = this._mapFormToManagerDetailsModel(form);
     return this.http.put<ManagerDetails>(
       `/registered-user/${id}`, model
     );
@@ -47,6 +48,13 @@ export class ManagerService {
     const model = this._mapFormToUnregisteredModel(form);
     return this.http.post<UnregistaredUserDetails>(
       `/unregistered-user`, model
+    );
+  }
+
+  public addManager(form: FormGroup): Observable<ManagerCreate> {
+    const model = this._mapFormToManagerCreateModel(form);
+    return this.http.post<ManagerCreate>(
+      `/registered-user`, model
     );
   }
 
@@ -72,7 +80,7 @@ export class ManagerService {
     };
   }
 
-  private _mapFormToManagerModel(form: FormGroup): ManagerDetails {
+  private _mapFormToManagerDetailsModel(form: FormGroup): ManagerDetails {
     return {
       firstName: form.controls['firstName'].value,
       lastName: form.controls['lastName'].value,
@@ -81,6 +89,19 @@ export class ManagerService {
       salary: form.controls['salary'].value,
       type: form.controls['type'].value.toUpperCase(),
       username: form.controls['username'].value,
+    };
+  }
+
+  private _mapFormToManagerCreateModel(form: FormGroup): ManagerCreate {
+    return {
+      firstName: form.controls['firstName'].value,
+      lastName: form.controls['lastName'].value,
+      emailAddress: form.controls['emailAddress'].value,
+      phoneNumber: form.controls['phoneNumber'].value,
+      salary: form.controls['salary'].value,
+      type: "MANAGER",
+      username: form.controls['username'].value,
+      password: form.controls['newPassword'].value,
     };
   }
 }

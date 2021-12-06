@@ -2,9 +2,11 @@
 
 <div class="main-container" fxLayout="row" fxLayoutAlign="space-around start">
     <div class="table-button-container">
-        <button mat-flat-button color="primary" (click)="addData()" class="add-button">
-            Add data
-        </button>
+        <button mat-flat-button color="primary" [matMenuTriggerFor]="aboveMenu" class="add-button">Add</button>
+        <mat-menu #aboveMenu="matMenu" yPosition="above">
+            <button mat-menu-item (click)="addManager()">Manager</button>
+            <button mat-menu-item (click)="addEmployee()">Employee</button>
+        </mat-menu>
         <div class="table-container">
             <app-workers-table (selectedRowChanged)="getDetails($event)"></app-workers-table>
         </div>
