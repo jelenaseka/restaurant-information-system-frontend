@@ -7,7 +7,7 @@
           <mat-icon>date_range</mat-icon>
           <span class="primary-information-label">CREATED AT</span>
         </div>
-        <p class="primary-information-p">15.11.2021</p>
+        <p class="primary-information-p">{{order?.createdAt}}</p>
       </div>
       <mat-divider></mat-divider>
       <div class="primary-information-section">
@@ -15,7 +15,7 @@
           <mat-icon>person</mat-icon>
           <span class="primary-information-label">WAITER</span>
         </div>
-        <p class="primary-information-p">Milorad</p>
+        <p class="primary-information-p">{{order?.waiter}}</p>
       </div>
       <mat-divider></mat-divider>
       <div class="primary-information-section">
@@ -23,7 +23,7 @@
           <mat-icon>attach_money</mat-icon>
           <span class="primary-information-label">TOTAL PRICE</span>
         </div>
-        <p class="primary-information-p">20$</p>
+        <p class="primary-information-p">{{order?.totalPrice}}$</p>
       </div>
     </div>
 
@@ -37,9 +37,24 @@
       <div fxFlex class="table-details-list">
         <h2>Drinks</h2>
         <mat-list role="list" class="table-details-mat-list">
-          <mat-list-item role="listitem">Item 1</mat-list-item>
-          <mat-list-item role="listitem">Item 2</mat-list-item>
-          <mat-list-item role="listitem">Item 3</mat-list-item>
+          <mat-list-item role="listitem" *ngFor="let item of order?.drinkItemsList">
+            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+              <span fxFlex>{{item.name}}</span>
+              <div fxFlex *ngIf="item.state === 'ON_HOLD'" style="text-align: end;">
+                <mat-icon color="primary">edit</mat-icon>
+                <mat-icon color="accent">clear</mat-icon>
+              </div>
+              <div *ngIf="item.state === 'PREPARATION'" fxFlex style="text-align: end;">
+                <p style="font-size: 12px; color: grey;">PREPARING...</p>
+              </div>
+              <div *ngIf="item.state === 'READY'" fxFlex style="text-align: end;">
+                <button mat-raised-button color="accent">Deliver</button>
+              </div>
+              <!-- <div *ngIf="item.state === 'DELIVERED'" fxFlex style="text-align: end;">
+                <mat-icon style="color: green;">done</mat-icon>
+              </div> -->
+            </div>
+          </mat-list-item>
         </mat-list>
         <div fxLayout="row" fxLayoutAlign="space-between center" class="action-buttons">
           <button mat-button color="primary">Deliver all</button>
@@ -51,9 +66,25 @@
       <div fxFlex class="table-details-list">
         <h2>Dishes</h2>
         <mat-list role="list" class="table-details-mat-list">
-          <mat-list-item role="listitem">Item 1</mat-list-item>
-          <mat-list-item role="listitem">Item 2</mat-list-item>
-          <mat-list-item role="listitem">Item 3</mat-list-item>
+          <mat-list-item role="listitem" *ngFor="let item of order?.dishItemList">
+            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+              <span fxFlex>{{item.orderedItem.itemName}}</span>
+              <div fxLayout="row" fxLayoutAlign="space-around center" fxFlex *ngIf="item.state === 'ON_HOLD'" style="text-align: end;">
+                <button mat-raised-button color="primary">prepare</button>
+                <mat-icon color="primary">edit</mat-icon>
+                <mat-icon color="accent">clear</mat-icon>
+              </div>
+              <div *ngIf="item.state === 'PREPARATION'" fxFlex style="text-align: end;">
+                <p style="font-size: 12px; color: grey;">PREPARING...</p>
+              </div>
+              <div *ngIf="item.state === 'READY'" fxFlex style="text-align: end;">
+                <button mat-raised-button color="accent">Deliver</button>
+              </div>
+              <!-- <div *ngIf="item.state === 'DELIVERED'" fxFlex style="text-align: end;">
+                <mat-icon style="color: green;">done</mat-icon>
+              </div> -->
+            </div>
+          </mat-list-item>
         </mat-list>
         <div fxLayout="row" fxLayoutAlign="space-between center" class="action-buttons">
           <button mat-button color="primary">Deliver all</button>

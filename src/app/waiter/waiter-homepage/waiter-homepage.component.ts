@@ -15,8 +15,7 @@ export class WaiterHomepageComponent implements OnInit {
   pinCode: string | undefined;
   table: string = 'T1';
 
-  constructor(public dialog: MatDialog, private auth: AuthService, private toastService: ToastrService,
-    private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
