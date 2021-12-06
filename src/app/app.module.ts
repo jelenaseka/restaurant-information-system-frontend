@@ -39,6 +39,7 @@ import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view
 import { AdministratorsComponent } from './admin/administrators/administrators.component';
 import { AddWorkerDialogComponent } from './system-admin/add-worker-dialog/add-worker-dialog.component';
 import { WorkersTableComponent } from './system-admin/workers-table/workers-table.component';
+import { ChangePasswordDialogComponent } from './system-admin/change-password-dialog/change-password-dialog.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { WorkersTableComponent } from './system-admin/workers-table/workers-tabl
     AdministratorsComponent,
     AddWorkerDialogComponent,
     WorkersTableComponent,
+    ChangePasswordDialogComponent,
   ],
   imports: [
     BrowserModule,

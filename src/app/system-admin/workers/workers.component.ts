@@ -7,6 +7,7 @@ import { UnregistaredUserDetails } from 'src/app/manager/employees/models/unregi
 import { ManagerService } from 'src/app/services/manager.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 import { AddWorkerDialogComponent } from '../add-worker-dialog/add-worker-dialog.component';
+import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { ManagerDetails } from '../models/manager-details.model';
 import { UserIdAndType } from '../models/user-id-and-type.model';
 import { WorkersTableComponent } from '../workers-table/workers-table.component';
@@ -44,7 +45,6 @@ export class WorkersComponent implements OnInit {
     salary: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),
     type: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),
     username: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.minLength(3), Validators.maxLength(30)]),
-    password: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.minLength(3), Validators.maxLength(30)]),
   });
 
   constructor(private _managerService: ManagerService, public validator: ValidatorService, private _toastr: ToastrService, private _dialog: MatDialog) {
@@ -84,6 +84,7 @@ export class WorkersComponent implements OnInit {
         }
       );
     }
+    this._enableFormEditing(false);
   }
 
   public saveUnregistered(): void {
@@ -159,14 +160,32 @@ export class WorkersComponent implements OnInit {
     // });
   }
 
+  public changePassword(): void {
+    const dialogRef = this._dialog.open(ChangePasswordDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == null) {
+        return;
+      }
+      this._managerService.changePassword(this.selecteduserId, result).subscribe(
+        () => {
+          this._toastr.success('Password is changed!', 'Updated');
+        },
+        (err) => {
+          this._toastr.error(convertResponseError(err), 'Not updated!')
+        }
+      );
+    });
+  }
+
   /**
    * Prolazi kroz kontrole forme da bi im postavljala atribut disabled na true ili false
    * u zavisnosti od value.
    * @param value boolean? true - Moguce je editovati kontrolu, false - nije moguce editovati kontrolu
    */
   private _enableFormEditing(value: boolean): void {
-    const state = this.isEnabledEditing ? 'disable' : 'enable';
     this.isEnabledEditing = value;
+    const state = this.isEnabledEditing ? 'enable' : 'disable';
     if (this.unregistered != null) {
       Object.keys(this.unregisteredForm.controls).forEach((controlName) => {
         if (controlName !== 'type') {

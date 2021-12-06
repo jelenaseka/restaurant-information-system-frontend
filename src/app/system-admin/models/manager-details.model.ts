@@ -6,5 +6,4 @@ export interface ManagerDetails {
     salary: number;
     type: string;
     username: string;
-    password: string;
   }

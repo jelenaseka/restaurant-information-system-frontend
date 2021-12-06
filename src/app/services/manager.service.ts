@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { UnregistaredUserTable } from '../manager/employees/models/unregistared-user-table.model';
 import { UnregistaredUserDetails } from '../manager/employees/models/unregistered-user-details';
 import { ManagerDetails } from '../system-admin/models/manager-details.model';
+import { PasswordUpdate } from '../system-admin/models/password-update.model';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,16 @@ export class ManagerService {
     );
   }
 
+  public changePassword(id: number, form: FormGroup): Observable<PasswordUpdate> {
+    const model = {
+      newPassword: form.controls['newPassword'].value,
+      oldPassword: form.controls['oldPassword'].value
+    }
+    return this.http.put<PasswordUpdate>(
+      `/registered-user/change-password/${id}`, model
+    );
+  }
+
   private _mapFormToUnregisteredModel(form: FormGroup): UnregistaredUserDetails {
     return {
       firstName: form.controls['firstName'].value,
@@ -70,7 +81,6 @@ export class ManagerService {
       salary: form.controls['salary'].value,
       type: form.controls['type'].value.toUpperCase(),
       username: form.controls['username'].value,
-      password: form.controls['password'].value
     };
   }
 }
