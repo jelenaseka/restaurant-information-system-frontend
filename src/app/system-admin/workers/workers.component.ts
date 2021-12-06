@@ -13,7 +13,6 @@ import { AddManagerDialogComponent } from '../add-manager-dialog/add-manager-dia
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { ManagerDetails } from '../models/manager-details.model';
 import { UserIdAndType } from '../models/user-id-and-type.model';
-import { WorkersTableComponent } from '../workers-table/workers-table.component';
 
 @Component({
   selector: 'app-workers',
@@ -29,8 +28,8 @@ export class WorkersComponent implements OnInit {
   manager: ManagerDetails | null;
 
   unregisteredForm: FormGroup = new FormGroup({
-    firstName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),
-    lastName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),
+    firstName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required, Validators.minLength(3), Validators.maxLength(30),]),
+    lastName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required, Validators.minLength(3), Validators.maxLength(30),]),
     emailAddress: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required, Validators.email]),
     phoneNumber: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required, Validators.pattern("[0-9]{10}")]),
     salary: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),

@@ -23,13 +23,13 @@
         <mat-form-field appearance="fill">
             <mat-label>First name</mat-label>
             <input matInput formControlName="firstName"/>
-            <mat-error *ngIf="unregisteredForm.invalid">{{ validator.validateRequired('firstName') }}</mat-error>
+            <mat-error *ngIf="unregisteredForm.invalid">{{ validator.validate3To30('firstName') }}</mat-error>
         </mat-form-field>
         <!-- Last name -->
         <mat-form-field appearance="fill">
             <mat-label>Last name</mat-label>
             <input matInput formControlName="lastName"/>
-            <mat-error *ngIf="unregisteredForm.invalid">{{ validator.validateRequired('lastName') }}</mat-error>
+            <mat-error *ngIf="unregisteredForm.invalid">{{ validator.validate3To30('lastName') }}</mat-error>
         </mat-form-field>
         <!-- Email address -->
         <mat-form-field appearance="fill">

@@ -23,8 +23,8 @@ export class EmployeesComponent implements OnInit {
   user: UnregistaredUserDetails | null;
 
   detailsForm: FormGroup = new FormGroup({
-    firstName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),
-    lastName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),
+    firstName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required, Validators.minLength(3), Validators.maxLength(30),]),
+    lastName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required, Validators.minLength(3), Validators.maxLength(30),]),
     emailAddress: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required, Validators.email]),
     phoneNumber: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required, Validators.pattern("[0-9]{10}")]),
     salary: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),
