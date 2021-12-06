@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { ValidatorService } from 'src/app/services/validator.service';
 import { RoomCreate } from '../model/room-create.model';
+import { RoomLayout } from '../model/room-layout.model';
 import { RoomWithTables } from '../model/room-with-tables.model';
 import { RoomnameDialogComponent } from '../roomname-dialog/roomname-dialog/roomname-dialog.component';
 import { RoomService } from '../services/room.service';
@@ -25,8 +26,8 @@ export class RestaurantViewComponent implements OnInit {
   editMode : boolean = false;
 
   detailsForm: FormGroup = new FormGroup({
-    row: new FormControl({value:'', disabled: !this.editMode}, [Validators.required,]),
-    column: new FormControl({value:'', disabled: !this.editMode}, [Validators.required,])
+    row: new FormControl({value:'', disabled: !this.editMode}, [Validators.required, Validators.min(1), Validators.max(10)]),
+    column: new FormControl({value:'', disabled: !this.editMode}, [Validators.required, Validators.min(1), Validators.max(10)])
   });
 
   constructor(private roomService : RoomService, private dialog: MatDialog, private toastService: ToastrService,
@@ -38,7 +39,7 @@ export class RestaurantViewComponent implements OnInit {
     this.getRooms(false);
   }
 
-  selectedChanged(newIndex) {
+  selectedChanged(newIndex) : void{
     this.selected.setValue(newIndex)
     this.setInputValues()
   }
@@ -55,12 +56,12 @@ export class RestaurantViewComponent implements OnInit {
   })
   }
 
-  setInputValues() {
+  setInputValues() : void {
     this.editMode = false;
     let rowControl = this.detailsForm.get('row') as FormControl;
-    rowControl.setValue(this.getRows()+"")
+    rowControl.setValue(this.getRows())
     let columnControl = this.detailsForm.get('column') as FormControl;
-    columnControl.setValue(this.getColumns()+"")
+    columnControl.setValue(this.getColumns())
   }
 
   openDialog(adding : boolean): void {
@@ -85,6 +86,25 @@ export class RestaurantViewComponent implements OnInit {
     return this.newName !== undefined && this.newName !== "";
   }
 
+  checkDifference() : boolean {
+    return this.detailsForm.get('row')?.value === this.rooms[this.selected.value].rows
+     && this.detailsForm.get('column')?.value === this.rooms[this.selected.value].columns;
+  }
+
+  save() : void {
+    let selectedId = this.rooms[this.selected.value].id;
+    let requestObject = new RoomLayout(this.detailsForm.get('row')?.value as number, this.detailsForm.get('column')?.value as number);
+    this.roomService.editRoomLayout(selectedId, requestObject).subscribe(() => {
+      this.toastService.success("Room layout changed successfully.", 'Ok');
+      this.toogleEditMode();
+      this.getRooms(true);
+    }, error => this.toastService.error(convertResponseError(error), 'Error'));
+  }
+
+  cancel() : void {
+    this.toogleEditMode();
+    this.setInputValues();
+  }
   
   addRoom() : void {
     let room  = new RoomCreate(this.newName as string);
@@ -109,7 +129,7 @@ export class RestaurantViewComponent implements OnInit {
     }, error => this.toastService.error(convertResponseError(error), 'Error'));
   }
 
-  toogleEditMode() {
+  toogleEditMode() : void {
     this.editMode = !this.editMode;
 
     let control = this.detailsForm.get('row') as FormControl;

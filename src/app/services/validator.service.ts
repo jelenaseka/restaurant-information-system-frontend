@@ -32,6 +32,19 @@ export class ValidatorService {
     return '';
   }
 
+  validateMin1Max10(control: string): string {
+    if (this.form?.get(control)?.hasError('required')) {
+      return 'You must enter a value!';
+    }
+    if (this.form?.get(control)?.hasError('min')) {
+      return 'Value should be greater or equal to 1!';
+    }
+    if (this.form?.get(control)?.hasError('max')) {
+      return 'Value should be less or equal to 10!';
+    }
+    return '';
+  }
+
   validatePhoneNumber(control: string): string {
     if (this.form?.get(control)?.hasError('required')) {
       return 'You must enter a value!';
