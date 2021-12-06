@@ -1,14 +1,18 @@
 <app-header></app-header>
 
 <div class="main-container" fxLayout="row" fxLayoutAlign="space-around start">
-    <div class="table-button-container">
-        <button mat-flat-button color="primary" [matMenuTriggerFor]="aboveMenu" class="add-button">Add</button>
+    <div class="table-construction-container">
+        <mat-form-field appearance="standard" class="search">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+          </mat-form-field>
+        <button mat-flat-button color="primary" [matMenuTriggerFor]="aboveMenu" class="add-button"><mat-icon>person_add</mat-icon>Add</button>
         <mat-menu #aboveMenu="matMenu" yPosition="above">
             <button mat-menu-item (click)="addManager()">Manager</button>
             <button mat-menu-item (click)="addEmployee()">Employee</button>
         </mat-menu>
         <div class="table-container">
-            <app-workers-table (selectedRowChanged)="getDetails($event)"></app-workers-table>
+            <app-workers-table [dataSource]="dataSource" [clickedRow]="clickedRow" (selectedRowChanged)="getDetails($event)"></app-workers-table>
         </div>
     </div>
     <mat-card class="details-card" *ngIf="unregistered != null">

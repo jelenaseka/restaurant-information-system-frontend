@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { AddEmployeeDialogComponent } from 'src/app/manager/add-employee-dialog/add-employee-dialog.component';
+import { UnregistaredUserTable } from 'src/app/manager/employees/models/unregistared-user-table.model';
 import { UnregistaredUserDetails } from 'src/app/manager/employees/models/unregistered-user-details';
 import { ManagerService } from 'src/app/services/manager.service';
 import { ValidatorService } from 'src/app/services/validator.service';
@@ -19,6 +21,8 @@ import { WorkersTableComponent } from '../workers-table/workers-table.component'
   styleUrls: ['./workers.component.scss']
 })
 export class WorkersComponent implements OnInit {
+  dataSource: MatTableDataSource<UnregistaredUserTable>;
+  clickedRow: UnregistaredUserTable | null;
   selecteduserId: number;
   isEnabledEditing: boolean = false;
   unregistered: UnregistaredUserDetails | null;
@@ -49,13 +53,17 @@ export class WorkersComponent implements OnInit {
   });
 
   constructor(private _managerService: ManagerService, public validator: ValidatorService, private _toastr: ToastrService, private _dialog: MatDialog) {
+    this.dataSource = new MatTableDataSource();
+    this.clickedRow = null;
     this.unregistered = null;
     this.manager = null;
     this.selecteduserId = -1;
     this.child = null;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._getTableData();
+  }
 
   getDetails(data: UserIdAndType): void {
     if (data.type !== 'MANAGER') {
@@ -100,7 +108,7 @@ export class WorkersComponent implements OnInit {
       () => {
         this._enableFormEditing(false);
         this._toastr.success('Details are saved successfully', 'Updated');
-        this.child?.refreshTable();
+        this._getTableData();
       },
       (err) => {
         this._toastr.error(convertResponseError(err), 'Not updated')
@@ -120,7 +128,7 @@ export class WorkersComponent implements OnInit {
       () => {
         this._enableFormEditing(false);
         this._toastr.success('Details are saved successfully', 'Updated');
-        this.child?.refreshTable();
+        this._getTableData();
       },
       (err) => {
         this._toastr.error(convertResponseError(err), 'Not updated')
@@ -152,7 +160,7 @@ export class WorkersComponent implements OnInit {
       this._managerService.addUser(result).subscribe(
         () => {
           this._toastr.success('New employee added to database!', 'Created');
-          this.child?.refreshTable();
+          this._getTableData();
         },
         (err) => {
           this._toastr.error(convertResponseError(err), 'Not created!')
@@ -171,7 +179,7 @@ export class WorkersComponent implements OnInit {
       this._managerService.addManager(result).subscribe(
         () => {
           this._toastr.success('New manager added to database!', 'Created');
-          this.child?.refreshTable();
+          this._getTableData();
         },
         (err) => {
           this._toastr.error(convertResponseError(err), 'Not created!')
@@ -196,6 +204,28 @@ export class WorkersComponent implements OnInit {
         }
       );
     });
+  }
+
+  private _getTableData(): void {
+    this._managerService.getWorkers().subscribe(
+      (res) => {
+        this.dataSource = new MatTableDataSource(res);
+        this.clickedRow = this.dataSource.data[0];
+        const userIdAndType: UserIdAndType = {
+          id: this.clickedRow.id,
+          type: this.clickedRow.type.toUpperCase()
+        }
+        this.getDetails(userIdAndType);
+      },
+      (err) => {
+        this._toastr.error(convertResponseError(err), "Don't exist!")
+      }
+    );
+  }
+
+  public applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   /**
