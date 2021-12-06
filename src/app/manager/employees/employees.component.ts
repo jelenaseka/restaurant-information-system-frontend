@@ -53,6 +53,7 @@ export class EmployeesComponent implements OnInit {
         this._toastr.error(convertResponseError(err), "Don't exist!")
       }
     );
+    this._enableFormEditing(false);
   }
 
   public saveChanges(): void {
@@ -111,8 +112,8 @@ export class EmployeesComponent implements OnInit {
    * @param value boolean? true - Moguce je editovati kontrolu, false - nije moguce editovati kontrolu
    */
   private _enableFormEditing(value: boolean): void {
-    const state = this.isEnabledEditing ? 'disable' : 'enable';
     this.isEnabledEditing = value;
+    const state = this.isEnabledEditing ? 'enable' : 'disable';
     Object.keys(this.detailsForm.controls).forEach((controlName) => {
       if (controlName !== 'type') {
         this.detailsForm.controls[controlName][state](); 

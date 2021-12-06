@@ -142,22 +142,22 @@ export class WorkersComponent implements OnInit {
   }
 
   public addData(): void {
-    // const dialogRef = this._dialog.open(AddWorkerDialogComponent);
+    const dialogRef = this._dialog.open(AddWorkerDialogComponent);
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result == null) {
-    //     return;
-    //   }
-    //   this._managerService.addUser(result).subscribe(
-    //     () => {
-    //       this._toastr.success('New employee added to database!', 'Created');
-    //       this.child?.refreshTable();
-    //     },
-    //     (err) => {
-    //       this._toastr.error(convertResponseError(err), 'Not created!')
-    //     }
-    //   );
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == null) {
+        return;
+      }
+      this._managerService.addUser(result).subscribe(
+        () => {
+          this._toastr.success('New employee added to database!', 'Created');
+          this.child?.refreshTable();
+        },
+        (err) => {
+          this._toastr.error(convertResponseError(err), 'Not created!')
+        }
+      );
+    });
   }
 
   public changePassword(): void {
