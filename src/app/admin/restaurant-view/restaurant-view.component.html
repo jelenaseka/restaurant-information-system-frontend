@@ -1,5 +1,9 @@
 <div fxLayout="column" class="page">
-  <div fxLayout="row" fxLayoutAlign.gt-sm="space-between center">
+  <div
+    fxLayout="row"
+    style="margin-right: 15px"
+    fxLayoutAlign.gt-sm="space-between center"
+  >
     <mat-tab-group
       [selectedIndex]="selected.value"
       (selectedIndexChange)="selectedChanged($event)"
@@ -44,6 +48,7 @@
         class="example-delete-tab-button"
         (click)="turnOnEditMode()"
         [disabled]="editMode"
+        style="margin-bottom: 70px"
       >
         Edit
       </button>
@@ -87,9 +92,9 @@
       <button
         mat-raised-button
         class="example-delete-tab-button"
-        (click)="applyChanges()"
+        (click)="applyLayoutChanges()"
         [disabled]="!editMode || checkDifference() || detailsForm.invalid"
-        style="margin-bottom: 50px"
+        style="margin-bottom: 70px"
       >
         Apply layout changes
       </button>
@@ -114,24 +119,24 @@
     </div>
     <div fxFlex fxLayout="column" class="form-div" id="floor-div">
       <div
-        *ngFor="let i of [].constructor(getRows())"
+        *ngFor="let i of [].constructor(getRows()); index as i_index"
         fxFlex
         fxLayout="row"
         class="transaprent-element"
       >
         <div
           class="transaprent-element"
-          *ngFor="let i of [].constructor(getColumns())"
+          *ngFor="let j of [].constructor(getColumns()); index as j_index"
           fxFlex
           fxLayout="column"
         >
-          <button fxFlex class="transaprent-element table-buttons">
-            <!-- <img
-              src="../../../assets/images/circle-table.png"
-              width="30%"
-              alt="Slika"
-            /> -->
-          </button>
+          <app-room-space
+            [tables]="getTables()"
+            [row]="i_index"
+            [column]="j_index"
+            fxFlex
+            class="transaprent-element"
+          ></app-room-space>
         </div>
       </div>
     </div>

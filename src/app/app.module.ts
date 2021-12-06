@@ -36,6 +36,7 @@ import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-di
 import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-employee-dialog.component';
 import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
 import { RoomnameDialogComponent } from './admin/roomname-dialog/roomname-dialog/roomname-dialog.component';
+import { RoomSpaceComponent } from './admin/room-space/room-space.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { RoomnameDialogComponent } from './admin/roomname-dialog/roomname-dialog
     AddEmployeeDialogComponent,
     RestaurantViewComponent,
     RoomnameDialogComponent,
+    RoomSpaceComponent,
   ],
   imports: [
     BrowserModule,

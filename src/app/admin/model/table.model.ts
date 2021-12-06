@@ -3,5 +3,7 @@ export interface Table {
     id: number,
     name : string,
     state : string,
-    shape : string
+    shape : string,
+    row: number,
+    column: number
 }
