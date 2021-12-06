@@ -2,8 +2,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
+import { ManagerService } from 'src/app/services/manager.service';
 import { UnregistaredUserTable } from '../../manager/employees/models/unregistared-user-table.model';
-import { SystemAdminService } from '../services/system-admin.service';
 import { UserIdAndType } from '../models/user-id-and-type.model';
 
 @Component({
@@ -17,7 +17,7 @@ export class WorkersTableComponent implements OnInit {
   clickedRow: UnregistaredUserTable | null;
   @Output() selectedRowChanged;
 
-  constructor(private _system_admin_service: SystemAdminService, private _toastr: ToastrService) {
+  constructor(private _managerService: ManagerService, private _toastr: ToastrService) {
     this.dataSource = new MatTableDataSource();
     this.clickedRow = null;
     this.selectedRowChanged = new EventEmitter<number>();
@@ -47,7 +47,7 @@ export class WorkersTableComponent implements OnInit {
   }
 
   private _getTableData(): void {
-    this._system_admin_service.getWorkers().subscribe(
+    this._managerService.getWorkers().subscribe(
       (res) => {
         this.dataSource = new MatTableDataSource(res);
         this.clickedRow = this.dataSource.data[0];

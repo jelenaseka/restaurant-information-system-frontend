@@ -37,7 +37,6 @@ import { WorkersComponent } from './system-admin/workers/workers.component';
 import { MenuComponent } from './system-admin/menu/menu.component';
 import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
 import { AdministratorsComponent } from './admin/administrators/administrators.component';
-import { AddWorkerDialogComponent } from './system-admin/add-worker-dialog/add-worker-dialog.component';
 import { WorkersTableComponent } from './system-admin/workers-table/workers-table.component';
 import { ChangePasswordDialogComponent } from './system-admin/change-password-dialog/change-password-dialog.component';
 import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add-manager-dialog.component';
@@ -66,7 +65,6 @@ import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add
     MenuComponent,
     RestaurantViewComponent,
     AdministratorsComponent,
-    AddWorkerDialogComponent,
     WorkersTableComponent,
     ChangePasswordDialogComponent,
     AddManagerDialogComponent,

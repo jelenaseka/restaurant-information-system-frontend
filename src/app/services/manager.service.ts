@@ -30,6 +30,10 @@ export class ManagerService {
     );
   }
 
+  public getWorkers(): Observable<UnregistaredUserTable[]> {
+    return this.http.get<UnregistaredUserTable[]>('/user/table');
+  }
+
   public updateUser(id: number, form: FormGroup): Observable<UnregistaredUserDetails> {
     const model = this._mapFormToUnregisteredModel(form);
     return this.http.put<UnregistaredUserDetails>(

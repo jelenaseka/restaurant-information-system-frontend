@@ -8,7 +8,6 @@ import { UnregistaredUserDetails } from 'src/app/manager/employees/models/unregi
 import { ManagerService } from 'src/app/services/manager.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 import { AddManagerDialogComponent } from '../add-manager-dialog/add-manager-dialog.component';
-import { AddWorkerDialogComponent } from '../add-worker-dialog/add-worker-dialog.component';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { ManagerDetails } from '../models/manager-details.model';
 import { UserIdAndType } from '../models/user-id-and-type.model';
