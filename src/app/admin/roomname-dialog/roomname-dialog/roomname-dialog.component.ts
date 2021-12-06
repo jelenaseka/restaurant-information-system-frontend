@@ -18,7 +18,6 @@ export class RoomnameDialogComponent {
   ) {}
 
   onNoClick(): void {
-    console.log(this.data)
     this.dialogRef.close();
   }
 

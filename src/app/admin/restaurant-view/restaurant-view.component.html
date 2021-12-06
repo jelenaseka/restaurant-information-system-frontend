@@ -1,33 +1,142 @@
-<div fxLayout="row" fxLayoutAlign.gt-sm="space-between center">
-  <mat-tab-group
-    [selectedIndex]="selected.value"
-    (selectedIndexChange)="selected.setValue($event)"
-  >
-    <mat-tab *ngFor="let room of rooms; let index = index" [label]="room.name">
-    </mat-tab>
-  </mat-tab-group>
-  <div>
-    <button
-      mat-raised-button
-      class="example-add-tab-button"
-      (click)="openDialog(true)"
+<div fxLayout="column" class="page">
+  <div fxLayout="row" fxLayoutAlign.gt-sm="space-between center">
+    <mat-tab-group
+      [selectedIndex]="selected.value"
+      (selectedIndexChange)="selected.setValue($event)"
     >
-      Add
-    </button>
-    <button
-      mat-raised-button
-      class="example-add-tab-button"
-      (click)="openDialog(false)"
-    >
-      Rename
-    </button>
-    <button
-      mat-raised-button
-      class="example-delete-tab-button"
-      [disabled]="rooms.length === 1"
-      (click)="removeRoom()"
-    >
-      Delete
-    </button>
+      <mat-tab
+        *ngFor="let room of rooms; let index = index"
+        [label]="room.name"
+      >
+      </mat-tab>
+    </mat-tab-group>
+    <div>
+      <button
+        mat-raised-button
+        class="example-add-tab-button"
+        (click)="openDialog(true)"
+      >
+        Add
+      </button>
+      <button
+        mat-raised-button
+        class="example-add-tab-button"
+        (click)="openDialog(false)"
+      >
+        Rename
+      </button>
+      <button
+        mat-raised-button
+        class="example-delete-tab-button"
+        [disabled]="rooms.length === 1"
+        (click)="removeRoom()"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+  <div fxFlex fxLayout="row" fxLayoutAlign="start stretch">
+    <div fxLayout="column" fxLayoutAlign="start" class="form-div">
+      <button
+        mat-raised-button
+        class="example-delete-tab-button"
+        (click)="toogleEditMode()"
+        [disabled]="editMode"
+      >
+        Edit
+      </button>
+      <form
+        class="form-container"
+        [formGroup]="detailsForm"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+      >
+        <!-- Row -->
+        <mat-form-field appearance="fill">
+          <mat-label>Row</mat-label>
+          <input
+            [disabled]="!editMode"
+            matInput
+            type="number"
+            max="10"
+            min="1"
+            formControlName="row"
+          />
+          <mat-error *ngIf="detailsForm.invalid">{{
+            validator.validateRequired("row")
+          }}</mat-error>
+        </mat-form-field>
+        <!-- Column -->
+        <mat-form-field appearance="fill">
+          <mat-label>Column</mat-label>
+          <input
+            [disabled]="true"
+            matInput
+            type="number"
+            max="10"
+            min="1"
+            formControlName="column"
+          />
+          <mat-error *ngIf="detailsForm.invalid">{{
+            validator.validateRequired("column")
+          }}</mat-error>
+        </mat-form-field>
+      </form>
+      <button
+        mat-raised-button
+        class="example-delete-tab-button"
+        (click)="toogleEditMode()"
+        [disabled]="!editMode"
+      >
+        Save
+      </button>
+    </div>
+    <div fxFlex fxLayout="column" class="form-div">
+      <div fxFlex fxLayout="row">
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+      </div>
+      <div fxFlex fxLayout="row">
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+      </div>
+      <div fxFlex fxLayout="row">
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+      </div>
+
+      <div fxFlex fxLayout="row">
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+        <div fxFlex fxLayout="column">
+          <button mat-raised-button fxFlex>DUGME</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

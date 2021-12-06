@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
+import { ValidatorService } from 'src/app/services/validator.service';
 import { RoomCreate } from '../model/room-create.model';
 import { RoomWithTables } from '../model/room-with-tables.model';
 import { RoomnameDialogComponent } from '../roomname-dialog/roomname-dialog/roomname-dialog.component';
@@ -15,13 +16,26 @@ import { RoomService } from '../services/room.service';
 })
 export class RestaurantViewComponent implements OnInit {
 
+  rows : number = 4;
+  columns : number = 4;
+
   rooms : RoomWithTables[] = [];
 
   selected = new FormControl(0);
 
   newName : string | undefined;
 
-  constructor(private roomService : RoomService, private dialog: MatDialog, private toastService: ToastrService) { }
+  editMode : boolean = false;
+
+  detailsForm: FormGroup = new FormGroup({
+    row: new FormControl({value:'', disabled: !this.editMode}, [Validators.required,]),
+    column: new FormControl({value:'', disabled: !this.editMode}, [Validators.required,])
+  });
+
+  constructor(private roomService : RoomService, private dialog: MatDialog, private toastService: ToastrService,
+     public validator: ValidatorService) {
+      this.validator.setForm(this.detailsForm);
+      }
 
   ngOnInit(): void {
     this.getRooms(false);
@@ -79,6 +93,15 @@ export class RestaurantViewComponent implements OnInit {
     this.roomService.removeRoom(selectedId).subscribe(() => {
       this.getRooms(false);
     }, error => this.toastService.error(convertResponseError(error), 'Error'));
+  }
+
+  toogleEditMode() {
+    this.editMode = !this.editMode;
+
+    let control = this.detailsForm.get('row') as FormControl;
+    control.disabled ? control.enable() : control.disable();
+    let control2 = this.detailsForm.get('column') as FormControl;
+    control2.disabled ? control2.enable() : control2.disable();
   }
 
 }
