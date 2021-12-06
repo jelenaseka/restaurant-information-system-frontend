@@ -16,9 +16,6 @@ import { RoomService } from '../services/room.service';
 })
 export class RestaurantViewComponent implements OnInit {
 
-  rows : number = 4;
-  columns : number = 4;
-
   rooms : RoomWithTables[] = [];
 
   selected = new FormControl(0);
@@ -41,12 +38,29 @@ export class RestaurantViewComponent implements OnInit {
     this.getRooms(false);
   }
 
+  selectedChanged(newIndex) {
+    this.selected.setValue(newIndex)
+    this.setInputValues()
+  }
+
   getRooms(lastIsSelected : boolean) : void {
     this.roomService.getActiveRooms().subscribe(data => {
       this.rooms = data;
       if(lastIsSelected)
         this.selected.setValue(this.rooms.length - 1);
+      else
+        this.selected.setValue(0);
+      
+      this.setInputValues()
   })
+  }
+
+  setInputValues() {
+    this.editMode = false;
+    let rowControl = this.detailsForm.get('row') as FormControl;
+    rowControl.setValue(this.getRows()+"")
+    let columnControl = this.detailsForm.get('column') as FormControl;
+    columnControl.setValue(this.getColumns()+"")
   }
 
   openDialog(adding : boolean): void {
@@ -102,6 +116,18 @@ export class RestaurantViewComponent implements OnInit {
     control.disabled ? control.enable() : control.disable();
     let control2 = this.detailsForm.get('column') as FormControl;
     control2.disabled ? control2.enable() : control2.disable();
+  }
+
+  getRows() : number {
+    if(this.rooms.length != 0)
+      return this.rooms[this.selected.value].rows;
+    return 0;
+  }
+
+  getColumns() : number {
+    if(this.rooms.length != 0)
+      return this.rooms[this.selected.value].columns;
+    return 0;
   }
 
 }

@@ -12,7 +12,7 @@ export class RoomService {
   constructor(private http: HttpClient) { }
 
   public getActiveRooms() : Observable<RoomWithTables[]> {
-    return this.http.get<RoomWithTables[]>("/room/active");
+    return this.http.get<RoomWithTables[]>("/room/");
   }
 
   public addRoom(room : RoomCreate) : Observable<string> {
