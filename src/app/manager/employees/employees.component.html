@@ -1,12 +1,14 @@
 <app-header></app-header>
 
 <div class="main-container" fxLayout="row" fxLayoutAlign="space-around start">
-    <div class="table-button-container">
-        <button mat-flat-button color="primary" (click)="addData()" class="add-button">
-            Add data
-        </button>
+    <div class="table-construction-container">
+        <mat-form-field appearance="standard" class="search">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+          </mat-form-field>
+        <button mat-flat-button color="primary" (click)="addEmployee()" class="add-button"><mat-icon>person_add</mat-icon>Add</button>
         <div class="table-container">
-            <app-employees-table (selectedRowChanged)="getDetails($event)"></app-employees-table>
+            <app-workers-table [dataSource]="dataSource" [clickedRow]="dataSource.data[0]" (selectedRowChanged)="getDetails($event)"></app-workers-table>
         </div>
     </div>
     <mat-card class="details-card">

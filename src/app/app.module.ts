@@ -21,7 +21,6 @@ import { RoleGuard } from './guards/role-guard';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
 import { HeaderComponent } from './registered/header/header.component';
 import { EmployeesComponent } from './manager/employees/employees.component';
-import { EmployeesTableComponent } from './manager/employees-table/employees-table.component';
 import { ReportComponent } from './manager/report/report.component';
 import { BartenderHomepageComponent } from './bartender/bartender-homepage/bartender-homepage.component';
 import { HeaderComponent as UnregisteredHeader } from './unregistered/header/header.component';
@@ -49,7 +48,6 @@ import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add
     WaiterHomepageComponent,
     HeaderComponent,
     EmployeesComponent,
-    EmployeesTableComponent,
     ReportComponent,
     BartenderHomepageComponent,
     HeaderComponent,

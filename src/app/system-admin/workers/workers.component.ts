@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -28,9 +28,6 @@ export class WorkersComponent implements OnInit {
   unregistered: UnregistaredUserDetails | null;
   manager: ManagerDetails | null;
 
-  @ViewChild(WorkersTableComponent)
-  child:WorkersTableComponent | null;
-
   unregisteredForm: FormGroup = new FormGroup({
     firstName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),
     lastName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),
@@ -58,7 +55,6 @@ export class WorkersComponent implements OnInit {
     this.unregistered = null;
     this.manager = null;
     this.selecteduserId = -1;
-    this.child = null;
   }
 
   ngOnInit(): void {
