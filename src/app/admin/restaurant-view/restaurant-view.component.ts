@@ -10,6 +10,13 @@ import { RoomWithTables } from '../model/room-with-tables.model';
 import { RoomnameDialogComponent } from '../roomname-dialog/roomname-dialog/roomname-dialog.component';
 import { RoomService } from '../services/room.service';
 
+enum Operations {
+  REFRESH,
+  ADD,
+  UPDATE_LAYOUT,
+  RENAME,
+  DELETE,
+}
 @Component({
   selector: 'app-restaurant-view',
   templateUrl: './restaurant-view.component.html',
@@ -36,20 +43,21 @@ export class RestaurantViewComponent implements OnInit {
       }
 
   ngOnInit(): void {
-    this.getRooms(false);
+    this.getRooms(Operations.REFRESH);
   }
 
   selectedChanged(newIndex) : void{
+    this.editMode = false;
     this.selected.setValue(newIndex)
     this.setInputValues()
   }
 
-  getRooms(lastIsSelected : boolean) : void {
+  getRooms(operation : Operations) : void {
     this.roomService.getActiveRooms().subscribe(data => {
       this.rooms = data;
-      if(lastIsSelected)
+      if(operation === Operations.ADD)
         this.selected.setValue(this.rooms.length - 1);
-      else
+      else if(operation === Operations.DELETE)
         this.selected.setValue(0);
       
       this.setInputValues()
@@ -57,7 +65,6 @@ export class RestaurantViewComponent implements OnInit {
   }
 
   setInputValues() : void {
-    this.editMode = false;
     let rowControl = this.detailsForm.get('row') as FormControl;
     rowControl.setValue(this.getRows())
     let columnControl = this.detailsForm.get('column') as FormControl;
@@ -92,17 +99,21 @@ export class RestaurantViewComponent implements OnInit {
   }
 
   save() : void {
+    // TODO uradi save
+    this.turnOffEditMode();
+  }
+
+  applyChanges() : void {
     let selectedId = this.rooms[this.selected.value].id;
     let requestObject = new RoomLayout(this.detailsForm.get('row')?.value as number, this.detailsForm.get('column')?.value as number);
     this.roomService.editRoomLayout(selectedId, requestObject).subscribe(() => {
       this.toastService.success("Room layout changed successfully.", 'Ok');
-      this.toogleEditMode();
-      this.getRooms(true);
+      this.getRooms(Operations.UPDATE_LAYOUT);
     }, error => this.toastService.error(convertResponseError(error), 'Error'));
   }
 
   cancel() : void {
-    this.toogleEditMode();
+    this.turnOffEditMode()
     this.setInputValues();
   }
   
@@ -110,7 +121,7 @@ export class RestaurantViewComponent implements OnInit {
     let room  = new RoomCreate(this.newName as string);
 
     this.roomService.addRoom(room).subscribe(() => {
-      this.getRooms(true);
+      this.getRooms(Operations.ADD);
     }, error => this.toastService.error(convertResponseError(error), 'Error'));
 
   }
@@ -118,24 +129,42 @@ export class RestaurantViewComponent implements OnInit {
   renameRoom() : void {
     let selectedId = this.rooms[this.selected.value].id;
     this.roomService.updateRoomName(selectedId, this.newName as string).subscribe(() => {
-      this.getRooms(false);
+      this.getRooms(Operations.RENAME);
     }, error => this.toastService.error(convertResponseError(error), 'Error'));
   }
 
   removeRoom() : void {
     let selectedId = this.rooms[this.selected.value].id;
     this.roomService.removeRoom(selectedId).subscribe(() => {
-      this.getRooms(false);
+      this.getRooms(Operations.DELETE);
     }, error => this.toastService.error(convertResponseError(error), 'Error'));
   }
 
-  toogleEditMode() : void {
-    this.editMode = !this.editMode;
+  // toogleEditMode() : void {
+  //   this.editMode = !this.editMode;
+
+  //   let control = this.detailsForm.get('row') as FormControl;
+  //   control.disabled ? control.enable() : control.disable();
+  //   let control2 = this.detailsForm.get('column') as FormControl;
+  //   control2.disabled ? control2.enable() : control2.disable();
+  // }
+
+  turnOffEditMode() : void {
+    this.editMode = false;
 
     let control = this.detailsForm.get('row') as FormControl;
-    control.disabled ? control.enable() : control.disable();
+    control.disable();
     let control2 = this.detailsForm.get('column') as FormControl;
-    control2.disabled ? control2.enable() : control2.disable();
+    control2.disable();
+  }
+
+  turnOnEditMode() : void {
+    this.editMode = true;
+
+    let control = this.detailsForm.get('row') as FormControl;
+    control.enable();
+    let control2 = this.detailsForm.get('column') as FormControl;
+    control2.enable();
   }
 
   getRows() : number {

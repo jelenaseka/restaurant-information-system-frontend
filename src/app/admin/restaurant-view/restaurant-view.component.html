@@ -40,7 +40,7 @@
       <button
         mat-raised-button
         class="example-delete-tab-button"
-        (click)="toogleEditMode()"
+        (click)="turnOnEditMode()"
         [disabled]="editMode"
       >
         Edit
@@ -70,7 +70,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Column</mat-label>
           <input
-            [disabled]="true"
+            [disabled]="!editMode"
             matInput
             type="number"
             max="10"
@@ -85,8 +85,16 @@
       <button
         mat-raised-button
         class="example-delete-tab-button"
-        (click)="save()"
+        (click)="applyChanges()"
         [disabled]="!editMode || checkDifference() || detailsForm.invalid"
+      >
+        Apply layout changes
+      </button>
+      <button
+        mat-raised-button
+        class="example-delete-tab-button"
+        (click)="save()"
+        [disabled]="!editMode"
       >
         Save
       </button>
