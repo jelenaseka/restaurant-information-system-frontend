@@ -15,15 +15,12 @@ import { LoginComponent } from './login/login/login.component';
 import { WaiterHomepageComponent } from './waiter/waiter-homepage/waiter-homepage.component';
 import { MaterialModule } from './core/material.module';
 import { AuthService } from './autentification/services/auth.service';
-import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.component';
-import { SystemAdminHomepageComponent } from './system-admin/system-admin-homepage/system-admin-homepage.component';
 import { JwtDecoderService } from './autentification/services/jwt-decoder.service';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role-guard';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
 import { HeaderComponent } from './registered/header/header.component';
 import { EmployeesComponent } from './manager/employees/employees.component';
-import { EmployeesTableComponent } from './manager/employees-table/employees-table.component';
 import { ReportComponent } from './manager/report/report.component';
 import { BartenderHomepageComponent } from './bartender/bartender-homepage/bartender-homepage.component';
 import { HeaderComponent as UnregisteredHeader } from './unregistered/header/header.component';
@@ -34,6 +31,14 @@ import { ItemDetailsComponent } from './unregistered/item-details/item-details.c
 import { DrinkItemsService } from './bartender/services/drink-items.service';
 import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-dialog.component';
 import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-employee-dialog.component';
+import { ReportsComponent } from './system-admin/reports/reports.component';
+import { WorkersComponent } from './system-admin/workers/workers.component';
+import { MenuComponent } from './system-admin/menu/menu.component';
+import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
+import { AdministratorsComponent } from './admin/administrators/administrators.component';
+import { WorkersTableComponent } from './system-admin/workers-table/workers-table.component';
+import { ChangePasswordDialogComponent } from './system-admin/change-password-dialog/change-password-dialog.component';
+import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add-manager-dialog.component';
 
 @NgModule({
   declarations: [
@@ -41,11 +46,8 @@ import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-em
     HomeComponent,
     LoginComponent,
     WaiterHomepageComponent,
-    AdminHomepageComponent,
-    SystemAdminHomepageComponent,
     HeaderComponent,
     EmployeesComponent,
-    EmployeesTableComponent,
     ReportComponent,
     BartenderHomepageComponent,
     HeaderComponent,
@@ -56,6 +58,14 @@ import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-em
     ItemDetailsComponent,
     PincodeDialogComponent,
     AddEmployeeDialogComponent,
+    ReportsComponent,
+    WorkersComponent,
+    MenuComponent,
+    RestaurantViewComponent,
+    AdministratorsComponent,
+    WorkersTableComponent,
+    ChangePasswordDialogComponent,
+    AddManagerDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,14 @@
 <app-header></app-header>
 
 <div class="main-container" fxLayout="row" fxLayoutAlign="space-around start">
-    <div class="table-button-container">
-        <button mat-flat-button color="primary" (click)="addData()" class="add-button">
-            Add data
-        </button>
+    <div class="table-construction-container">
+        <mat-form-field appearance="standard" class="search">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+          </mat-form-field>
+        <button mat-flat-button color="primary" (click)="addEmployee()" class="add-button"><mat-icon>person_add</mat-icon>Add</button>
         <div class="table-container">
-            <app-employees-table (selectedRowChanged)="getDetails($event)"></app-employees-table>
+            <app-workers-table [dataSource]="dataSource" [clickedRow]="dataSource.data[0]" (selectedRowChanged)="getDetails($event)"></app-workers-table>
         </div>
     </div>
     <mat-card class="details-card">
@@ -18,13 +20,13 @@
             <mat-form-field appearance="fill">
                 <mat-label>First name</mat-label>
                 <input matInput formControlName="firstName"/>
-                <mat-error *ngIf="detailsForm.invalid">{{ validator.validateRequired('firstName') }}</mat-error>
+                <mat-error *ngIf="detailsForm.invalid">{{ validator.validate3To30('firstName') }}</mat-error>
             </mat-form-field>
             <!-- Last name -->
             <mat-form-field appearance="fill">
                 <mat-label>Last name</mat-label>
                 <input matInput formControlName="lastName"/>
-                <mat-error *ngIf="detailsForm.invalid">{{ validator.validateRequired('lastName') }}</mat-error>
+                <mat-error *ngIf="detailsForm.invalid">{{ validator.validate3To30('lastName') }}</mat-error>
             </mat-form-field>
             <!-- Email address -->
             <mat-form-field appearance="fill">
@@ -42,9 +44,9 @@
             <mat-form-field appearance="fill">
                 <mat-label>Type</mat-label>
                 <mat-select formControlName="type">
-                  <mat-option value="waiter">Waiter</mat-option>
-                  <mat-option value="chef">Chef</mat-option>
-                  <mat-option value="bartender">Bartender</mat-option>
+                  <mat-option value="WAITER">Waiter</mat-option>
+                  <mat-option value="CHEF">Chef</mat-option>
+                  <mat-option value="BARTENDER">Bartender</mat-option>
                 </mat-select>
               </mat-form-field>
               <!-- Salary -->

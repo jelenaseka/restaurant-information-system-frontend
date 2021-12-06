@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmployeesTableComponent } from './employees-table.component';
+import { AddManagerDialogComponent } from './add-manager-dialog.component';
 
-describe('EmployeesTableComponent', () => {
-  let component: EmployeesTableComponent;
-  let fixture: ComponentFixture<EmployeesTableComponent>;
+describe('AddManagerDialogComponent', () => {
+  let component: AddManagerDialogComponent;
+  let fixture: ComponentFixture<AddManagerDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EmployeesTableComponent ]
+      declarations: [ AddManagerDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EmployeesTableComponent);
+    fixture = TestBed.createComponent(AddManagerDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -18,6 +18,14 @@ mat-form-field {
   width: 50%;
 }
 
+.search {
+  font-size: large;
+  width: 80%;
+  position: absolute;
+  left: 0px;
+  top: -40px;
+}
+
 button {
   font-size: large;
   width: 48%;
@@ -32,15 +40,19 @@ mat-card {
   overflow-x: hidden;
 }
 
-.table-button-container {
+mat-icon {
+  margin-right: 10px;
+}
+
+.table-construction-container {
   margin-top: 5vh;
   position: relative;
   width: 60vw;
 }
 
 .table-container {
-  margin-top: 5vh;
-  height: 78vh;
+  margin-top: 10vh;
+  height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
