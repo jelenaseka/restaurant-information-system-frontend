@@ -3,23 +3,25 @@ import { DxChartComponent } from 'devextreme-angular';
 import { ReportInfoItem } from '../../models/report-info-item.model';
 
 @Component({
-  selector: 'app-bar-chart',
-  templateUrl: './bar-chart.component.html',
-  styleUrls: ['./bar-chart.component.scss']
+  selector: 'app-line-chart',
+  templateUrl: './line-chart.component.html',
+  styleUrls: ['./line-chart.component.scss']
 })
-export class BarChartComponent implements OnInit {
+export class LineChartComponent implements OnInit {
 
+  types: string[] = ['line', 'stackedline', 'fullstackedline'];
+  
   @Input()
   reportInfoItems: ReportInfoItem[] = [];
   @Input()
   chartTitle: string = "Report";
-  @ViewChild("targetChart", { static: false }) barChart: DxChartComponent | null = null;
+  @ViewChild("targetLineChart", { static: false }) lineChart: DxChartComponent | null = null;
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  
   public refreshChart(): void {
-    this.barChart?.instance.render();
+    this.lineChart?.instance.render();
   }
 }

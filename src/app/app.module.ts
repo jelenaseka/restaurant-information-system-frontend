@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ToastrModule } from 'ngx-toastr';
-import { DxChartModule } from 'devextreme-angular';
+import { DxChartModule, DxSelectBoxModule } from 'devextreme-angular';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -40,6 +40,7 @@ import { ChangePasswordDialogComponent } from './system-admin/change-password-di
 import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add-manager-dialog.component';
 import { ReportHomepageComponent } from './reports/report-homepage/report-homepage.component';
 import { BarChartComponent } from './reports/charts/bar-chart/bar-chart.component';
+import { LineChartComponent } from './reports/charts/line-chart/line-chart.component';
 
 @NgModule({
   declarations: [
@@ -68,10 +69,12 @@ import { BarChartComponent } from './reports/charts/bar-chart/bar-chart.componen
     AddManagerDialogComponent,
     ReportHomepageComponent,
     BarChartComponent,
+    LineChartComponent,
   ],
   imports: [
     BrowserModule,
     DxChartModule,
+    DxSelectBoxModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,

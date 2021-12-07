@@ -2,7 +2,7 @@
 
 <mat-tab-group mat-align-tabs="start" (selectedTabChange)='onSelectChange($event)'>
     <mat-tab label="Weekly">
-        <div class="tab-cotainer">
+        <div class="tab-cotainer" fxLayout="column" fxLayoutAlign="center center">
             <form class="year-input-container" [formGroup]="weeklyForm" (ngSubmit)="getWeeklyReport()"
             fxLayout="row" fxLayoutAlign="center center">
                 <h2>Get weekly report by inserting the year and month: </h2>
@@ -24,15 +24,25 @@
                 </mat-form-field>
                 <button mat-flat-button color="primary" type="submit"></button>
             </form>
-            <app-bar-chart #targetChartW [reportInfoItems]="weeklyReport" [chartTitle]="'Weekly report based on income and outcome'"></app-bar-chart>
+            <div class="chart-space">
+                <mat-form-field appearance="fill">
+                    <mat-label>Type of chart</mat-label>
+                    <mat-select [(ngModel)]="selectedChart">
+                        <mat-option value="bar">Bar chart</mat-option>
+                        <mat-option value="line">Line chart</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <app-bar-chart *ngIf="this.selectedChart === 'bar'" #targetChartBarW [reportInfoItems]="weeklyReport" [chartTitle]="'Weekly report based on income and outcome'"></app-bar-chart>
+                <app-line-chart *ngIf="this.selectedChart === 'line'" #targetChartLineW [reportInfoItems]="weeklyReport" [chartTitle]="'Weekly report based on income and outcome'"></app-line-chart>
+            </div>
         </div>
     </mat-tab>
     <mat-tab label="Monthly">
-        <div class="tab-cotainer">
+        <div class="tab-cotainer" fxLayout="column" fxLayoutAlign="center center">
             <form class="year-input-container" [formGroup]="monthlyForm" (ngSubmit)="getMonthlyReport()"
             fxLayout="row" fxLayoutAlign="center center">
                 <h2>Get monthly report by inserting the year: </h2>
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill" id="year-input">
                     <mat-label>Year</mat-label>
                     <input 
                     matInput type="number" 
@@ -42,15 +52,25 @@
                 </mat-form-field>
                 <button mat-flat-button color="primary" type="submit"></button>
             </form>
-            <app-bar-chart #targetChartM [reportInfoItems]="monthlyReport" [chartTitle]="'Monthly report based on income and outcome'"></app-bar-chart>
+            <div class="chart-space">
+                <mat-form-field appearance="fill">
+                    <mat-label>Type of chart</mat-label>
+                    <mat-select [(ngModel)]="selectedChart">
+                        <mat-option value="bar">Bar chart</mat-option>
+                        <mat-option value="line">Line chart</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <app-bar-chart *ngIf="this.selectedChart === 'bar'" #targetChartBarM [reportInfoItems]="monthlyReport" [chartTitle]="'Monthly report based on income and outcome'"></app-bar-chart>
+                <app-line-chart *ngIf="this.selectedChart === 'line'" #targetChartLineM [reportInfoItems]="monthlyReport" [chartTitle]="'Monthly report based on income and outcome'"></app-line-chart>
+            </div>
         </div>
     </mat-tab>
     <mat-tab label="Quarterly">
-        <div class="tab-cotainer">
+        <div class="tab-cotainer" fxLayout="column" fxLayoutAlign="center center">
             <form class="year-input-container" [formGroup]="quarterlyForm" (ngSubmit)="getQuarterlyReport()"
             fxLayout="row" fxLayoutAlign="center center">
-                <h2>Get quarterly report by inserting the year: </h2>
-                <mat-form-field appearance="fill">
+                <h2>Get quarterely report by inserting the year: </h2>
+                <mat-form-field appearance="fill" id="year-input">
                     <mat-label>Year</mat-label>
                     <input 
                     matInput type="number" 
@@ -60,7 +80,17 @@
                 </mat-form-field>
                 <button mat-flat-button color="primary" type="submit"></button>
             </form>
-            <app-bar-chart #targetChartQ [reportInfoItems]="quarterlyReport" [chartTitle]="'Quarterly report based on income and outcome'"></app-bar-chart>
+            <div class="chart-space">
+                <mat-form-field appearance="fill">
+                    <mat-label>Type of chart</mat-label>
+                    <mat-select [(ngModel)]="selectedChart">
+                        <mat-option value="bar">Bar chart</mat-option>
+                        <mat-option value="line">Line chart</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <app-bar-chart *ngIf="this.selectedChart === 'bar'" #targetChartBarQ [reportInfoItems]="quarterlyReport" [chartTitle]="'Quarterly report based on income and outcome'"></app-bar-chart>
+                <app-line-chart *ngIf="this.selectedChart === 'line'" #targetChartLineQ [reportInfoItems]="quarterlyReport" [chartTitle]="'Quarterly report based on income and outcome'"></app-line-chart>
+            </div>
         </div>
     </mat-tab>
   </mat-tab-group>

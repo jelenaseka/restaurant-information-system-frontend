@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { ReportService } from 'src/app/services/report.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 import { BarChartComponent } from '../charts/bar-chart/bar-chart.component';
+import { LineChartComponent } from '../charts/line-chart/line-chart.component';
 import { ReportInfoItem } from '../models/report-info-item.model';
 
 @Component({
@@ -12,19 +13,24 @@ import { ReportInfoItem } from '../models/report-info-item.model';
   templateUrl: './report-homepage.component.html',
   styleUrls: ['./report-homepage.component.scss']
 })
-export class ReportHomepageComponent implements OnInit {
+export class ReportHomepageComponent implements OnInit, AfterViewInit {
   minYear: number = 2010;
   maxYear: number = new Date().getFullYear();
   minMonth: number = 1;
   maxMonth: number = 12;
 
+  selectedChart: string = "line";
+
   weeklyReport: ReportInfoItem[] = [];
   monthlyReport: ReportInfoItem[] = [];
   quarterlyReport: ReportInfoItem[] = [];
 
-  @ViewChild("targetChartW", { static: false }) barChartW: BarChartComponent | null = null;
-  @ViewChild("targetChartM", { static: false }) barChartM: BarChartComponent | null = null;
-  @ViewChild("targetChartQ", { static: false }) barChartQ: BarChartComponent | null = null;
+  @ViewChild("targetChartBarW", { static: false }) barChartW: BarChartComponent | null = null;
+  @ViewChild("targetChartLineW", { static: false }) lineChartW: LineChartComponent | null = null;
+  @ViewChild("targetChartBarM", { static: false }) barChartM: BarChartComponent | null = null;
+  @ViewChild("targetChartLineM", { static: false }) lineChartM: LineChartComponent | null = null;
+  @ViewChild("targetChartBarQ", { static: false }) barChartQ: BarChartComponent | null = null;
+  @ViewChild("targetChartLineQ", { static: false }) lineChartQ: LineChartComponent | null = null;
 
   weeklyForm: FormGroup = new FormGroup({
     year: new FormControl(this.maxYear, 
@@ -47,6 +53,10 @@ export class ReportHomepageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getWeeklyReport();
+  }
+
+  ngAfterViewInit(): void {
+    this.selectedChart = 'bar';
   }
 
   public getWeeklyReport() {
@@ -97,13 +107,14 @@ export class ReportHomepageComponent implements OnInit {
 
   public onSelectChange(event): void {
     if(event.index == 0){
-      this._refreshTab(this.barChartW, this.weeklyForm);
+      this._refreshTab(this.barChartW, this.lineChartW, this.weeklyForm);
       this.getWeeklyReport();
+
     } else if(event.index == 1) {
-      this._refreshTab(this.barChartM, this.monthlyForm);
+      this._refreshTab(this.barChartM, null, this.monthlyForm);
       this.getMonthlyReport();
     } else{
-      this._refreshTab(this.barChartQ, this.quarterlyForm);
+      this._refreshTab(this.barChartQ, null, this.quarterlyForm);
       this.getQuarterlyReport();
     }
   }
@@ -114,12 +125,14 @@ export class ReportHomepageComponent implements OnInit {
    * @param barChart : BarChartComponent | null
    * @param form : FormGroup
    */
-  private _refreshTab(barChart: BarChartComponent | null, form: FormGroup): void {
+  private _refreshTab(barChart: BarChartComponent | null, lineChart: LineChartComponent | null, form: FormGroup): void {
     barChart?.refreshChart();
+    lineChart?.refreshChart();
     this.validator.setForm(form);
     form.controls["year"].setValue(this.maxYear);
     if (form == this.weeklyForm) {
       form.controls["month"].setValue(this.minMonth);
     }
+    this.selectedChart = 'bar';
   }
 }

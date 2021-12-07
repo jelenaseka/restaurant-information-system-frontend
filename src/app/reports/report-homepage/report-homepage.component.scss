@@ -4,6 +4,7 @@
     width: 70vw;
     height: 75vh;
     background-color: var(--card-color);
+    box-shadow: 0px 0px 10px lightslategray;
 }
 
 .year-input-container {
@@ -24,4 +25,9 @@ mat-form-field {
 
 #year-input {
     margin-right: 20px;
+}
+
+.chart-space {
+    width: 80%;
+    margin: auto;
 }
