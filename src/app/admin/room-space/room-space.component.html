@@ -1,4 +1,9 @@
-<button fxFlex class="transaprent-element table-buttons" (click)="openDialog()">
+<button
+  fxFlex
+  [ngClass]="{ 'button-pointer table-buttons': editMode }"
+  class="transaprent-element border-transparent"
+  (click)="openDialog()"
+>
   <h1>{{ table?.name }}</h1>
   <img
     *ngIf="table?.shape === 'CIRCLE'"

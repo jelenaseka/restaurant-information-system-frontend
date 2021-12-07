@@ -10,6 +10,8 @@ import { Table } from '../model/table.model';
 export class RoomSpaceComponent implements OnInit {
 
   @Input()
+  editMode :  boolean = false;
+  @Input()
   tables :  Table[] = [];
   @Input()
   row :  number = -1;
@@ -30,16 +32,18 @@ export class RoomSpaceComponent implements OnInit {
 
   
   openDialog(): void {
-    const dialogRef = this.dialog.open(EditRoomDialogComponent, {
-      width: '300px',
-      data: {newName: this.table?.name, newShape:this.table?.shape},
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if(result !== undefined) {
-        this.editTable(result);
-      }
-    });
+    if(this.editMode) {
+      const dialogRef = this.dialog.open(EditRoomDialogComponent, {
+        width: '300px',
+        data: {newName: this.table?.name, newShape:this.table?.shape},
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if(result !== undefined) {
+          this.editTable(result);
+        }
+      });
+    }
   }
 
   editTable(result) : void {
