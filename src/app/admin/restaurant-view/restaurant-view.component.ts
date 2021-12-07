@@ -26,6 +26,7 @@ enum Operations {
 export class RestaurantViewComponent implements OnInit {
 
   rooms : RoomWithTables[] = [];
+  tablesBackup : Table[] = [];
 
   selected = new FormControl(0);
 
@@ -65,11 +66,6 @@ export class RestaurantViewComponent implements OnInit {
   })
   }
 
-  getTables() : Table[] {
-    let currentRoom : RoomWithTables = this.rooms[this.selected.value];
-    return currentRoom.tables;
-  };
-
   setInputValues() : void {
     let rowControl = this.detailsForm.get('row') as FormControl;
     rowControl.setValue(this.getRows())
@@ -105,8 +101,11 @@ export class RestaurantViewComponent implements OnInit {
   }
 
   save() : void {
-    // TODO uradi save
-    this.turnOffEditMode();
+    let selectedId = this.rooms[this.selected.value].id;
+    this.roomService.save(this.rooms[this.selected.value].tables, selectedId).subscribe(() => {
+      this.toastService.success("Room updated successfully.", 'Ok');
+      this.turnOffEditMode();
+    }, error => this.toastService.error(convertResponseError(error), 'Error'));
   }
 
   applyLayoutChanges() : void {
@@ -119,6 +118,8 @@ export class RestaurantViewComponent implements OnInit {
   }
 
   cancel() : void {
+    this.rooms[this.selected.value].tables = this.tablesBackup;
+
     this.turnOffEditMode()
     this.setInputValues();
   }
@@ -147,6 +148,8 @@ export class RestaurantViewComponent implements OnInit {
   turnOffEditMode() : void {
     this.editMode = false;
 
+    this.tablesBackup = [];
+
     let control = this.detailsForm.get('row') as FormControl;
     control.disable();
     let control2 = this.detailsForm.get('column') as FormControl;
@@ -155,6 +158,8 @@ export class RestaurantViewComponent implements OnInit {
 
   turnOnEditMode() : void {
     this.editMode = true;
+
+    this.tablesBackup = JSON.parse(JSON.stringify(this.rooms[this.selected.value].tables));
 
     let control = this.detailsForm.get('row') as FormControl;
     control.enable();

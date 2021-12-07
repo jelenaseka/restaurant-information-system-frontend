@@ -132,7 +132,7 @@
         >
           <app-room-space
             [editMode]="editMode"
-            [tables]="getTables()"
+            [tables]="this.rooms[this.selected.value].tables"
             [row]="i_index"
             [column]="j_index"
             fxFlex

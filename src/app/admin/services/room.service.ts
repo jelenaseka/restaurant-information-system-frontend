@@ -4,13 +4,18 @@ import { Observable } from 'rxjs';
 import { RoomCreate } from '../model/room-create.model';
 import { RoomLayout } from '../model/room-layout.model';
 import { RoomWithTables } from '../model/room-with-tables.model';
+import { Table } from '../model/table.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
- 
+
   constructor(private http: HttpClient) { }
+
+  public save(tables: Table[], id : number)  : Observable<void>  {
+    return this.http.put<void>("/room/"+id, {tables:tables});
+  }
 
   public getActiveRooms() : Observable<RoomWithTables[]> {
     return this.http.get<RoomWithTables[]>("/room/");

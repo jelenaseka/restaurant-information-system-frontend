@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EditRoomDialogComponent } from '../edit-room-dialog/edit-room-dialog.component';
 import { Table } from '../model/table.model';
@@ -7,7 +7,7 @@ import { Table } from '../model/table.model';
   templateUrl: './room-space.component.html',
   styleUrls: ['./room-space.component.scss']
 })
-export class RoomSpaceComponent implements OnInit {
+export class RoomSpaceComponent implements OnInit, OnChanges {
 
   @Input()
   editMode :  boolean = false;
@@ -22,7 +22,8 @@ export class RoomSpaceComponent implements OnInit {
 
   constructor( private dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  ngOnChanges() : void {
+    this.table = undefined;
     this.tables.forEach(table => {
       if(table.row === this.row && table.column === this.column) {
         this.table = table;
@@ -30,12 +31,19 @@ export class RoomSpaceComponent implements OnInit {
     });
   }
 
+  ngOnInit(): void {
+    this.tables.forEach(table => {
+      if(table.row === this.row && table.column === this.column) {
+        this.table = table;
+      }
+    });
+  }
   
   openDialog(): void {
     if(this.editMode) {
       const dialogRef = this.dialog.open(EditRoomDialogComponent, {
         width: '300px',
-        data: {newName: this.table?.name, newShape:this.table?.shape},
+        data: {newName: this.table?.name, newShape:this.table?.shape, alreadyUsedNames:this.tables?.map(t=>t.name)},
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -48,12 +56,22 @@ export class RoomSpaceComponent implements OnInit {
 
   editTable(result) : void {
     if(this.table) {
-      (this.table as Table).name = result.newName;
-      (this.table as Table).shape = result.newShape;
-      if(result.newShape === "EMPTY") 
+      if(result.newShape === "EMPTY") {
+        // REMOVE EXISTING
+        const index = this.tables.indexOf(this.table);
+        this.tables.splice(index, 1)
         this.table = undefined;
+      } else {
+        // UPDATE EXISTING
+        const index = this.tables.indexOf(this.table);
+        this.tables[index].name = result.newName;
+        this.tables[index].shape = result.newShape;
+        this.table = this.tables[index];
+      }
     } else {
+      // ADD NEW
       this.table = new Table(0, result.newName, "FREE", result.newShape, this.row, this.column);
+      this.tables.push(this.table)
     }
   }
 
