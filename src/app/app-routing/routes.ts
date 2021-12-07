@@ -5,10 +5,9 @@ import { WaiterHomepageComponent } from '../waiter/waiter-homepage/waiter-homepa
 import { AuthGuard } from '../guards/auth.guard';
 import { RoleGuard } from '../guards/role-guard';
 import { EmployeesComponent } from '../manager/employees/employees.component';
-import { ReportComponent } from '../manager/report/report.component';
 import { BartenderHomepageComponent } from '../bartender/bartender-homepage/bartender-homepage.component';
 import { ChefHomepageComponent } from '../chef/chef-homepage/chef-homepage.component';
-import { ReportsComponent } from '../system-admin/reports/reports.component';
+import { ReportHomepageComponent } from '../reports/report-homepage/report-homepage.component';
 import { WorkersComponent } from '../system-admin/workers/workers.component';
 import { MenuComponent } from '../system-admin/menu/menu.component';
 import { RestaurantViewComponent } from '../admin/restaurant-view/restaurant-view.component';
@@ -37,7 +36,7 @@ export const routes: Routes = [
   },
   {
     path: 'home/manager/report',
-    component: ReportComponent,
+    component: ReportHomepageComponent,
     canActivate: [RoleGuard],
     data: { expectedRole: 'MANAGER' },
   },
@@ -67,7 +66,7 @@ export const routes: Routes = [
   },
   {
     path: 'home/system-admin/report',
-    component: ReportsComponent,
+    component: ReportHomepageComponent,
     canActivate: [RoleGuard],
     data: { expectedRole: 'SYSTEM_ADMIN' },
   },
