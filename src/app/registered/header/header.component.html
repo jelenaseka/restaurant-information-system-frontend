@@ -5,8 +5,41 @@
     fxLayoutAlign="space-between start"
   >
     <mat-icon>restaurant</mat-icon>
-    <button mat-stroked-button color="primary" [routerLink]="['/home/manager/employees']" [routerLinkActive]="'active-button'">Employees</button>
-    <button mat-stroked-button color="primary" [routerLink]="['/home/manager/report']" [routerLinkActive]="'active-button'">Report</button>
+    <button mat-stroked-button color="primary" 
+            [routerLink]="['/home/manager/employees']" 
+            [routerLinkActive]="'active-button'"
+            *ngIf="_type === 'MANAGER'"
+            >Employees</button>
+    <button mat-stroked-button color="primary" 
+            [routerLink]="['/home/manager/report']" 
+            [routerLinkActive]="'active-button'"
+            *ngIf="_type === 'MANAGER'"
+            >Report</button>
+    <button mat-stroked-button color="primary"
+            [routerLink]="['/home/system-admin/workers']"
+            [routerLinkActive]="'active-button'"
+            *ngIf="_type === 'SYSTEM_ADMIN'"
+            >Workers</button>
+    <button mat-stroked-button color="primary"
+            [routerLink]="['/home/system-admin/menu']"
+            [routerLinkActive]="'active-button'"
+            *ngIf="_type === 'SYSTEM_ADMIN'"
+            >Menu</button>
+    <button mat-stroked-button color="primary"
+            [routerLink]="['/home/system-admin/report']"
+            [routerLinkActive]="'active-button'"
+            *ngIf="_type === 'SYSTEM_ADMIN'"
+            >Report</button>
+    <button mat-stroked-button color="primary"
+            [routerLink]="['/home/admin/restaurant-view']"
+            [routerLinkActive]="'active-button'"
+            *ngIf="_type === 'ADMIN'"
+            >Restaurant View</button>
+    <button mat-stroked-button color="primary"
+            [routerLink]="['/home/admin/administrators']"
+            [routerLinkActive]="'active-button'"
+            *ngIf="_type === 'ADMIN'"
+            >Administrators</button>
   </div>
   <button id="logout" mat-flat-button color="primary" (click)="logout()">
     Log out

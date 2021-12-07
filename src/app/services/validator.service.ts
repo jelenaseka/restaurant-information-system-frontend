@@ -22,6 +22,19 @@ export class ValidatorService {
     return '';
   }
 
+  validateNumberRange(control: string, minValue: number, maxValue: number): string {
+    if (this.form?.get(control)?.hasError('required')) {
+      return 'You must enter a value!';
+    }
+    if (this.form?.get(control)?.hasError('min')) {
+      return `You must enter a value greater or equal to ${minValue}!`;
+    }
+    if (this.form?.get(control)?.hasError('max')) {
+      return `You must enter a value less or equal to ${maxValue}!`;
+    }
+    return '';
+  }
+
   validateEmail(control: string): string {
     if (this.form?.get(control)?.hasError('required')) {
       return 'You must enter a value!';
@@ -58,6 +71,13 @@ export class ValidatorService {
   validateFourDigits(control: string): string {
     if (this.form?.get(control)?.errors != null) {
       return 'Required 4 digits exactly!';
+    }
+    return '';
+  }
+
+  validate3To30(control: string): string {
+    if (this.form?.get(control)?.errors != null) {
+      return 'Required length is 3 - 30!';
     }
     return '';
   }
