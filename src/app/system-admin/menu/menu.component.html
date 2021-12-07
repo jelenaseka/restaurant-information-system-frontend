@@ -42,7 +42,7 @@
     </mat-card>
 
     <div class="main-buttons-container" fxLayout="column" fxLayoutAlign="end end">
-        <button mat-raised-button color="warn">Discard changes</button>
-        <button mat-raised-button color="accent">Save changes</button>
+        <button mat-raised-button color="warn" (click)="discardChanges()">Discard changes</button>
+        <button mat-raised-button color="accent" (click)="saveChanges()">Save changes</button>
     </div>
 </div>

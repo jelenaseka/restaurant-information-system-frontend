@@ -31,6 +31,30 @@ export class MenuComponent implements OnInit {
     );
   }
 
+  public discardChanges() {
+    this._itemService.discardChanges().subscribe(
+      () => {
+        this._toastr.success("", "Discared")
+        this._fetchItems();
+      },
+      (err) => {
+        this._toastr.error(convertResponseError(err), "Not discarded!")
+      }
+    );
+  }
+
+  public saveChanges() {
+    this._itemService.saveChanges().subscribe(
+      () => {
+        this._toastr.success("", "Saved")
+        this._fetchItems();
+      },
+      (err) => {
+        this._toastr.error(convertResponseError(err), "Not saved!")
+      }
+    );
+  }
+
   private _fetchItems(): void {
     this._itemService.getItemsForMenu().subscribe(
       (res) => {
