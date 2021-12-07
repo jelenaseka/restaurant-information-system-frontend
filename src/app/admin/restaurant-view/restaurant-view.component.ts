@@ -34,6 +34,8 @@ export class RestaurantViewComponent implements OnInit {
 
   editMode : boolean = false;
 
+  roomIsActive : boolean = false;
+
   detailsForm: FormGroup = new FormGroup({
     row: new FormControl({value:'', disabled: true}, [Validators.required, Validators.min(1), Validators.max(10)]),
     column: new FormControl({value:'', disabled: true}, [Validators.required, Validators.min(1), Validators.max(10)])
@@ -50,18 +52,34 @@ export class RestaurantViewComponent implements OnInit {
 
   selectedChanged(newIndex) : void{
     this.editMode = false;
-    this.selected.setValue(newIndex)
-    this.setInputValues()
+    this.selected.setValue(newIndex);
+    this.setInputValues();
+
+    this.checkIfRoomIsActive();
+  }
+
+  checkIfRoomIsActive() : void {
+    this.roomIsActive = false;
+    this.rooms[this.selected.value].tables.forEach(table => {
+      if(table.state !== "FREE")
+        this.roomIsActive = true;
+    });
   }
 
   getRooms(operation : Operations) : void {
     this.roomService.getActiveRooms().subscribe(data => {
+      let oldTables;
+      if(operation === Operations.UPDATE_LAYOUT || operation === Operations.RENAME)
+        oldTables = this.rooms[this.selected.value].tables;
+
       this.rooms = data;
       if(operation === Operations.ADD)
         this.selected.setValue(this.rooms.length - 1);
       else if(operation === Operations.DELETE)
         this.selected.setValue(0);
-      
+      if(operation === Operations.UPDATE_LAYOUT || operation === Operations.RENAME)
+        this.rooms[this.selected.value].tables = oldTables;
+  
       this.setInputValues();
   })
   }
@@ -127,6 +145,7 @@ export class RestaurantViewComponent implements OnInit {
   addRoom() : void {
     let room  = new RoomCreate(this.newName as string);
     this.roomService.addRoom(room).subscribe(() => {
+      this.toastService.success("Room is added successfully.", 'Ok');
       this.getRooms(Operations.ADD);
     }, error => this.toastService.error(convertResponseError(error), 'Error'));
   }
@@ -134,6 +153,7 @@ export class RestaurantViewComponent implements OnInit {
   renameRoom() : void {
     let selectedId = this.rooms[this.selected.value].id;
     this.roomService.updateRoomName(selectedId, this.newName as string).subscribe(() => {
+      this.toastService.success("Room is renamed successfully.", 'Ok');
       this.getRooms(Operations.RENAME);
     }, error => this.toastService.error(convertResponseError(error), 'Error'));
   }
@@ -141,6 +161,7 @@ export class RestaurantViewComponent implements OnInit {
   removeRoom() : void {
     let selectedId = this.rooms[this.selected.value].id;
     this.roomService.removeRoom(selectedId).subscribe(() => {
+      this.toastService.success("Room is deleted successfully.", 'Ok');
       this.getRooms(Operations.DELETE);
     }, error => this.toastService.error(convertResponseError(error), 'Error'));
   }

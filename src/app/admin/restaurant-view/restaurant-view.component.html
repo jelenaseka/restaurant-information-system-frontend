@@ -43,11 +43,14 @@
   </div>
   <div fxFlex fxLayout="row" fxLayoutAlign="start stretch">
     <div fxLayout="column" fxLayoutAlign="start" class="form-div">
+      <h4 style="margin-left: 10px" *ngIf="roomIsActive">
+        Room is currently active!
+      </h4>
       <button
         mat-raised-button
         class="example-delete-tab-button"
         (click)="turnOnEditMode()"
-        [disabled]="editMode"
+        [disabled]="editMode || roomIsActive"
         style="margin-bottom: 70px"
       >
         Edit
