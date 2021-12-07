@@ -1,4 +1,5 @@
-<button fxFlex class="transaprent-element table-buttons">
+<button fxFlex class="transaprent-element table-buttons" (click)="openDialog()">
+  <h1>{{ table?.name }}</h1>
   <img
     *ngIf="table?.shape === 'CIRCLE'"
     src="../../../assets/images/circle-table.png"

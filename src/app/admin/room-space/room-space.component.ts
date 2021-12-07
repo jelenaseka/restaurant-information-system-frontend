@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { EditRoomDialogComponent } from '../edit-room-dialog/edit-room-dialog.component';
 import { Table } from '../model/table.model';
-
 @Component({
   selector: 'app-room-space',
   templateUrl: './room-space.component.html',
@@ -17,7 +18,7 @@ export class RoomSpaceComponent implements OnInit {
 
   table : Table | undefined;
 
-  constructor() { }
+  constructor( private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.tables.forEach(table => {
@@ -25,6 +26,31 @@ export class RoomSpaceComponent implements OnInit {
         this.table = table;
       }
     });
+  }
+
+  
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EditRoomDialogComponent, {
+      width: '300px',
+      data: {newName: this.table?.name, newShape:this.table?.shape},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined) {
+        this.editTable(result);
+      }
+    });
+  }
+
+  editTable(result) : void {
+    if(this.table) {
+      (this.table as Table).name = result.newName;
+      (this.table as Table).shape = result.newShape;
+      if(result.newShape === "EMPTY") 
+        this.table = undefined;
+    } else {
+      this.table = new Table(0, result.newName, "FREE", result.newShape, this.row, this.column);
+    }
   }
 
 }

@@ -37,6 +37,7 @@ import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-em
 import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
 import { RoomnameDialogComponent } from './admin/roomname-dialog/roomname-dialog/roomname-dialog.component';
 import { RoomSpaceComponent } from './admin/room-space/room-space.component';
+import { EditRoomDialogComponent } from './admin/edit-room-dialog/edit-room-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { RoomSpaceComponent } from './admin/room-space/room-space.component';
     RestaurantViewComponent,
     RoomnameDialogComponent,
     RoomSpaceComponent,
+    EditRoomDialogComponent,
   ],
   imports: [
     BrowserModule,

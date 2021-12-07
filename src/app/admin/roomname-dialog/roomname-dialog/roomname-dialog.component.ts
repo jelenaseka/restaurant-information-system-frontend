@@ -1,7 +1,7 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-export interface DialogData {
+export interface NameDialogData {
   newName: string;
 }
 
@@ -14,7 +14,7 @@ export class RoomnameDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<RoomnameDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: NameDialogData,
   ) {}
 
   onNoClick(): void {
