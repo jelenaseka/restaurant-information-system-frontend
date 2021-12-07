@@ -1,7 +1,10 @@
 <app-header></app-header>
 
-<mat-tab-group mat-align-tabs="start">
+<mat-tab-group mat-align-tabs="start" (selectedTabChange)='onSelectChange($event)'>
     <mat-tab label="Weekly">
+        Weekly
+    </mat-tab>
+    <mat-tab label="Monthly">
         <div class="tab-cotainer">
             <form class="year-input-container" [formGroup]="yearFormPicker" (ngSubmit)="getMonthlyReport()"
             fxLayout="row" fxLayoutAlign="center center">
@@ -16,10 +19,26 @@
                 </mat-form-field>
                 <button mat-flat-button color="primary" type="submit"></button>
             </form>
-            <app-bar-chart [reportInfoItems]="reportInfoItems"></app-bar-chart>
+            <app-bar-chart #targetChartM [reportInfoItems]="monthlyReport" [chartTitle]="'Monthly report based on income and outcome'"></app-bar-chart>
         </div>
     </mat-tab>
-    <mat-tab label="Monthly">Monthly</mat-tab>
-    <mat-tab label="Yearly">Yearly</mat-tab>
+    <mat-tab label="Quarterly">
+        <div class="tab-cotainer">
+            <form class="year-input-container" [formGroup]="yearFormPicker" (ngSubmit)="getQuarterlyReport()"
+            fxLayout="row" fxLayoutAlign="center center">
+                <h2>Get quarterly report by inserting the year: </h2>
+                <mat-form-field appearance="fill">
+                    <mat-label>Year</mat-label>
+                    <input 
+                    matInput type="number" 
+                    formControlName="year"
+                    />
+                    <mat-error *ngIf="yearFormPicker.invalid">{{ validator.validateYear('year', minYear, maxYear) }}</mat-error>
+                </mat-form-field>
+                <button mat-flat-button color="primary" type="submit"></button>
+            </form>
+            <app-bar-chart #targetChartQ [reportInfoItems]="quarterlyReport" [chartTitle]="'Quarterly report based on income and outcome'"></app-bar-chart>
+        </div>
+    </mat-tab>
   </mat-tab-group>
 

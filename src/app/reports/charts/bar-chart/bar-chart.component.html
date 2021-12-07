@@ -1,6 +1,7 @@
 <dx-chart
+  #targetChart
   id="chart"
-  title="Monthly income and outcome statistics"
+  [title]="chartTitle"
   [dataSource]="reportInfoItems"
 >
     <dxi-series 

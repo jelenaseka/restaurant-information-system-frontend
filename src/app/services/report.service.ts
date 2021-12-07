@@ -13,4 +13,8 @@ export class ReportService {
   public getMonthlyReport(year: number): Observable<ReportInfo> {
     return this.http.get<ReportInfo>(`/report/monthly?year=${year}`);
   }
+
+  public getQuarterlyReport(year: number): Observable<ReportInfo> {
+    return this.http.get<ReportInfo>(`/report/quarterly?year=${year}`);
+  }
 }
