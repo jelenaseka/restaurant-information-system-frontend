@@ -41,14 +41,14 @@
             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
               <span fxFlex>{{item.name}}</span>
               <div fxFlex *ngIf="item.state === 'ON_HOLD'" style="text-align: end;">
-                <mat-icon color="primary">edit</mat-icon>
-                <mat-icon color="accent">clear</mat-icon>
+                <mat-icon color="primary" (click)="openEditOrderItemDialog(item)">edit</mat-icon>
+                <mat-icon color="warn">clear</mat-icon>
               </div>
               <div *ngIf="item.state === 'PREPARATION'" fxFlex style="text-align: end;">
                 <p style="font-size: 12px; color: grey;">PREPARING...</p>
               </div>
               <div *ngIf="item.state === 'READY'" fxFlex style="text-align: end;">
-                <button mat-raised-button color="accent">Deliver</button>
+                <button mat-raised-button color="accent" (click)="deliverDrinkItems(order?.waiterId, item.id)">Deliver</button>
               </div>
               <!-- <div *ngIf="item.state === 'DELIVERED'" fxFlex style="text-align: end;">
                 <mat-icon style="color: green;">done</mat-icon>
@@ -69,16 +69,19 @@
           <mat-list-item role="listitem" *ngFor="let item of order?.dishItemList">
             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
               <span fxFlex>{{item.orderedItem.itemName}}</span>
-              <div fxLayout="row" fxLayoutAlign="space-around center" fxFlex *ngIf="item.state === 'ON_HOLD'" style="text-align: end;">
-                <button mat-raised-button color="primary">prepare</button>
-                <mat-icon color="primary">edit</mat-icon>
-                <mat-icon color="accent">clear</mat-icon>
+              <div fxLayout="row" fxLayoutAlign="space-around center" fxFlex *ngIf="item.state === 'NEW'" style="text-align: end;">
+                <button mat-raised-button color="primary" (click)="changeDishItemState( order?.waiterId, item.id)">prepare</button>
+                <mat-icon color="primary" (click)="openEditOrderItemDialog(item)">edit</mat-icon>
+                <mat-icon color="warn">clear</mat-icon>
+              </div>
+              <div *ngIf="item.state === 'ON_HOLD'" fxFlex style="text-align: end;">
+                <p style="font-size: 12px; color: grey;">ON HOLD</p>
               </div>
               <div *ngIf="item.state === 'PREPARATION'" fxFlex style="text-align: end;">
                 <p style="font-size: 12px; color: grey;">PREPARING...</p>
               </div>
               <div *ngIf="item.state === 'READY'" fxFlex style="text-align: end;">
-                <button mat-raised-button color="accent">Deliver</button>
+                <button mat-raised-button color="accent" (click)="changeDishItemState( order?.waiterId, item.id)">Deliver</button>
               </div>
               <!-- <div *ngIf="item.state === 'DELIVERED'" fxFlex style="text-align: end;">
                 <mat-icon style="color: green;">done</mat-icon>
