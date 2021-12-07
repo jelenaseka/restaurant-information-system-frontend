@@ -10,6 +10,10 @@ export class ReportService {
 
   constructor(private http: HttpClient) {}
 
+  public getWeeklyReport(year: number, month: number): Observable<ReportInfo> {
+    return this.http.get<ReportInfo>(`/report/weekly?year=${year}&month=${month}`);
+  }
+
   public getMonthlyReport(year: number): Observable<ReportInfo> {
     return this.http.get<ReportInfo>(`/report/monthly?year=${year}`);
   }
