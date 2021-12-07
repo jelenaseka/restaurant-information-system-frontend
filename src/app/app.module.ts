@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ToastrModule } from 'ngx-toastr';
+import { DxChartModule } from 'devextreme-angular';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -21,7 +22,6 @@ import { RoleGuard } from './guards/role-guard';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
 import { HeaderComponent } from './registered/header/header.component';
 import { EmployeesComponent } from './manager/employees/employees.component';
-import { ReportComponent } from './manager/report/report.component';
 import { BartenderHomepageComponent } from './bartender/bartender-homepage/bartender-homepage.component';
 import { HeaderComponent as UnregisteredHeader } from './unregistered/header/header.component';
 import { ChefHomepageComponent } from './chef/chef-homepage/chef-homepage.component';
@@ -31,7 +31,6 @@ import { ItemDetailsComponent } from './unregistered/item-details/item-details.c
 import { DrinkItemsService } from './bartender/services/drink-items.service';
 import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-dialog.component';
 import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-employee-dialog.component';
-import { ReportsComponent } from './system-admin/reports/reports.component';
 import { WorkersComponent } from './system-admin/workers/workers.component';
 import { MenuComponent } from './system-admin/menu/menu.component';
 import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
@@ -39,6 +38,8 @@ import { AdministratorsComponent } from './admin/administrators/administrators.c
 import { WorkersTableComponent } from './system-admin/workers-table/workers-table.component';
 import { ChangePasswordDialogComponent } from './system-admin/change-password-dialog/change-password-dialog.component';
 import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add-manager-dialog.component';
+import { ReportHomepageComponent } from './reports/report-homepage/report-homepage.component';
+import { BarChartComponent } from './reports/charts/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,6 @@ import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add
     WaiterHomepageComponent,
     HeaderComponent,
     EmployeesComponent,
-    ReportComponent,
     BartenderHomepageComponent,
     HeaderComponent,
     UnregisteredHeader,
@@ -58,7 +58,7 @@ import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add
     ItemDetailsComponent,
     PincodeDialogComponent,
     AddEmployeeDialogComponent,
-    ReportsComponent,
+    ReportHomepageComponent,
     WorkersComponent,
     MenuComponent,
     RestaurantViewComponent,
@@ -66,9 +66,12 @@ import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add
     WorkersTableComponent,
     ChangePasswordDialogComponent,
     AddManagerDialogComponent,
+    ReportHomepageComponent,
+    BarChartComponent,
   ],
   imports: [
     BrowserModule,
+    DxChartModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,

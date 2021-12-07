@@ -22,6 +22,19 @@ export class ValidatorService {
     return '';
   }
 
+  validateYear(control: string, minYear: number, maxYear: number): string {
+    if (this.form?.get(control)?.hasError('required')) {
+      return 'You must enter a value!';
+    }
+    if (this.form?.get(control)?.hasError('min')) {
+      return `You must enter a year greater then ${minYear}!`;
+    }
+    if (this.form?.get(control)?.hasError('max')) {
+      return `You must enter a year less then ${maxYear}!`;
+    }
+    return '';
+  }
+
   validateEmail(control: string): string {
     if (this.form?.get(control)?.hasError('required')) {
       return 'You must enter a value!';

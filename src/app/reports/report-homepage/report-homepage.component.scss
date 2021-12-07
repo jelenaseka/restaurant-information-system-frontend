@@ -1,0 +1,23 @@
+.tab-cotainer {
+    padding-top: 5vh;
+    margin: 0px auto;
+    width: 70vw;
+    height: 75vh;
+    background-color: var(--card-color);
+}
+
+.year-input-container {
+    margin-bottom: 5vh;
+}
+
+.year-input-container > button {
+    display: none;
+}
+
+h2 {
+    margin-right: 30px;
+}
+
+mat-form-field {
+    font-size: large;
+}
