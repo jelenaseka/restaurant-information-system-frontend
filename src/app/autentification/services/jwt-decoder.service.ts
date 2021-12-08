@@ -23,4 +23,13 @@ export class JwtDecoderService {
     }
     return null;
   }
+
+  public isTokenExpired() : boolean{
+    const token : string | null = localStorage.getItem('token');
+    if (token) {
+      return this._helper.isTokenExpired(token);
+    }
+    return true;
+  }
+
 }

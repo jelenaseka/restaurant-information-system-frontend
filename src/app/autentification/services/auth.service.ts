@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { Credentials } from '../models/credentials.model';
 import { Router } from '@angular/router';
 import { UnregisteredUser } from '../models/unregistered-user.model';
+import { JwtDecoderService } from './jwt-decoder.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private jwt: JwtDecoderService) {}
 
   public loginUser(userCredentials: Credentials): Observable<string> {
     return this.http.post<string>('/authenticate', userCredentials);
@@ -21,7 +22,7 @@ export class AuthService {
   }
 
   public isUserLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !this.jwt.isTokenExpired();
   }
 
   public checkPinCode(pinCode: number, userType : string) : Observable<UnregisteredUser> {
