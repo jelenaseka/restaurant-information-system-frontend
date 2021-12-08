@@ -76,8 +76,8 @@ import { LineChartComponent } from './reports/charts/line-chart/line-chart.compo
     AddManagerDialogComponent,
     ReportHomepageComponent,
     BarChartComponent,
-    LineChartComponent,
-  ],
+    LineChartComponent
+    ],
   imports: [
     BrowserModule,
     DxChartModule,
