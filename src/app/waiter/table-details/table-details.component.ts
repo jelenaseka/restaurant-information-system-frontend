@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/autentification/services/auth.service';
 import { SocketResponse } from 'src/app/sockets/model/socket-response.model';
 import { SocketService } from 'src/app/sockets/socket.service';
 import { PincodeDialogComponent } from 'src/app/unregistered/pincode-dialog/pincode-dialog.component';
-import { AddOrderItemDialogComponent } from '../add-order-item-dialog/add-order-item-dialog.component';
+import { AddOrderItemDialogComponent } from '../add-dish-item-dialog/add-dish-item-dialog.component';
 import { DishItem, DishItemDTO, DrinkItems, DrinkItemsDTO, OrderDTO, OrderItem, OrderItemDTO } from '../models/order.model';
 import { OrderService } from '../services/order.service';
 
