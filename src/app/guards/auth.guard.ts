@@ -22,9 +22,9 @@ export class AuthGuard implements CanActivate {
     if (type === 'MANAGER') {
       this._router.navigate(['/home/manager/employees']);
     } else if (type === 'ADMIN') {
-      this._router.navigate(['/home/admin']);
+      this._router.navigate(['/home/admin/restaurant-view']);
     } else {
-      this._router.navigate(['/home/system-admin']);
+      this._router.navigate(['/home/system-admin/workers']);
     }
     return false;
   }

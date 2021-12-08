@@ -2,15 +2,17 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from '../home/home/home.component';
 import { LoginComponent } from '../login/login/login.component';
 import { WaiterHomepageComponent } from '../waiter/waiter-homepage/waiter-homepage.component';
-import { AdminHomepageComponent } from '../admin/admin-homepage/admin-homepage.component';
-import { SystemAdminHomepageComponent } from '../system-admin/system-admin-homepage/system-admin-homepage.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { RoleGuard } from '../guards/role-guard';
 import { EmployeesComponent } from '../manager/employees/employees.component';
-import { ReportComponent } from '../manager/report/report.component';
 import { BartenderHomepageComponent } from '../bartender/bartender-homepage/bartender-homepage.component';
 import { ChefHomepageComponent } from '../chef/chef-homepage/chef-homepage.component';
 import { TableDetailsComponent } from '../waiter/table-details/table-details.component';
+import { ReportHomepageComponent } from '../reports/report-homepage/report-homepage.component';
+import { WorkersComponent } from '../system-admin/workers/workers.component';
+import { MenuComponent } from '../system-admin/menu/menu.component';
+import { RestaurantViewComponent } from '../admin/restaurant-view/restaurant-view.component';
+import { AdministratorsComponent } from '../admin/administrators/administrators.component';
 
 export const routes: Routes = [
   {
@@ -36,19 +38,37 @@ export const routes: Routes = [
   },
   {
     path: 'home/manager/report',
-    component: ReportComponent,
+    component: ReportHomepageComponent,
     canActivate: [RoleGuard],
     data: { expectedRole: 'MANAGER' },
   },
   {
-    path: 'home/admin',
-    component: AdminHomepageComponent,
+    path: 'home/admin/restaurant-view',
+    component: RestaurantViewComponent,
     canActivate: [RoleGuard],
     data: { expectedRole: 'ADMIN' },
   },
   {
-    path: 'home/system-admin',
-    component: SystemAdminHomepageComponent,
+    path: 'home/admin/administrators',
+    component: AdministratorsComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'ADMIN' },
+  },
+  {
+    path: 'home/system-admin/menu',
+    component: MenuComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'SYSTEM_ADMIN' },
+  },
+  {
+    path: 'home/system-admin/workers',
+    component: WorkersComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'SYSTEM_ADMIN' },
+  },
+  {
+    path: 'home/system-admin/report',
+    component: ReportHomepageComponent,
     canActivate: [RoleGuard],
     data: { expectedRole: 'SYSTEM_ADMIN' },
   },

@@ -1,0 +1,20 @@
+.transaprent-element {
+  background-color: transparent;
+}
+
+.border-transparent {
+  border: transparent;
+}
+
+.table-buttons {
+  border: transparent;
+  // cursor: pointer;
+}
+
+.button-pointer {
+  cursor: pointer;
+}
+
+.table-buttons:hover {
+  background-color: rgba($color: #000000, $alpha: 0.2);
+}

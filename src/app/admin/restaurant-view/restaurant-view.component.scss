@@ -1,0 +1,36 @@
+.example-input-label,
+.example-add-tab-button,
+.example-delete-tab-button {
+  margin: 8px;
+}
+
+.form-div {
+  margin: 20px;
+}
+
+.page {
+  height: 90vh;
+}
+
+#floor-div {
+  background-image: url("../../../assets/images/floor.jpg");
+  background-repeat: repeat;
+  // background-color: red;
+}
+
+.transaprent-element {
+  background-color: transparent;
+}
+
+.table-buttons {
+  border: transparent;
+  cursor: pointer;
+}
+
+.table-buttons:hover {
+  background-color: rgba($color: #000000, $alpha: 0.2);
+}
+
+input {
+  margin-top: 10px;
+}

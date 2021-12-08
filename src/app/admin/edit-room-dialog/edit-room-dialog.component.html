@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Edit name and state of the table</h1>
+<div mat-dialog-content>
+  <!-- Type -->
+  <mat-form-field appearance="fill">
+    <mat-label>State</mat-label>
+    <mat-select [(value)]="selected">
+      <mat-option value="EMPTY">Empty</mat-option>
+      <mat-option value="CIRCLE">Circle</mat-option>
+      <mat-option value="SQUARE">Square</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Table name</mat-label>
+    <input
+      [disabled]="selected === 'EMPTY'"
+      type="text"
+      matInput
+      [(ngModel)]="data.newName"
+      cdkFocusInitial
+    />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button
+    [disabled]="!checkNewName() && selected !== 'EMPTY'"
+    mat-button
+    [mat-dialog-close]="returnObject()"
+  >
+    > Ok
+  </button>
+</div>
