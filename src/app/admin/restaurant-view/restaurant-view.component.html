@@ -26,6 +26,7 @@
       </button>
       <button
         mat-raised-button
+        [disabled]="roomIsActive"
         class="example-add-tab-button"
         (click)="openDialog(false)"
       >
@@ -35,7 +36,7 @@
         color="warn"
         mat-raised-button
         class="example-delete-tab-button"
-        [disabled]="rooms.length === 1"
+        [disabled]="rooms.length === 1 || roomIsActive"
         (click)="removeRoom()"
       >
         Delete

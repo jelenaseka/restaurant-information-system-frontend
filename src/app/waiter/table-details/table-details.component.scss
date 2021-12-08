@@ -1,0 +1,55 @@
+.hidden {
+  opacity: 0.1;
+}
+
+.table-details-component {
+  height: 87vh;
+}
+
+.table-information {
+  background-color: #eee;
+}
+
+.primary-information {
+  padding: 10px;
+  padding-top: 10px;
+}
+
+.primary-information-section {
+  margin-top: 10px;
+}
+
+.primary-information-label {
+  font-size: 12px;
+  color: gray;
+  padding-top: 3px;
+  margin-left: 5px;
+}
+
+.primary-information-p {
+  padding: 3px 0 0 3px;
+}
+
+.primary-information-actions {
+  margin: 10px;
+}
+
+.table-details-list {
+  margin: 10px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+.table-details-list h2 {
+  background-color: lightgray;
+  padding: 10px;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.table-details-list .action-buttons {
+  margin-top: 10px;
+}

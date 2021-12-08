@@ -9,12 +9,9 @@ import { environment as env } from '../../environments/environment';
 export class SocketService {
   private stompClient: any = null;
 
-  constructor() {
+  public connect(topicName: string, handleChange: any): void {
     let socket = new SockJS(env.socketUrl);
     this.stompClient = Stomp.over(socket);
-  }
-
-  public connect(topicName: string, handleChange: any): void {
     this.stompClient.connect({}, () => {
       this.stompClient.subscribe(`/topic/${topicName}`, data => {
         handleChange(JSON.parse(data.body));

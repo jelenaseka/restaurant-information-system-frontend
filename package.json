@@ -28,7 +28,7 @@
     "devextreme-angular": "21.2.3",
     "moment": "^2.29.1",
     "net": "^1.0.2",
-    "ngx-toastr": "^14.1.4",
+    "ngx-toastr": "^14.2.1",
     "rxjs": "~6.6.0",
     "sockjs-client": "^1.5.1",
     "stomp-websocket": "^2.3.4-next",
