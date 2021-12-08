@@ -136,6 +136,7 @@
           fxLayout="column"
         >
           <app-room-space
+            [isInWaiter]="false"
             [editMode]="editMode"
             [tables]="this.rooms[this.selected.value].tables"
             [row]="i_index"

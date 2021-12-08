@@ -1,20 +1,33 @@
 <button
   fxFlex
-  [ngClass]="{ 'button-pointer table-buttons': editMode }"
+  [ngClass]="{
+    'button-pointer table-buttons':
+      (editMode && !isInWaiter) || (editMode && isInWaiter && table)
+  }"
   class="transaprent-element border-transparent"
   (click)="openDialog()"
 >
-  <h1>{{ table?.name }}</h1>
-  <img
-    *ngIf="table?.shape === 'CIRCLE'"
-    src="../../../assets/images/circle-table.png"
-    width="30%"
-    alt="Slika"
-  />
-  <img
-    *ngIf="table?.shape === 'SQUARE'"
-    src="../../../assets/images/square-table.png"
-    width="30%"
-    alt="Slika"
-  />
+  <div fxLayout="column" fxLayoutAlign="space-between center">
+    <mat-card
+      style="width: 100px; margin-bottom: 10px; padding: 8px"
+      *ngIf="table"
+      [ngClass]="{
+        'taken-state': table.state === 'TAKEN',
+        'changed-state': table.state === 'CHANGED'
+      }"
+      ><h3>{{ table?.name }}</h3></mat-card
+    >
+    <img
+      *ngIf="table?.shape === 'CIRCLE'"
+      src="../../../assets/images/circle-table.png"
+      width="30%"
+      alt="Slika"
+    />
+    <img
+      *ngIf="table?.shape === 'SQUARE'"
+      src="../../../assets/images/square-table.png"
+      width="30%"
+      alt="Slika"
+    />
+  </div>
 </button>

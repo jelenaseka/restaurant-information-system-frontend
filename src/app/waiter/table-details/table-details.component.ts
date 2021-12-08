@@ -36,8 +36,10 @@ export class TableDetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(!result)
+        this.router.navigate(['/home/waiter'])
       this.pinCode = result;
-        this.getOrderByRestaurantTableNameIfWaiterValid();
+      this.getOrderByRestaurantTableNameIfWaiterValid();
     });
   }
 
@@ -49,7 +51,7 @@ export class TableDetailsComponent implements OnInit {
             this.order = new OrderDTO(data.id, data.totalPrice, data.createdAt, data.waiter, data.waiterId,
               data.dishItemList, data.drinkItemsList);
           }, (err: any) => {
-            this.router.navigate(['/home'])
+            this.router.navigate(['/home/waiter'])
           });
       }
   }
