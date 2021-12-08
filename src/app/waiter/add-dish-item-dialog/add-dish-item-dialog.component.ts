@@ -44,9 +44,9 @@ export class AddOrderItemDialogComponent implements OnInit {
   categories: Category[] = []
   itemsForMenu: ItemsForMenu[] = []
   itemsByCategory: ItemsForMenu[] = []
-  itemType: string
+  itemType: string = '';
   selected: number = 0
-  itemForDialog: ItemForDialog
+  itemForDialog: ItemForDialog | undefined;
 
   constructor(public dialogRef: MatDialogRef<AddOrderItemDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public item: OrderItem,
@@ -64,7 +64,7 @@ export class AddOrderItemDialogComponent implements OnInit {
       this.itemForDialog.icon = ((this.item as DishItem).dishItem as DishItemDTO).icon
     } else {
       ((this.item as DrinkItems).drinkItems as DrinkItemsDTO).itemList.forEach(item => {
-        this.itemForDialog.items.push(item)
+        this.itemForDialog?.items.push(item)
       });
       this.itemForDialog.id = ((this.item as DrinkItems).drinkItems as DrinkItemsDTO).id
       this.itemForDialog.name = ((this.item as DrinkItems).drinkItems as DrinkItemsDTO).name

@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { EditRoomDialogComponent } from '../edit-room-dialog/edit-room-dialog.component';
 import { Table } from '../model/table.model';
 @Component({
@@ -9,6 +10,8 @@ import { Table } from '../model/table.model';
 })
 export class RoomSpaceComponent implements OnInit, OnChanges {
 
+  @Input()
+  isInWaiter :  boolean = false;
   @Input()
   editMode :  boolean = false;
   @Input()
@@ -20,7 +23,7 @@ export class RoomSpaceComponent implements OnInit, OnChanges {
 
   table : Table | undefined;
 
-  constructor( private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private router: Router) { }
 
   ngOnChanges() : void {
     this.table = undefined;
@@ -40,17 +43,21 @@ export class RoomSpaceComponent implements OnInit, OnChanges {
   }
   
   openDialog(): void {
-    if(this.editMode) {
-      const dialogRef = this.dialog.open(EditRoomDialogComponent, {
-        width: '300px',
-        data: {newName: this.table?.name, newShape:this.table?.shape, alreadyUsedNames:this.tables?.map(t=>t.name)},
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if(result !== undefined) {
-          this.editTable(result);
-        }
-      });
+    if(this.isInWaiter) {
+      this.router.navigate(['/home/waiter',this.table?.id]);
+    } else {
+      if(this.editMode) {
+        const dialogRef = this.dialog.open(EditRoomDialogComponent, {
+          width: '300px',
+          data: {newName: this.table?.name, newShape:this.table?.shape, alreadyUsedNames:this.tables?.map(t=>t.name)},
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          if(result !== undefined) {
+            this.editTable(result);
+          }
+        });
+      }
     }
   }
 

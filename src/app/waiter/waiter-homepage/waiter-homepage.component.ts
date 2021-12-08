@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/autentification/services/auth.service';
-import { JwtDecoderService } from 'src/app/autentification/services/jwt-decoder.service';
-import { PincodeDialogComponent } from 'src/app/unregistered/pincode-dialog/pincode-dialog.component';
+import { FormControl } from '@angular/forms';
+import { RoomWithTables } from 'src/app/admin/model/room-with-tables.model';
+import { RoomService } from 'src/app/admin/services/room.service';
 
 @Component({
   selector: 'app-waiter-homepage',
@@ -15,9 +12,32 @@ export class WaiterHomepageComponent implements OnInit {
   pinCode: string | undefined;
   table: string = 'T1';
 
-  constructor() { }
+  rooms : RoomWithTables[] = [];
+
+  selected = new FormControl(0);
+
+  constructor(private roomService : RoomService) { }
 
   ngOnInit(): void {
+    this.getRooms();
+  }
+
+  getRooms() : void {
+    this.roomService.getActiveRooms().subscribe(data => {
+      this.rooms = data;  
+  })
+  }
+
+  getRows() : number {
+    if(this.rooms.length != 0)
+      return this.rooms[this.selected.value].rows;
+    return 0;
+  }
+
+  getColumns() : number {
+    if(this.rooms.length != 0)
+      return this.rooms[this.selected.value].columns;
+    return 0;
   }
 
 }
