@@ -1,0 +1,43 @@
+mat-form-field {
+    margin: 0 5vw;
+    font-size: medium;
+    width: 20vw;
+}
+
+button {
+    font-size: large;
+    width: 25%;
+  }
+
+mat-option {
+    position: relative;
+}
+
+mat-option button {
+    position: absolute;
+    bottom: 5px;
+    right: -30px;
+}
+
+.add-button {
+    position: absolute;
+    right: -100px;
+    bottom: 10px;
+}
+
+.image-item {
+    width: 256px;
+    height: 256px;
+    cursor: pointer;
+}
+
+.add-ingredient {
+    background-color: red;
+}
+
+.add-ingredient button {
+    position: absolute;
+    right: -100px;
+    bottom: 10px;
+
+}

@@ -41,6 +41,7 @@ import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add
 import { ReportHomepageComponent } from './reports/report-homepage/report-homepage.component';
 import { BarChartComponent } from './reports/charts/bar-chart/bar-chart.component';
 import { LineChartComponent } from './reports/charts/line-chart/line-chart.component';
+import { AddItemDialogComponent } from './system-admin/add-item-dialog/add-item-dialog.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { LineChartComponent } from './reports/charts/line-chart/line-chart.compo
     ReportHomepageComponent,
     BarChartComponent,
     LineChartComponent,
+    AddItemDialogComponent,
   ],
   imports: [
     BrowserModule,

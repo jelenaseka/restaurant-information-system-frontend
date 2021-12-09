@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { ItemService } from 'src/app/services/item.service';
+import { AddItemDialogComponent } from '../add-item-dialog/add-item-dialog.component';
 import { MenuItem } from '../models/menu-item.model';
 
 @Component({
@@ -13,7 +15,7 @@ export class MenuComponent implements OnInit {
 
   dishItems: MenuItem[] = [];
   drinkItems: MenuItem[] = [];
-  constructor(private _itemService: ItemService, private _toastr: ToastrService) { }
+  constructor(private _itemService: ItemService, private _toastr: ToastrService, private _dialog: MatDialog) { }
 
   ngOnInit(): void {
     this._fetchItems();
@@ -53,6 +55,25 @@ export class MenuComponent implements OnInit {
         this._toastr.error(convertResponseError(err), "Not saved!")
       }
     );
+  }
+
+  public addItem(type: string): void {
+    const dialogRef = this._dialog.open(AddItemDialogComponent, { data: type});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == null) {
+        return;
+      }
+      this._itemService.createItem(result).subscribe(
+        () => {
+          this._toastr.success('Successfully created item!', 'Create');
+          this._fetchItems();
+        },
+        (err) => {
+          this._toastr.error(convertResponseError(err), 'Not created!')
+        }
+      );
+    });
   }
 
   private _fetchItems(): void {

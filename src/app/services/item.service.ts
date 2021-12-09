@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ItemCategoryCreate } from '../system-admin/models/item-category-create.model';
+import { ItemCategory } from '../system-admin/models/item-category.model';
+import { ItemCreate } from '../system-admin/models/item-create.model';
 import { MenuItem } from '../system-admin/models/menu-item.model';
 
 @Injectable({
@@ -24,5 +27,25 @@ export class ItemService {
 
   public deleteItem(id: number): Observable<string> {
     return this.http.delete<string>(`/item/${id}`);
+  }
+
+  public createItem(item: ItemCreate): Observable<string> {
+    return this.http.post<string>('/item', item);
+  }
+
+  public getCategoriesForDrinks(): Observable<ItemCategory[]> {
+    return this.http.get<ItemCategory[]>('/item-category/drink');
+  }
+
+  public getCategoriesForDishes(): Observable<ItemCategory[]> {
+    return this.http.get<ItemCategory[]>('/item-category/dish');
+  }
+
+  public deleteCategory(id: number): Observable<void> {
+    return this.http.delete<void>(`/item-category/${id}`);
+  }
+
+  public createCategory(category: ItemCategoryCreate): Observable<string> {
+    return this.http.post<string>('/item-category', category);
   }
 }

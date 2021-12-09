@@ -7,9 +7,9 @@
         <div class="item-card-container">
             <mat-card class="item-card" *ngFor="let item of drinkItems">
                 <mat-card-header>
-                    <img mat-card-avatar src={{item.iconBase64}}/>
+                    <img mat-card-avatar src="{{item.iconBase64 == '' || item.iconBase64 == null ? './assets/images/drink.png' : item.iconBase64}}"/>
                     <mat-card-title>{{item.name}}</mat-card-title>
-                    <mat-card-subtitle>{{item.description}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{item.description === "" ? "There's no description." : item.description}}</mat-card-subtitle>
                 </mat-card-header>
                 <button mat-icon-button color="warn" class="clear-button" (click)="deleteItem(item.id)">
                     <mat-icon>clear</mat-icon>
@@ -17,7 +17,7 @@
             </mat-card>
         </div>
         <mat-card-actions>
-            <button mat-stroked-button color="primary"><mat-icon>add</mat-icon>Add</button>
+            <button mat-stroked-button color="primary" (click)="addItem('DRINK')"><mat-icon>add</mat-icon>Add</button>
         </mat-card-actions>
     </mat-card>
 
@@ -27,9 +27,9 @@
         <div class="item-card-container">
             <mat-card class="item-card" *ngFor="let item of dishItems">
                 <mat-card-header>
-                    <img mat-card-avatar src={{item.iconBase64}}/>
+                    <img mat-card-avatar src="{{item.iconBase64 == '' || item.iconBase64 == null ? './assets/images/dish.png' : item.iconBase64}}"/>
                     <mat-card-title>{{item.name}}</mat-card-title>
-                    <mat-card-subtitle>{{item.description}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{item.description === "" ? "There's no description." : item.description}}</mat-card-subtitle>
                 </mat-card-header>
                 <button mat-icon-button color="warn" class="clear-button" (click)="deleteItem(item.id)">
                     <mat-icon>clear</mat-icon>
@@ -37,7 +37,7 @@
             </mat-card>
         </div>
         <mat-card-actions>
-            <button mat-stroked-button color="primary"><mat-icon>add</mat-icon>Add</button>
+            <button mat-stroked-button color="primary" (click)="addItem('DISH')"><mat-icon>add</mat-icon>Add</button>
         </mat-card-actions>
     </mat-card>
 
