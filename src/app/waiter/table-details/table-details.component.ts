@@ -8,7 +8,7 @@ import { SocketService } from 'src/app/sockets/socket.service';
 import { PincodeDialogComponent } from 'src/app/unregistered/pincode-dialog/pincode-dialog.component';
 import { AddOrderItemDialogComponent } from '../add-dish-item-dialog/add-dish-item-dialog.component';
 import { DishItem, DishItemDTO, DrinkItems, DrinkItemsDTO, OrderDTO, OrderItem, OrderItemDTO } from '../models/order.model';
-import { OrderItemDialogComponent } from '../order-item-dialog/order-item-dialog.component';
+import { DishItemCreateDTO, DishItemUpdateDTO, DrinkItemsCreateDTO, DrinkItemsUpdateDTO, OrderItemDialogComponent } from '../order-item-dialog/order-item-dialog.component';
 import { OrderService } from '../services/order.service';
 
 @Component({
@@ -114,6 +114,10 @@ export class TableDetailsComponent implements OnInit {
       width: '100%',
       data: {orderItem, orderId: this.order.id}
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.edit(result)
+    });
   }
 
   openCreateDrinkItemsDialog() {
@@ -132,6 +136,10 @@ export class TableDetailsComponent implements OnInit {
       height: '100%',
       width: '100%',
       data: {orderItem, orderId: this.order.id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.edit(result)
     });
   }
 
@@ -153,7 +161,23 @@ export class TableDetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result === "" || result === undefined) return
+      this.edit(result)
+    });
+  }
+
+  edit(result) {
+    if(result === "" || result === undefined) return
+      console.log('result: ',result)
+      if(result instanceof DrinkItemsUpdateDTO) {
+        //proveri id da znas jel create il update
+        console.log('update drink')
+      } else if(result instanceof DishItemUpdateDTO) {
+        console.log('update dish')
+      } else if (result instanceof DrinkItemsCreateDTO) {
+        console.log('create drink')
+      } else if (result instanceof DishItemCreateDTO) {
+        console.log('create dish')
+      }
       // if(item instanceof DrinkItemsDTO) {
       //   this.iSentRequest = true;
       //   this.socketService.sendMessage("/drink-items/update/" + this.selectedItemId, JSON.stringify(result))
@@ -161,7 +185,6 @@ export class TableDetailsComponent implements OnInit {
       //   this.iSentRequest = true;
       //   this.socketService.sendMessage("/dish-item/update/" + this.selectedItemId, JSON.stringify(result))
       // }
-    });
   }
 
 }

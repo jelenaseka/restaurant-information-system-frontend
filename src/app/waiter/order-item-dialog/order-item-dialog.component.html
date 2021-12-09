@@ -29,12 +29,13 @@
                 <button mat-button (click)="incrementAmount(item)">
                   <mat-icon color="primary">add</mat-icon>
                 </button>
+                <button mat-raised-button color="warn" (click)="removeItem(item)">Remove</button>
               </div>
             </div>
           </mat-list-item>
         </mat-list>
         <div>
-          <button mat-raised-button color="primary" (click)="addItem()">Add</button>
+          <button mat-raised-button color="primary" (click)="addItem()" [disabled]="this.itemType === 'DISH' && orderItemCopy.items.length === 1">Add</button>
         </div>
       </div>
       <h2 style="text-align: center;">Notes</h2>
@@ -47,5 +48,9 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button (click)="resetChanges()">Cancel</button>
-  <button mat-button [mat-dialog-close]="true" (click)="editOrderItem()" cdkFocusInitial>Done</button>
+  <button mat-button 
+          [mat-dialog-close]="true" 
+          (click)="editOrderItem()" 
+          [disabled]="orderItemCopy.items[0] == null"
+          cdkFocusInitial>Done</button>
 </mat-dialog-actions>

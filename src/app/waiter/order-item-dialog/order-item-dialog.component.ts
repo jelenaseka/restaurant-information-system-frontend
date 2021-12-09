@@ -58,6 +58,66 @@ class DishItemCopy {
   }
 }
 
+export class DrinkItemsCreateDTO {
+  notes: string;
+  drinkItems: DrinkItemUpdateDTO[]
+
+  constructor(notes: string, drinkItems: DrinkItemUpdateDTO[]) {
+    this.notes = notes;
+    this.drinkItems = drinkItems;
+  }
+}
+
+export class DrinkItemsUpdateDTO {
+  id: number;
+  notes: string;
+  drinkItems: DrinkItemUpdateDTO[]
+
+  constructor(id: number, notes: string, drinkItems: DrinkItemUpdateDTO[]) {
+    this.id = id;
+    this.notes = notes;
+    this.drinkItems = drinkItems;
+  }
+}
+
+class DrinkItemUpdateDTO {
+  id: number;
+  amount: number;
+  itemId: number;
+  status: ItemStatus;
+
+  constructor(id: number, amount: number, itemId: number, status: ItemStatus) {
+    this.id = id;
+    this.amount = amount;
+    this.itemId = itemId;
+    this.status = status;
+  }
+}
+
+export class DishItemUpdateDTO {
+  id: number;
+  notes: string;
+  amount: number;
+
+  constructor(id: number, notes: string, amount: number) {
+    this.id = id;
+    this.notes = notes;
+    this.amount = amount;
+  }
+}
+
+export class DishItemCreateDTO {
+  itemId: number;
+  notes: string;
+  amount: number;
+
+  constructor(itemId: number, notes: string, amount: number) {
+    this.itemId = itemId;
+    this.notes = notes;
+    this.amount = amount;
+  }
+}
+
 @Component({
   selector: 'app-order-item-dialog',
   templateUrl: './order-item-dialog.component.html',
@@ -73,6 +133,7 @@ export class OrderItemDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.itemType = this.data.orderItem instanceof DrinkItems ? 'DRINK' : 'DISH'
+    console.log('item type: ',this.itemType)
     if(this.itemType == 'DISH') {
       let notes = JSON.parse(JSON.stringify(((this.data.orderItem as DishItem).dishItem as DishItemDTO).notes))
       let id = JSON.parse(JSON.stringify(((this.data.orderItem as DishItem).dishItem as DishItemDTO).id))
@@ -102,17 +163,63 @@ export class OrderItemDialogComponent implements OnInit {
       })
       
     }
-    console.log('representation: ',this.orderItemRepresentation)
-    console.log('copy: ',this.orderItemCopy)
+    // console.log('representation: ',this.orderItemRepresentation)
+    // console.log('copy: ',this.orderItemCopy)
   }
 
   editOrderItem() {
-    console.log(this.orderItemRepresentation.id)
+    if(this.orderItemRepresentation.id === -1) {
+      //create
+      if(this.itemType === 'DRINK') {
+        let items: DrinkItemUpdateDTO[] = []
+        this.orderItemCopy.items.forEach(item => {
+          items.push(new DrinkItemUpdateDTO(item.id, item.amount, item.itemId, item.status))
+        })
+        let drinkItemsCreateDTO: DrinkItemsCreateDTO = new DrinkItemsCreateDTO(
+          this.orderItemCopy.notes,
+          items)
+        this.dialogRef.close(drinkItemsCreateDTO);
+      } else {
+        console.log(this.orderItemCopy)
+        if(this.orderItemCopy.items[0] == null) {
+          return
+        }
+        let dishItemCreateDTO: DishItemCreateDTO = new DishItemCreateDTO(
+          this.orderItemCopy.items[0].itemId,
+          this.orderItemCopy.notes,
+          this.orderItemCopy.items[0].amount
+        )
+
+        this.dialogRef.close(dishItemCreateDTO)
+      }
+    } else {
+      // update
+      if(this.itemType === 'DRINK') {
+        let items: DrinkItemUpdateDTO[] = []
+        this.orderItemCopy.items.forEach(item => {
+          console.log('item', item)
+          items.push(new DrinkItemUpdateDTO(item.id, item.amount, item.itemId, item.status))
+        })
+        let drinkItemsUpdateDTO: DrinkItemsUpdateDTO = new DrinkItemsUpdateDTO(
+          this.orderItemRepresentation.id,
+          this.orderItemCopy.notes,
+          items)
+
+        this.dialogRef.close(drinkItemsUpdateDTO);
+      } else {
+        let dishItemUpdateDTO: DishItemUpdateDTO = new DishItemUpdateDTO(
+          this.orderItemRepresentation.id,
+          this.orderItemCopy.notes,
+          this.orderItemCopy.items[0].amount
+        )
+
+        this.dialogRef.close(dishItemUpdateDTO)
+      }
+    }
   }
 
   resetChanges() {
-    console.log('representation: ',this.orderItemRepresentation)
-    console.log('copy: ',this.orderItemCopy)
+    this.dialogRef.close("")
   }
 
   addItem() {
@@ -123,12 +230,25 @@ export class OrderItemDialogComponent implements OnInit {
     }
   }
 
+  removeItem(orderItem: any) {
+    console.log(orderItem)
+    this.orderItemCopy.items = this.orderItemCopy.items.filter(item => {
+      return item.id !== orderItem.id && item.itemName !== orderItem.itemName
+    })
+  }
+
   incrementAmount(item: any) {
     item.amount = item.amount + 1
+    if(item.status !== ItemStatus.CREATE) {
+      item.status = ItemStatus.UPDATE
+    }
   }
 
   decrementAmount(item: any) {
     item.amount = item.amount - 1
+    if(item.status !== ItemStatus.CREATE) {
+      item.status = ItemStatus.UPDATE
+    }
   }
 
 }
