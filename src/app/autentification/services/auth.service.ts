@@ -22,7 +22,10 @@ export class AuthService {
   }
 
   public isUserLoggedIn(): boolean {
-    return !this.jwt.isTokenExpired();
+    let loggedIn : boolean = !this.jwt.isTokenExpired();
+    if(!loggedIn)
+     localStorage.removeItem('token');
+    return loggedIn;
   }
 
   public checkPinCode(pinCode: number, userType : string) : Observable<UnregisteredUser> {

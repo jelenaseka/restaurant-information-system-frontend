@@ -10,7 +10,7 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  public getOrderByRestaurantTableNameIfWaiterValid(tableName: string, pinCode: string): Observable<OrderDTO> {
-    return this.http.get<OrderDTO>("/order/" + tableName + "/" + pinCode);
+  public getOrderByRestaurantTableNameIfWaiterValid(tableId: number, pinCode: string): Observable<OrderDTO> {
+    return this.http.get<OrderDTO>("/order/" + tableId + "/" + pinCode);
   }
 }
