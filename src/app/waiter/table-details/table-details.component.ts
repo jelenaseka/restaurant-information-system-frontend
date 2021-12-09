@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/autentification/services/auth.service';
 import { SocketResponse } from 'src/app/sockets/model/socket-response.model';
 import { SocketService } from 'src/app/sockets/socket.service';
@@ -15,37 +16,48 @@ import { OrderService } from '../services/order.service';
   templateUrl: './table-details.component.html',
   styleUrls: ['./table-details.component.scss']
 })
-export class TableDetailsComponent implements OnInit {
+export class TableDetailsComponent implements OnInit, OnDestroy {
   pinCode: string | undefined;
   table: string = 'T1';
   isWaiter: boolean = false;
   order: OrderDTO | undefined;
   iSentRequest : boolean = false;
 
+  discardedOrCharged : boolean = false;
+
+  idFromRoute : number | undefined;
+  routeSub: Subscription | undefined;
+
   constructor(public dialog: MatDialog, private auth: AuthService, private toastService: ToastrService,
     private router: Router, private orderService: OrderService,
-    private socketService: SocketService) { }
+    private socketService: SocketService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.socketService.connect("order", this.handleChange);
-    this.pinCode = undefined;
-    this.table = 'T1'
-    const dialogRef = this.dialog.open(PincodeDialogComponent, {
-      width: '250px',
-      data: {pinCode: this.pinCode, heading: 'Access table T1'},
-    });
+    this.routeSub = this.route.params.subscribe(params => {
+      this.idFromRoute = params['table'];
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(!result)
-        this.router.navigate(['/home/waiter'])
-      this.pinCode = result;
-      this.getOrderByRestaurantTableNameIfWaiterValid();
+      this.socketService.connect("order", this.handleChange);
+      this.pinCode = undefined;
+      this.table = 'T1'
+      const dialogRef = this.dialog.open(PincodeDialogComponent, {
+        width: '250px',
+        data: {pinCode: this.pinCode, heading: 'Access table'},
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if(!result)
+          this.router.navigate(['/home/waiter'])
+        this.pinCode = result;
+        this.getOrderByRestaurantTableNameIfWaiterValid();
+      });
+
+
     });
   }
 
   getOrderByRestaurantTableNameIfWaiterValid() {
     if(this.pinCode !== undefined) {
-    this.orderService.getOrderByRestaurantTableNameIfWaiterValid('T1',this.pinCode)
+    this.orderService.getOrderByRestaurantTableNameIfWaiterValid(this.idFromRoute as number, this.pinCode)
           .subscribe((data) => {
             this.isWaiter = true
             this.order = new OrderDTO(data.id, data.totalPrice, data.createdAt, data.waiter, data.waiterId,
@@ -56,14 +68,53 @@ export class TableDetailsComponent implements OnInit {
       }
   }
 
+  deliverAllDishesIsDisabled() : boolean {
+    let flag : boolean = true;
+    this.order?.dishItemList.forEach(dishItem => {
+      if(dishItem.state === "READY") {
+        flag = false;
+      }
+    });
+    return flag;
+  }
+
+  deliverAllDrinksIsDisabled() : boolean {
+    let flag : boolean = true;
+    this.order?.drinkItemsList.forEach(drinkItem => {
+      if(drinkItem.state === "READY") {
+        flag = false;
+      }
+    });
+    return flag;
+  }
+
+  deliverAllDishes() : void {
+    this.order?.dishItemList.forEach(dishItem => {
+      if(dishItem.state === "READY") {
+        this.changeDishItemState(this.order?.waiterId, dishItem.id);
+      }
+    });
+  }
+
+  deliverAllDrinks() : void {
+    this.order?.drinkItemsList.forEach(drinkItem => {
+      if(drinkItem.state === "READY") {
+        this.changeDrinkItemsState(this.order?.waiterId, drinkItem.id);
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.socketService.disconnect();
+    (this.routeSub as Subscription).unsubscribe();
   }
 
   handleChange = (data : SocketResponse) => {
     if(data.successfullyFinished) {
       this.getOrderByRestaurantTableNameIfWaiterValid();
       if(this.iSentRequest) {
+        if(this.discardedOrCharged)
+          this.router.navigate(['/home/waiter'])
         this.toastService.success(data.message, 'Ok')
       }
     } else {
@@ -74,7 +125,19 @@ export class TableDetailsComponent implements OnInit {
     this.iSentRequest = false;
   }
 
-  deliverDrinkItems(waiterId: number | undefined, itemId: number): void {
+  discard() : void {
+    this.iSentRequest = true;
+    this.discardedOrCharged = true;
+    this.socketService.sendMessage("/order/discard/"+this.idFromRoute, JSON.stringify({}))
+  }
+
+  charge() : void {
+    this.iSentRequest = true;
+    this.discardedOrCharged = true;
+    this.socketService.sendMessage("/order/charge/"+this.idFromRoute, JSON.stringify({}))
+  }
+
+  changeDrinkItemsState(waiterId: number | undefined, itemId: number): void {
     let data = {
       itemId: <number>itemId,
       userId: waiterId

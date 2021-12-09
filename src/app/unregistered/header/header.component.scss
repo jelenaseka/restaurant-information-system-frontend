@@ -1,6 +1,10 @@
 .navbar {
   padding: 10px 30px;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  border-bottom: 1px solid var(--primary);
+  height: 10vh;
+  background-color: var(--header-color);
 }
 
 #home-button {
