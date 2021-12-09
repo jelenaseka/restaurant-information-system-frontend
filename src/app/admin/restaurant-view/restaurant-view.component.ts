@@ -93,6 +93,10 @@ export class RestaurantViewComponent implements OnInit {
 
   openDialog(adding : boolean): void {
     this.newName = undefined;
+
+    if(!adding)
+      this.newName = this.rooms[this.selected.value].name;
+
     const dialogRef = this.dialog.open(RoomnameDialogComponent, {
       width: '250px',
       data: {newName: this.newName},
