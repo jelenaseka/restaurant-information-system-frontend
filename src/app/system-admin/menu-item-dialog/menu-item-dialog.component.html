@@ -1,0 +1,85 @@
+<h2 mat-dialog-title>{{data.id === 0 ? 'Add new ' : 'Edit '}}{{data.type.toLowerCase()}} item</h2>
+<mat-divider [ngStyle]="{'margin-bottom' : '5vh'}"></mat-divider>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="itemForm" fxLayout="column" fxLayoutAlign="center center">
+        <!-- Name -->
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name"/>
+            <mat-error *ngIf="itemForm.invalid">{{ validatorItem.validateRequired('name') }}</mat-error>
+        </mat-form-field>
+        <!-- Description -->
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea  matInput formControlName="description"></textarea>
+        </mat-form-field>
+        <!-- Image -->
+        <h2>Browse to image:</h2>
+        <input type="file" accept="image/*" (change)="onFileChanged($event)" style="display: none" #selectFile>
+        <img *ngIf="data.type === 'DRINK'" class="image-item" src="{{selectedFile == null || selectedFile == '' ? './assets/images/drink.png' : selectedFile}}" (click)="selectFile.click()">
+        <img *ngIf="data.type === 'DISH'" class="image-item" src="{{selectedFile == null || selectedFile == '' ? './assets/images/dish.jpg' : selectedFile}}" (click)="selectFile.click()">
+        <!-- Item Category -->
+        <mat-form-field appearance="fill">
+            <mat-label>Item Category</mat-label>
+            <mat-select formControlName="itemCategory">
+                <mat-select-trigger>
+                    {{itemForm.controls['itemCategory'].value}}
+                </mat-select-trigger>
+                <mat-option *ngFor="let category of categories" [value]="category.name">
+                    {{category.name}}
+                    <button mat-icon-button color="warn" class="clear-button" (click)="deleteCategory(category.id, $event)">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+                </mat-option>
+            </mat-select>
+            <button mat-icon-button color="primary" class="add-button" (click)="showCategoryField($event)" *ngIf="!showCategoryCreateField">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-form-field>
+        <form [formGroup]="categoryForm" fxLayout="column" fxLayoutAlign="center center" *ngIf="showCategoryCreateField" (ngSubmit)="addCategory()">
+            <!-- Category name -->
+            <mat-form-field appearance="fill">
+                <mat-label>Category name</mat-label>
+                <input matInput formControlName="name"/>
+                <button mat-icon-button color='primary' type="submit" class="add-button"><mat-icon>add</mat-icon></button>
+            </mat-form-field>
+        </form>
+        <!-- Price -->
+        <mat-form-field appearance="fill">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" formControlName="price"/>
+            <mat-error *ngIf="itemForm.invalid">{{ validatorItem.validatePositiveNumber('price') }}</mat-error>
+        </mat-form-field>
+        <mat-card class="ingredients-container">
+            <mat-card-title>Prices history</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-list role="list" *ngIf="itemDetails != null">
+                <mat-list-item role="listitem" *ngFor="let price of itemDetails.prices">Price: {{price.value}} - recorded at {{formatDate(price.createdAt)}}</mat-list-item>
+            </mat-list>
+        </mat-card>
+        <!-- Ingredients -->
+        <mat-card class="ingredients-container">
+            <mat-card-title>Ingredients</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-card class="ingredient-card" *ngFor="let ing of ingredients">
+                {{ing}}
+                <button mat-icon-button color="warn" class="clear-button" (click)="deleteIngredient(ing)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </mat-card>
+        </mat-card>
+        <form [formGroup]="ingredientForm" fxLayout="column" fxLayoutAlign="center center" (ngSubmit)="addIngredient()">
+            <!-- Ingredient -->
+            <mat-form-field appearance="fill">
+                <mat-label>Ingredient</mat-label>
+                <input matInput formControlName="ingredient"/>
+                <button mat-icon-button color='primary' type="submit" class="add-button"><mat-icon>add</mat-icon></button>
+            </mat-form-field>
+        </form>
+    </form>
+</mat-dialog-content>
+<mat-divider [ngStyle]="{'margin-top' : '5vh'}"></mat-divider>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button color='primary' (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color='primary' (click)="onSave()" cdkFocusInitial>Save</button>
+</mat-dialog-actions> 
