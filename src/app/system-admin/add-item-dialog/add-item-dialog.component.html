@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Add new {{type.toLowerCase()}} item</h2>
+<h2 mat-dialog-title>{{data.id === 0 ? 'Add new ' : 'Edit '}}{{data.type.toLowerCase()}} item</h2>
 <mat-divider [ngStyle]="{'margin-bottom' : '5vh'}"></mat-divider>
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="itemForm" fxLayout="column" fxLayoutAlign="center center">
@@ -16,8 +16,8 @@
         <!-- Image -->
         <h2>Browse to image:</h2>
         <input type="file" accept="image/*" (change)="onFileChanged($event)" style="display: none" #selectFile>
-        <img *ngIf="type === 'DRINK'" class="image-item" src="{{selectedFile == null ? './assets/images/drink.png' : selectedFile}}" (click)="selectFile.click()">
-        <img *ngIf="type === 'DISH'" class="image-item" src="{{selectedFile == null ? './assets/images/dish.jpg' : selectedFile}}" (click)="selectFile.click()">
+        <img *ngIf="data.type === 'DRINK'" class="image-item" src="{{selectedFile == null || selectedFile == '' ? './assets/images/drink.png' : selectedFile}}" (click)="selectFile.click()">
+        <img *ngIf="data.type === 'DISH'" class="image-item" src="{{selectedFile == null || selectedFile == '' ? './assets/images/dish.jpg' : selectedFile}}" (click)="selectFile.click()">
         <!-- Item Category -->
         <mat-form-field appearance="fill">
             <mat-label>Item Category</mat-label>
@@ -50,6 +50,13 @@
             <input matInput type="number" formControlName="price"/>
             <mat-error *ngIf="itemForm.invalid">{{ validatorItem.validatePositiveNumber('price') }}</mat-error>
         </mat-form-field>
+        <mat-card class="ingredients-container">
+            <mat-card-title>Prices history</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-list role="list" *ngIf="itemDetails != null">
+                <mat-list-item role="listitem" *ngFor="let price of itemDetails.prices">Price: {{price.value}} - recorded at {{formatDate(price.createdAt)}}</mat-list-item>
+            </mat-list>
+        </mat-card>
         <!-- Ingredients -->
         <mat-card class="ingredients-container">
             <mat-card-title>Ingredients</mat-card-title>

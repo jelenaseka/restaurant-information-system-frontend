@@ -11,6 +11,9 @@
                     <mat-card-title>{{item.name}}</mat-card-title>
                     <mat-card-subtitle>{{item.description === "" ? "There's no description." : item.description}}</mat-card-subtitle>
                 </mat-card-header>
+                <button mat-icon-button color="primary" class="edit-button" (click)="editItem(item.id, 'DRINK')">
+                    <mat-icon>edit</mat-icon>
+                </button>
                 <button mat-icon-button color="warn" class="clear-button" (click)="deleteItem(item.id)">
                     <mat-icon>clear</mat-icon>
                 </button>
@@ -31,6 +34,9 @@
                     <mat-card-title>{{item.name}}</mat-card-title>
                     <mat-card-subtitle>{{item.description === "" ? "There's no description." : item.description}}</mat-card-subtitle>
                 </mat-card-header>
+                <button mat-icon-button color="primary" class="edit-button" (click)="editItem(item.id, 'DISH')">
+                    <mat-icon>edit</mat-icon>
+                </button>
                 <button mat-icon-button color="warn" class="clear-button" (click)="deleteItem(item.id)">
                     <mat-icon>clear</mat-icon>
                 </button>

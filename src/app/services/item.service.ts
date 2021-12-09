@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { ItemCategoryCreate } from '../system-admin/models/item-category-create.model';
 import { ItemCategory } from '../system-admin/models/item-category.model';
 import { ItemCreate } from '../system-admin/models/item-create.model';
+import { ItemDetails } from '../system-admin/models/item-details.model';
+import { ItemUpdate } from '../system-admin/models/item-update.model';
 import { MenuItem } from '../system-admin/models/menu-item.model';
 
 @Injectable({
@@ -12,6 +14,10 @@ import { MenuItem } from '../system-admin/models/menu-item.model';
 export class ItemService {
 
   constructor(private http: HttpClient) { }
+
+  public getItemDetails(id: number): Observable<ItemDetails> {
+    return this.http.get<ItemDetails>(`/item/not-active/${id}`);
+  }
 
   public getItemsForMenu(): Observable<MenuItem[]> {
     return this.http.get<MenuItem[]>('/item/menu');
@@ -31,6 +37,10 @@ export class ItemService {
 
   public createItem(item: ItemCreate): Observable<string> {
     return this.http.post<string>('/item', item);
+  }
+
+  public updateItem(item: ItemUpdate, id: number): Observable<string> {
+    return this.http.put<string>(`/item/${id}`, item);
   }
 
   public getCategoriesForDrinks(): Observable<ItemCategory[]> {

@@ -5,6 +5,7 @@ import { convertResponseError } from 'src/app/error-converter.function';
 import { ItemService } from 'src/app/services/item.service';
 import { AddItemDialogComponent } from '../add-item-dialog/add-item-dialog.component';
 import { MenuItem } from '../models/menu-item.model';
+import { UserIdAndType } from '../models/user-id-and-type.model';
 
 @Component({
   selector: 'app-menu',
@@ -58,7 +59,11 @@ export class MenuComponent implements OnInit {
   }
 
   public addItem(type: string): void {
-    const dialogRef = this._dialog.open(AddItemDialogComponent, { data: type});
+    const sendData: UserIdAndType = {
+      id: 0,
+      type
+    }
+    const dialogRef = this._dialog.open(AddItemDialogComponent, { data: sendData});
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == null) {
@@ -71,6 +76,29 @@ export class MenuComponent implements OnInit {
         },
         (err) => {
           this._toastr.error(convertResponseError(err), 'Not created!')
+        }
+      );
+    });
+  }
+
+  public editItem(id: number, type: string) {
+    const sendData: UserIdAndType = {
+      id,
+      type
+    }
+    const dialogRef = this._dialog.open(AddItemDialogComponent, { data: sendData});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == null) {
+        return;
+      }
+      this._itemService.updateItem(result, id).subscribe(
+        () => {
+          this._toastr.success('Successfully updated item!', 'Update');
+          this._fetchItems();
+        },
+        (err) => {
+          this._toastr.error(convertResponseError(err), 'Not updated!')
         }
       );
     });
