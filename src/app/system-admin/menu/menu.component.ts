@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { ItemService } from 'src/app/services/item.service';
-import { AddItemDialogComponent } from '../add-item-dialog/add-item-dialog.component';
+import { MenuItemDialogComponent } from '../menu-item-dialog/menu-item-dialog.component';
 import { MenuItem } from '../models/menu-item.model';
 import { UserIdAndType } from '../models/user-id-and-type.model';
 
@@ -63,7 +63,7 @@ export class MenuComponent implements OnInit {
       id: 0,
       type
     }
-    const dialogRef = this._dialog.open(AddItemDialogComponent, { data: sendData});
+    const dialogRef = this._dialog.open(MenuItemDialogComponent, { data: sendData});
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == null) {
@@ -86,7 +86,7 @@ export class MenuComponent implements OnInit {
       id,
       type
     }
-    const dialogRef = this._dialog.open(AddItemDialogComponent, { data: sendData});
+    const dialogRef = this._dialog.open(MenuItemDialogComponent, { data: sendData});
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == null) {

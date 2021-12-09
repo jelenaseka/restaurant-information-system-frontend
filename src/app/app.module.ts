@@ -41,7 +41,7 @@ import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add
 import { ReportHomepageComponent } from './reports/report-homepage/report-homepage.component';
 import { BarChartComponent } from './reports/charts/bar-chart/bar-chart.component';
 import { LineChartComponent } from './reports/charts/line-chart/line-chart.component';
-import { AddItemDialogComponent } from './system-admin/add-item-dialog/add-item-dialog.component';
+import { MenuItemDialogComponent } from './system-admin/menu-item-dialog/menu-item-dialog.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +71,7 @@ import { AddItemDialogComponent } from './system-admin/add-item-dialog/add-item-
     ReportHomepageComponent,
     BarChartComponent,
     LineChartComponent,
-    AddItemDialogComponent,
+    MenuItemDialogComponent,
   ],
   imports: [
     BrowserModule,

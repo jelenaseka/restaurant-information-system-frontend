@@ -14,11 +14,11 @@ import { ItemDetails } from '../models/item-details.model';
 import { ItemUpdate } from '../models/item-update.model';
 
 @Component({
-  selector: 'app-add-item-dialog',
-  templateUrl: './add-item-dialog.component.html',
-  styleUrls: ['./add-item-dialog.component.scss']
+  selector: 'app-menu-item-dialog',
+  templateUrl: './menu-item-dialog.component.html',
+  styleUrls: ['./menu-item-dialog.component.scss']
 })
-export class AddItemDialogComponent implements OnInit {
+export class MenuItemDialogComponent implements OnInit {
   showCategoryCreateField: boolean = false;
   reader: FileReader;
   newCategory: string = '';
@@ -44,7 +44,7 @@ export class AddItemDialogComponent implements OnInit {
     ingredient: new FormControl('', [Validators.required]),
   });
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: UserIdAndType, public dialogRef: MatDialogRef<AddItemDialogComponent>,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: UserIdAndType, public dialogRef: MatDialogRef<MenuItemDialogComponent>,
    public validatorItem: ValidatorService, public _toastr: ToastrService, public _itemService: ItemService) { 
     this.validatorItem.setForm(this.itemForm);
     this.reader = new FileReader();

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddItemDialogComponent } from './add-item-dialog.component';
+import { MenuItemDialogComponent } from './menu-item-dialog.component';
 
 describe('AddItemDialogComponent', () => {
-  let component: AddItemDialogComponent;
-  let fixture: ComponentFixture<AddItemDialogComponent>;
+  let component: MenuItemDialogComponent;
+  let fixture: ComponentFixture<MenuItemDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddItemDialogComponent ]
+      declarations: [ MenuItemDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddItemDialogComponent);
+    fixture = TestBed.createComponent(MenuItemDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
