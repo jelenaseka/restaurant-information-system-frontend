@@ -7,6 +7,7 @@ import { RoleGuard } from '../guards/role-guard';
 import { EmployeesComponent } from '../manager/employees/employees.component';
 import { BartenderHomepageComponent } from '../bartender/bartender-homepage/bartender-homepage.component';
 import { ChefHomepageComponent } from '../chef/chef-homepage/chef-homepage.component';
+import { TableDetailsComponent } from '../waiter/table-details/table-details.component';
 import { ReportHomepageComponent } from '../reports/report-homepage/report-homepage.component';
 import { WorkersComponent } from '../system-admin/workers/workers.component';
 import { MenuComponent } from '../system-admin/menu/menu.component';
@@ -25,7 +26,8 @@ export const routes: Routes = [
     component: LoginComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'home/waiter', component: WaiterHomepageComponent, canActivate: [AuthGuard], },
+  { path: 'home/waiter', component: WaiterHomepageComponent, canActivate: [AuthGuard] },
+  { path: 'home/waiter/:table', component: TableDetailsComponent, canActivate: [AuthGuard] },
   { path: 'home/bartender', component: BartenderHomepageComponent, canActivate: [AuthGuard], },
   { path: 'home/chef', component: ChefHomepageComponent, canActivate: [AuthGuard], },
   {
@@ -70,5 +72,6 @@ export const routes: Routes = [
     canActivate: [RoleGuard],
     data: { expectedRole: 'SYSTEM_ADMIN' },
   },
+  
   { path: '**', redirectTo: '/home' },
 ];

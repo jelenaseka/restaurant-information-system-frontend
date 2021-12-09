@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>Install Angular</h2>
+<mat-dialog-content class="mat-typography">
+  <div fxLayout="row">
+    <mat-tab-group fxFlex (selectedTabChange)="tabChanged($event)">
+      <mat-tab
+        *ngFor="let category of categories; let index = index"
+        [label]="category.name"
+      >
+      </mat-tab>
+    </mat-tab-group>
+    <div fxFlex fxLayout="column">
+      <div>
+        <mat-list role="list">
+          <mat-list-item
+            role="listitem"
+            *ngFor="let item of itemForDialog?.items"
+          >
+            <div
+              fxLayout="row"
+              fxLayoutAlign="space-between center"
+              style="width: 100%"
+            >
+              <div>
+                {{ item.itemName }}
+              </div>
+
+              <div fxLayout="row">
+                <button mat-button>
+                  <mat-icon color="primary">add</mat-icon>
+                </button>
+                <input style="width: 20px" />
+                <button mat-button>
+                  <mat-icon color="primary">remove</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <div class="notes">
+        <p style="font-weight: 500; text-align: center">Notes</p>
+        {{ itemForDialog?.notes }}
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>

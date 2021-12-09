@@ -31,9 +31,14 @@ import { ItemDetailsComponent } from './unregistered/item-details/item-details.c
 import { DrinkItemsService } from './bartender/services/drink-items.service';
 import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-dialog.component';
 import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-employee-dialog.component';
+import { TableDetailsComponent } from './waiter/table-details/table-details.component';
+import { AddOrderItemDialogComponent } from './waiter/add-dish-item-dialog/add-dish-item-dialog.component';
+import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
+import { RoomnameDialogComponent } from './admin/roomname-dialog/roomname-dialog/roomname-dialog.component';
+import { RoomSpaceComponent } from './admin/room-space/room-space.component';
+import { EditRoomDialogComponent } from './admin/edit-room-dialog/edit-room-dialog.component';
 import { WorkersComponent } from './system-admin/workers/workers.component';
 import { MenuComponent } from './system-admin/menu/menu.component';
-import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
 import { AdministratorsComponent } from './admin/administrators/administrators.component';
 import { WorkersTableComponent } from './system-admin/workers-table/workers-table.component';
 import { ChangePasswordDialogComponent } from './system-admin/change-password-dialog/change-password-dialog.component';
@@ -60,15 +65,19 @@ import { MenuItemDialogComponent } from './system-admin/menu-item-dialog/menu-it
     ItemDetailsComponent,
     PincodeDialogComponent,
     AddEmployeeDialogComponent,
+    TableDetailsComponent,
+    AddOrderItemDialogComponent,
+    RestaurantViewComponent,
+    RoomnameDialogComponent,
+    RoomSpaceComponent,
+    EditRoomDialogComponent,
     ReportHomepageComponent,
     WorkersComponent,
     MenuComponent,
-    RestaurantViewComponent,
     AdministratorsComponent,
     WorkersTableComponent,
     ChangePasswordDialogComponent,
     AddManagerDialogComponent,
-    ReportHomepageComponent,
     BarChartComponent,
     LineChartComponent,
     MenuItemDialogComponent,
