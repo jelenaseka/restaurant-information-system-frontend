@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -18,12 +18,10 @@ import { convertResponseError } from 'src/app/error-converter.function';
 export class AddItemDialogComponent implements OnInit {
   showCategoryCreateField: boolean = false;
   reader: FileReader;
-  areIngredientsOk: boolean = true;
-  ingredient: string = '';
   newCategory: string = '';
 
   categories: ItemCategory[] = [];
-  ingredients: Array<string> = ["borownica"];
+  ingredients: Array<string> = [];
   iconBase64: string = "";
   selectedFile = null;
 
@@ -38,9 +36,13 @@ export class AddItemDialogComponent implements OnInit {
     name: new FormControl('', [Validators.required, Validators.min(3), Validators.max(30)]),
   });
 
+  ingredientForm: FormGroup = new FormGroup({
+    ingredient: new FormControl('', [Validators.required]),
+  });
+
   constructor(@Inject(MAT_DIALOG_DATA) public type: string, public dialogRef: MatDialogRef<AddItemDialogComponent>,
-   public validator: ValidatorService, public _toastr: ToastrService, public _itemService: ItemService) { 
-    this.validator.setForm(this.itemForm);
+   public validatorItem: ValidatorService, public _toastr: ToastrService, public _itemService: ItemService) { 
+    this.validatorItem.setForm(this.itemForm);
     this.reader = new FileReader();
   }
 
@@ -92,9 +94,6 @@ export class AddItemDialogComponent implements OnInit {
   }
 
   addCategory() {
-    if (this.categoryForm.invalid) {
-      return;
-    }
     const category: ItemCategoryCreate = {
       name: this.categoryForm.controls["name"].value,
       type: this.type
@@ -123,14 +122,19 @@ export class AddItemDialogComponent implements OnInit {
   }
 
   public addIngredient(): void {
-    if (this.ingredient === '')
+    if (this.ingredientForm.invalid)
       return;
-    if (this.ingredients.includes(this.ingredient)) {
-      this.areIngredientsOk = false;
+    let ing = this.ingredientForm.controls["ingredient"].value;
+    if (this.ingredients.includes(ing)) {
+      this._toastr.warning(`Ingredient ${ing} already contained in list.`, "Warning!")
       return;
     }
-    this.areIngredientsOk = true;
-    this.ingredients.push(this.ingredient);
+    this.ingredients.push(ing);
+    this.ingredientForm.controls['ingredient'].setValue('');
+  }
+
+  public deleteIngredient(ing: string): void {
+    this.ingredients = this.ingredients.filter(i => i !== ing);
   }
 
   private _fetchCategories(): void {
