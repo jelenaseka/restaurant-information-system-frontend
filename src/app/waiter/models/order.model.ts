@@ -121,3 +121,119 @@ export class DrinkItems implements OrderItem {
     this.drinkItems = drinkItems;
   }
 }
+
+export class OrderItemRepresentation {
+  id: number;
+  notes: string;
+  items: any[];
+
+  constructor(id: number, notes: string, items: any[]) {
+    this.id = id;
+    this.notes = notes;
+    this.items = items;
+  }
+}
+
+export class OrderItemCopy {
+  notes: string;
+  items: any[]
+
+  constructor(notes: string, items: any) {
+    this.notes = notes;
+    this.items = items;
+  }
+}
+
+export enum ItemStatus {
+  CREATE, UPDATE, DELETE, NONE
+}
+
+export class DrinkItemCopy {
+  id: number;
+  amount: number;
+  itemName: string;
+  itemId: number;
+  status: ItemStatus;
+
+  constructor(id: number, amount: number, itemName: string, itemId: number, status: ItemStatus) {
+    this.id = id;
+    this.amount = amount;
+    this.itemName = itemName;
+    this.itemId = itemId;
+    this.status = status;
+  }
+}
+
+export class DishItemCopy {
+  amount: number;
+  itemName: string;
+  itemId: number;
+  status: ItemStatus;
+
+  constructor(amount: number, itemName: string, itemId: number, status: ItemStatus) {
+    this.amount = amount;
+    this.itemName = itemName;
+    this.itemId = itemId;
+    this.status = status;
+  }
+}
+
+export class DrinkItemsCreateDTO {
+  notes: string;
+  drinkItems: DrinkItemUpdateDTO[]
+
+  constructor(notes: string, drinkItems: DrinkItemUpdateDTO[]) {
+    this.notes = notes;
+    this.drinkItems = drinkItems;
+  }
+}
+
+export class DrinkItemsUpdateDTO {
+  id: number;
+  notes: string;
+  drinkItems: DrinkItemUpdateDTO[]
+
+  constructor(id: number, notes: string, drinkItems: DrinkItemUpdateDTO[]) {
+    this.id = id;
+    this.notes = notes;
+    this.drinkItems = drinkItems;
+  }
+}
+
+export class DrinkItemUpdateDTO {
+  id: number;
+  amount: number;
+  itemId: number;
+  status: ItemStatus;
+
+  constructor(id: number, amount: number, itemId: number, status: ItemStatus) {
+    this.id = id;
+    this.amount = amount;
+    this.itemId = itemId;
+    this.status = status;
+  }
+}
+
+export class DishItemUpdateDTO {
+  id: number;
+  notes: string;
+  amount: number;
+
+  constructor(id: number, notes: string, amount: number) {
+    this.id = id;
+    this.notes = notes;
+    this.amount = amount;
+  }
+}
+
+export class DishItemCreateDTO {
+  itemId: number;
+  notes: string;
+  amount: number;
+
+  constructor(itemId: number, notes: string, amount: number) {
+    this.itemId = itemId;
+    this.notes = notes;
+    this.amount = amount;
+  }
+}

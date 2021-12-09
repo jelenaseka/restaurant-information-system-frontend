@@ -7,8 +7,8 @@ import { SocketResponse } from 'src/app/sockets/model/socket-response.model';
 import { SocketService } from 'src/app/sockets/socket.service';
 import { PincodeDialogComponent } from 'src/app/unregistered/pincode-dialog/pincode-dialog.component';
 import { AddOrderItemDialogComponent } from '../add-dish-item-dialog/add-dish-item-dialog.component';
-import { DishItem, DishItemDTO, DrinkItems, DrinkItemsDTO, OrderDTO, OrderItem, OrderItemDTO } from '../models/order.model';
-import { DishItemCreateDTO, DishItemUpdateDTO, DrinkItemsCreateDTO, DrinkItemsUpdateDTO, OrderItemDialogComponent } from '../order-item-dialog/order-item-dialog.component';
+import { DishItem, DishItemCreateDTO, DishItemDTO, DishItemUpdateDTO, DrinkItems, DrinkItemsCreateDTO, DrinkItemsDTO, DrinkItemsUpdateDTO, OrderDTO, OrderItem, OrderItemDTO } from '../models/order.model';
+import { OrderItemDialogComponent } from '../order-item-dialog/order-item-dialog.component';
 import { OrderService } from '../services/order.service';
 
 @Component({

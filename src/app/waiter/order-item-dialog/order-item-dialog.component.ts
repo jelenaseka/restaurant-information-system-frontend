@@ -1,121 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DishItem, DishItemDTO, DrinkItems, DrinkItemsDTO } from '../models/order.model';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { Observable } from 'rxjs';
+import { filter, mergeMap } from 'rxjs/operators';
+import { DishItem, DishItemCopy, DishItemCreateDTO, DishItemDTO, DishItemUpdateDTO, DrinkItemCopy, DrinkItems, DrinkItemsCreateDTO, DrinkItemsDTO, DrinkItemsUpdateDTO, DrinkItemUpdateDTO, ItemStatus, OrderItemCopy, OrderItemRepresentation } from '../models/order.model';
+import { Category, CategoryService } from '../services/category.service';
 
-class OrderItemRepresentation {
-  id: number;
-  notes: string;
-  items: any[];
-
-  constructor(id: number, notes: string, items: any[]) {
-    this.id = id;
-    this.notes = notes;
-    this.items = items;
-  }
+interface ItemForMenu {
+  id: number,
+  name: string,
+  iconBase64: string
 }
 
-class OrderItemCopy {
-  notes: string;
-  items: any[]
-
-  constructor(notes: string, items: any) {
-    this.notes = notes;
-    this.items = items;
-  }
-}
-
-enum ItemStatus {
-  CREATE, UPDATE, DELETE, NONE
-}
-
-class DrinkItemCopy {
-  id: number;
-  amount: number;
-  itemName: string;
-  itemId: number;
-  status: ItemStatus;
-
-  constructor(id: number, amount: number, itemName: string, itemId: number, status: ItemStatus) {
-    this.id = id;
-    this.amount = amount;
-    this.itemName = itemName;
-    this.itemId = itemId;
-    this.status = status;
-  }
-}
-
-class DishItemCopy {
-  amount: number;
-  itemName: string;
-  itemId: number;
-  status: ItemStatus;
-
-  constructor(amount: number, itemName: string, itemId: number, status: ItemStatus) {
-    this.amount = amount;
-    this.itemName = itemName;
-    this.itemId = itemId;
-    this.status = status;
-  }
-}
-
-export class DrinkItemsCreateDTO {
-  notes: string;
-  drinkItems: DrinkItemUpdateDTO[]
-
-  constructor(notes: string, drinkItems: DrinkItemUpdateDTO[]) {
-    this.notes = notes;
-    this.drinkItems = drinkItems;
-  }
-}
-
-export class DrinkItemsUpdateDTO {
-  id: number;
-  notes: string;
-  drinkItems: DrinkItemUpdateDTO[]
-
-  constructor(id: number, notes: string, drinkItems: DrinkItemUpdateDTO[]) {
-    this.id = id;
-    this.notes = notes;
-    this.drinkItems = drinkItems;
-  }
-}
-
-class DrinkItemUpdateDTO {
-  id: number;
-  amount: number;
-  itemId: number;
-  status: ItemStatus;
-
-  constructor(id: number, amount: number, itemId: number, status: ItemStatus) {
-    this.id = id;
-    this.amount = amount;
-    this.itemId = itemId;
-    this.status = status;
-  }
-}
-
-export class DishItemUpdateDTO {
-  id: number;
-  notes: string;
-  amount: number;
-
-  constructor(id: number, notes: string, amount: number) {
-    this.id = id;
-    this.notes = notes;
-    this.amount = amount;
-  }
-}
-
-export class DishItemCreateDTO {
-  itemId: number;
-  notes: string;
-  amount: number;
-
-  constructor(itemId: number, notes: string, amount: number) {
-    this.itemId = itemId;
-    this.notes = notes;
-    this.amount = amount;
-  }
+interface ItemsForMenu {
+  category: string,
+  items: ItemForMenu[]
 }
 
 @Component({
@@ -127,11 +27,20 @@ export class OrderItemDialogComponent implements OnInit {
   itemType: string = ''
   orderItemRepresentation: OrderItemRepresentation
   orderItemCopy: OrderItemCopy
+  itemsForMenu: ItemsForMenu[] = []
+  itemsByCategory: ItemsForMenu = {
+    category: '',
+    items: []
+  }
+  categories: Category[] = []
 
   constructor(public dialogRef: MatDialogRef<OrderItemDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private categoryService: CategoryService,
+    private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.getCategoriesAndItemsForMenu()
     this.itemType = this.data.orderItem instanceof DrinkItems ? 'DRINK' : 'DISH'
     console.log('item type: ',this.itemType)
     if(this.itemType == 'DISH') {
@@ -163,8 +72,26 @@ export class OrderItemDialogComponent implements OnInit {
       })
       
     }
-    // console.log('representation: ',this.orderItemRepresentation)
-    // console.log('copy: ',this.orderItemCopy)
+  }
+
+  getCategoriesAndItemsForMenu(): void {
+    let i = 0
+    this.categoryService.getCategories().pipe(
+      mergeMap((data) => data),
+      filter(item => item.type === this.itemType),
+      mergeMap(item => {
+        this.categories.push({name: item.name, type: item.type})
+        return this.getItemsForCategory(item.name)
+      })
+    )
+    .subscribe((data) => {
+      this.itemsForMenu.push({category: this.categories[i].name, items: data})
+      i = i + 1
+    })
+  }
+
+  getItemsForCategory(category: string): Observable<ItemForMenu[]> {
+    return this.http.get<ItemForMenu[]>("/item/category/" + category);
   }
 
   editOrderItem() {
@@ -222,18 +149,10 @@ export class OrderItemDialogComponent implements OnInit {
     this.dialogRef.close("")
   }
 
-  addItem() {
-    if(this.itemType === 'DISH') {
-      this.orderItemCopy.items.push(new DishItemCopy(0, "item dish", 1, ItemStatus.CREATE))
-    } else {
-      this.orderItemCopy.items.push(new DrinkItemCopy(-1, 0, "item 1", 1, ItemStatus.CREATE))
-    }
-  }
-
   removeItem(orderItem: any) {
     console.log(orderItem)
     this.orderItemCopy.items = this.orderItemCopy.items.filter(item => {
-      return item.id !== orderItem.id && item.itemName !== orderItem.itemName
+      return item.itemId !== orderItem.itemId && item.itemName !== orderItem.itemName
     })
   }
 
@@ -251,4 +170,39 @@ export class OrderItemDialogComponent implements OnInit {
     }
   }
 
+  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    let categoryAndItems = this.itemsForMenu.filter(item => item.category === this.categories[tabChangeEvent.index].name)[0];
+    this.itemsByCategory.items = categoryAndItems.items
+    this.itemsByCategory.category = categoryAndItems.category
+    console.log(this.itemsByCategory)
+  }
+
+  addItemToList(itemId: number, itemName: string) {
+    if(this.itemType === 'DISH') {
+      this.orderItemCopy.items.push(new DishItemCopy(0, itemName, itemId, ItemStatus.CREATE))
+    } else {
+      this.orderItemCopy.items.push(new DrinkItemCopy(-1, 0, itemName, itemId, ItemStatus.CREATE))
+    }
+  }
+
+  isAddButtonDisabled(itemId: number) {
+    let shouldDisable = false
+    if(this.itemType === 'DISH' && this.orderItemRepresentation.id !== -1) {
+      // posto se updatuje nema smisla da menja jelo, vec samo kolicinu
+      shouldDisable = true
+    }
+    if(this.itemType === 'DISH' && this.orderItemCopy.items.length === 1) {
+      shouldDisable = true
+    } 
+    else if(this.itemType === 'DRINK') {
+      this.orderItemCopy.items.forEach(item => {
+        if(item.itemId === itemId) shouldDisable = true
+      })
+    }
+    return shouldDisable
+  }
+
+  isRemoveButtonDisabled() {
+    return (this.itemType === 'DISH' && this.orderItemRepresentation.id !== -1)
+  }
 }
