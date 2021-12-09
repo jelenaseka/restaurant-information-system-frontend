@@ -8,6 +8,7 @@ import { SocketService } from 'src/app/sockets/socket.service';
 import { PincodeDialogComponent } from 'src/app/unregistered/pincode-dialog/pincode-dialog.component';
 import { AddOrderItemDialogComponent } from '../add-dish-item-dialog/add-dish-item-dialog.component';
 import { DishItem, DishItemDTO, DrinkItems, DrinkItemsDTO, OrderDTO, OrderItem, OrderItemDTO } from '../models/order.model';
+import { OrderItemDialogComponent } from '../order-item-dialog/order-item-dialog.component';
 import { OrderService } from '../services/order.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class TableDetailsComponent implements OnInit {
   pinCode: string | undefined;
   table: string = 'T1';
   isWaiter: boolean = false;
-  order: OrderDTO | undefined;
+  order: OrderDTO;
+  selectedItemId: number
   iSentRequest : boolean = false;
 
   constructor(public dialog: MatDialog, private auth: AuthService, private toastService: ToastrService,
@@ -48,6 +50,7 @@ export class TableDetailsComponent implements OnInit {
             this.isWaiter = true
             this.order = new OrderDTO(data.id, data.totalPrice, data.createdAt, data.waiter, data.waiterId,
               data.dishItemList, data.drinkItemsList);
+            console.log('ORDER: ',this.order)
           }, (err: any) => {
             this.router.navigate(['/home'])
           });
@@ -90,24 +93,74 @@ export class TableDetailsComponent implements OnInit {
     this.socketService.sendMessage("/dish-item/change-state", JSON.stringify(data))
   }
 
+  openCreateDishItemDialog() {
+    let item = {
+      id: -1,
+      itemId: -1,
+      notes: "",
+      state: "NEW",
+      icon: "",
+      orderedItem: {
+        itemName: "",
+        amount: 0
+      }
+    }
+    let orderItem: OrderItem = new DishItem(new DishItemDTO(item));
+    
+    let dialogRef = this.dialog.open(OrderItemDialogComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
+      data: {orderItem, orderId: this.order.id}
+    });
+  }
+
+  openCreateDrinkItemsDialog() {
+    let item = {
+      id: -1,
+      notes: "",
+      state: "ON_HOLD",
+      itemList: [],
+      name: ""
+    }
+    let orderItem: OrderItem = new DrinkItems(new DrinkItemsDTO(item));
+    
+    let dialogRef = this.dialog.open(OrderItemDialogComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
+      data: {orderItem, orderId: this.order.id}
+    });
+  }
+
   openEditOrderItemDialog(item: OrderItemDTO) {
     let orderItem: OrderItem;
+    this.selectedItemId = item.id
     if(item instanceof DrinkItemsDTO) {
       orderItem = new DrinkItems(item);
     } else {
       orderItem = new DishItem(item);
     }
 
-    let dialogRef = this.dialog.open(AddOrderItemDialogComponent, {
+    let dialogRef = this.dialog.open(OrderItemDialogComponent, {
       maxWidth: '100vw',
       maxHeight: '100vh',
       height: '100%',
       width: '100%',
-      data: orderItem
+      data: {orderItem, orderId: this.order.id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`); // Pizza!
+      if(result === "" || result === undefined) return
+      // if(item instanceof DrinkItemsDTO) {
+      //   this.iSentRequest = true;
+      //   this.socketService.sendMessage("/drink-items/update/" + this.selectedItemId, JSON.stringify(result))
+      // } else {
+      //   this.iSentRequest = true;
+      //   this.socketService.sendMessage("/dish-item/update/" + this.selectedItemId, JSON.stringify(result))
+      // }
     });
   }
 

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { DishItem, DishItemDTO, DrinkItems, DrinkItemsDTO, OrderItem } from '../models/order.model';
+import { DishItem, DishItemDTO, DishItemOrderedDTO, DrinkItemDTO, DrinkItems, DrinkItemsDTO, OrderItem } from '../models/order.model';
 import { Category, CategoryService } from '../services/category.service';
 import { mergeMap, map, filter, switchMap, concatAll } from 'rxjs/operators';
 import { from, Observable, of } from 'rxjs';
@@ -17,6 +17,32 @@ interface ItemForMenu {
 interface ItemsForMenu {
   category: string,
   items: ItemForMenu[]
+}
+
+class DrinkItemsCreate {
+  orderId: number;
+  notes: string;
+  drinkItemList: DrinkItemDTO[];
+
+  constructor(orderId: number, notes: string, drinkItemList: DrinkItemDTO[]) {
+    this.orderId = orderId;
+    this.notes = notes;
+    this.drinkItemList = drinkItemList
+  }
+}
+
+class DishItemCreate {
+  orderId: number;
+  notes: string;
+  amount: number;
+  itemId: number;
+
+  constructor(orderId: number, notes: string, amount: number, itemId: number) {
+    this.orderId = orderId;
+    this.notes = notes;
+    this.amount = amount;
+    this.itemId = itemId;
+  }
 }
 
 class ItemForDialog {
@@ -47,31 +73,37 @@ export class AddOrderItemDialogComponent implements OnInit {
   itemType: string
   selected: number = 0
   itemForDialog: ItemForDialog
+  itemsOriginal: any[] = []
 
   constructor(public dialogRef: MatDialogRef<AddOrderItemDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public item: OrderItem,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private categoryService: CategoryService,
     private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.itemType = this.item instanceof DrinkItems ? 'DRINK' : 'DISH'
+    console.log('oninit')
+    console.log('data: ',this.data)
+    this.itemType = this.data.orderItem instanceof DrinkItems ? 'DRINK' : 'DISH'
     this.getCategoriesAndItemsForMenu()
     this.itemForDialog = new ItemForDialog()
     if(this.itemType == 'DISH') {
-      this.itemForDialog.items.push(((this.item as DishItem).dishItem as DishItemDTO).orderedItem)
-      this.itemForDialog.id = ((this.item as DishItem).dishItem as DishItemDTO).id
-      this.itemForDialog.notes = ((this.item as DishItem).dishItem as DishItemDTO).notes
-      this.itemForDialog.icon = ((this.item as DishItem).dishItem as DishItemDTO).icon
+      this.itemForDialog.items.push(((this.data.orderItem as DishItem).dishItem as DishItemDTO).orderedItem)
+      this.itemsOriginal = JSON.parse(JSON.stringify(this.itemForDialog.items))
+
+      this.itemForDialog.id = ((this.data.orderItem as DishItem).dishItem as DishItemDTO).id
+      this.itemForDialog.notes = ((this.data.orderItem as DishItem).dishItem as DishItemDTO).notes
+      this.itemForDialog.icon = ((this.data.orderItem as DishItem).dishItem as DishItemDTO).icon
     } else {
-      ((this.item as DrinkItems).drinkItems as DrinkItemsDTO).itemList.forEach(item => {
+      ((this.data.orderItem as DrinkItems).drinkItems as DrinkItemsDTO).itemList.forEach(item => {
         this.itemForDialog.items.push(item)
       });
-      this.itemForDialog.id = ((this.item as DrinkItems).drinkItems as DrinkItemsDTO).id
-      this.itemForDialog.name = ((this.item as DrinkItems).drinkItems as DrinkItemsDTO).name
-      this.itemForDialog.notes = ((this.item as DrinkItems).drinkItems as DrinkItemsDTO).notes
+      this.itemsOriginal = JSON.parse(JSON.stringify(this.itemForDialog.items))
+
+      this.itemForDialog.id = ((this.data.orderItem as DrinkItems).drinkItems as DrinkItemsDTO).id
+      this.itemForDialog.name = ((this.data.orderItem as DrinkItems).drinkItems as DrinkItemsDTO).name
+      this.itemForDialog.notes = ((this.data.orderItem as DrinkItems).drinkItems as DrinkItemsDTO).notes
     }
     
-    console.log(this.itemForDialog)
   }
 
   getCategoriesAndItemsForMenu(): void {
@@ -87,9 +119,6 @@ export class AddOrderItemDialogComponent implements OnInit {
     .subscribe((data) => {
       this.itemsForMenu.push({category: this.categories[i].name, items: data})
       i = i + 1
-      // this.itemsByCategory.push(this.itemsForMenu[0])
-      // console.log(this.categories)
-      // console.log(this.itemsForMenu)
     })
   }
 
@@ -97,17 +126,48 @@ export class AddOrderItemDialogComponent implements OnInit {
     return this.http.get<ItemForMenu[]>("/item/category/" + category);
   }
 
-  closeDialog() {
-    this.dialogRef.close('Pizza!');
+  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    this.itemsByCategory = this.itemsForMenu.filter(item => item.category === this.categories[tabChangeEvent.index].name)
   }
 
-  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-    // console.log('tabChangeEvent => ', tabChangeEvent);
-    // console.log('index => ', tabChangeEvent.index);
-    //renderuj one items for menu
-    this.itemsByCategory = this.itemsForMenu.filter(item => item.category === this.categories[tabChangeEvent.index].name)
-    // console.log(this.itemsByCategory)
+  editOrderItem() {
+    if(this.itemType == 'DRINK') {
+      let createDrinkItems = new DrinkItemsCreate(this.data.orderId, this.itemForDialog.notes, [])
+      this.itemForDialog.items.forEach(item => {
+        console.log('item status',item.status)
+        createDrinkItems.drinkItemList.push(new DrinkItemDTO(item.id, item.amount, item.name))
+      })
+      // this.dialogRef.close(createDrinkItems);
+    } else {
+      // let amount = this.itemForDialog.items[0].amount
+      // let createDishItem = new DishItemCreate(this.data.orderId, this.itemForDialog.notes, amount, this.itemForDialog.id)
+      // this.dialogRef.close(createDishItem);
+    }
     
+  }
+
+  resetChanges(): void {
+    this.itemForDialog.items = JSON.parse(JSON.stringify(this.itemsOriginal))
+    if(this.itemType == 'DRINK') { 
+      ((this.data.orderItem as DrinkItems).drinkItems as DrinkItemsDTO).itemList = JSON.parse(JSON.stringify(this.itemsOriginal))
+    } else {
+      ((this.data.orderItem as DishItem).dishItem as DishItemDTO).orderedItem = JSON.parse(JSON.stringify(this.itemsOriginal[0]))
+    }
+    this.dialogRef.close("");
+  }
+
+  increment(item: any) {
+    item.amount = item.amount + 1
+  }
+
+  decrement(item: any) {
+    item.amount = item.amount - 1
+  }
+
+  addItem() {
+    if(this.itemType == 'DRINK') { // SAMO TADA MOZE
+      // this.itemForDialog.items.push(new DrinkItemDTO(0, 0, "name")) //prvo je id ITEMA sa menija, i ime dobija, amount je 0
+    }
   }
 
 }

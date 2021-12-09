@@ -1,29 +1,32 @@
 <h2 mat-dialog-title>Install Angular</h2>
 <mat-dialog-content class="mat-typography">
   <div fxLayout="row">
-    <mat-tab-group fxFlex (selectedTabChange)="tabChanged($event)">
+    <!-- <mat-tab-group fxFlex (selectedTabChange)="tabChanged($event)">
       <mat-tab *ngFor="let category of categories; let index = index" [label]="category.name">
         
       </mat-tab>
-    </mat-tab-group>
+    </mat-tab-group> -->
+    <div fxFlex>
+
+    </div>
     <div fxFlex fxLayout="column">
       <div>
         <h2 style="text-align: center;">Items</h2>
         <mat-list role="list">
-          <mat-list-item role="listitem" *ngFor="let item of itemForDialog.items">
+          <mat-list-item role="listitem" *ngFor="let item of orderItemCopy.items">
             <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
               <div>
                 {{item.itemName}}
               </div>
               
               <div fxLayout="row" fxLayoutAlign="space-around center">
-                <button mat-button (click)="decrement(item)" [disabled]="item.amount === 0">
+                <button mat-button (click)="decrementAmount(item)" [disabled]="item.amount === 0">
                   <mat-icon color="primary">remove</mat-icon>
                 </button>
                 <div>
                   <input matInput style="width: 20px" readonly [value]="item.amount"/>
                 </div>
-                <button mat-button (click)="increment(item)">
+                <button mat-button (click)="incrementAmount(item)">
                   <mat-icon color="primary">add</mat-icon>
                 </button>
               </div>
@@ -36,8 +39,7 @@
       </div>
       <h2 style="text-align: center;">Notes</h2>
       <div class="notes">
-        
-        {{itemForDialog.notes}}
+        {{orderItemCopy.notes}}
       </div>
     </div>
   </div>

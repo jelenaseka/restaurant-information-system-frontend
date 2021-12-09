@@ -36,6 +36,7 @@ import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-di
 import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-employee-dialog.component';
 import { TableDetailsComponent } from './waiter/table-details/table-details.component';
 import { AddOrderItemDialogComponent } from './waiter/add-dish-item-dialog/add-dish-item-dialog.component';
+import { OrderItemDialogComponent } from './waiter/order-item-dialog/order-item-dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { AddOrderItemDialogComponent } from './waiter/add-dish-item-dialog/add-d
     AddEmployeeDialogComponent,
     TableDetailsComponent,
     AddOrderItemDialogComponent,
+    OrderItemDialogComponent,
   ],
   imports: [
     BrowserModule,
