@@ -1,0 +1,70 @@
+<app-header></app-header>
+
+<div class="main-container" fxLayout="row" fxLayoutAlign="space-around start">
+        <div class="table-construction-container">
+            <mat-form-field appearance="standard" class="search">
+                <mat-label>Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+            </mat-form-field>
+            <button mat-flat-button color="primary" (click)="addSystemAdmin()" class="add-button"><mat-icon>person_add</mat-icon>Add</button>
+            <div class="table-container">
+                <app-workers-table [dataSource]="dataSource" [clickedRow]="dataSource.data[0]" (selectedRowChanged)="getDetails($event)"></app-workers-table>
+            </div>
+        </div>
+        <mat-card class="details-card">
+            <mat-card-title>System admin details</mat-card-title>
+            <mat-divider></mat-divider>
+            <form class="form-container" [formGroup]="form" (ngSubmit)="saveSystemAdmin()"
+            fxLayout="column" fxLayoutAlign="center center">
+            <!-- First name -->
+            <mat-form-field appearance="fill">
+                <mat-label>First name</mat-label>
+                <input matInput formControlName="firstName"/>
+                <mat-error *ngIf="form.invalid">{{ validator.validateRequired('firstName') }}</mat-error>
+            </mat-form-field>
+            <!-- Last name -->
+            <mat-form-field appearance="fill">
+                <mat-label>Last name</mat-label>
+                <input matInput formControlName="lastName"/>
+                <mat-error *ngIf="form.invalid">{{ validator.validateRequired('lastName') }}</mat-error>
+            </mat-form-field>
+            <!-- Email address -->
+            <mat-form-field appearance="fill">
+                <mat-label>Email address</mat-label>
+                <input matInput placeholder="Ex. pat@example.com" formControlName="emailAddress"/>
+                <mat-error *ngIf="form.invalid">{{ validator.validateEmail('emailAddress') }}</mat-error>
+            </mat-form-field>
+            <!-- Username -->
+            <mat-form-field appearance="fill">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="username"/>
+                <mat-error *ngIf="form.invalid">{{  validator.validate3To30('username') }}</mat-error>
+            </mat-form-field>
+            <!-- Type -->
+            <mat-form-field appearance="fill">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option value="SYSTEM_ADMIN">System admin</mat-option>
+                </mat-select>
+                </mat-form-field>
+                <!-- Salary -->
+            <mat-form-field appearance="fill">
+                <mat-label>Salary</mat-label>
+                <input matInput type="number" formControlName="salary"/>
+                <mat-error *ngIf="form.invalid">{{ validator.validateRequired('salary') }}</mat-error>
+            </mat-form-field>
+            <!-- Phone number -->
+            <mat-form-field appearance="fill">
+                <mat-label>Phone number</mat-label>
+                <input matInput formControlName="phoneNumber"/>
+                <mat-error *ngIf="form.invalid">{{ validator.validatePhoneNumber('phoneNumber')}}</mat-error>
+            </mat-form-field>
+            <div class="buttons-container" fxLayout="row" fxLayoutAlign="space-around center">
+                <button mat-stroked-button color="primary" type="button" (click)="cancelEdit()" *ngIf="isEnabledEditing">Cancel</button>
+                <button mat-flat-button color="primary" type="button" (click)="enableEdit()" *ngIf="!isEnabledEditing">Edit</button>
+                <button mat-flat-button color="primary" type="submit" *ngIf="isEnabledEditing">Save</button>
+            </div>
+            <button type="button" class="password-btn" (click)="changePassword()">Change password</button>
+        </form>
+    </mat-card>
+</div>

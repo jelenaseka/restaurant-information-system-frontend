@@ -33,8 +33,6 @@ export class ItemDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.pinCode = result;
       if(this.pinCode !== undefined) {
-      
-
         let userType : string = this.getUserType().toLowerCase();
         if(this.pinCodeIsValid()) {
           this.auth.checkPinCode(Number.parseInt(<string>this.pinCode), userType)

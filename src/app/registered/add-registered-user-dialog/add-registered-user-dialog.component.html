@@ -1,0 +1,70 @@
+<h2 mat-dialog-title>Add new manager</h2>
+<mat-divider [ngStyle]="{'margin-bottom' : '5vh'}"></mat-divider>
+<mat-dialog-content class="mat-typography">
+    <form class="form-container" [formGroup]="managerForm"
+        fxLayout="column" fxLayoutAlign="center center">
+        <!-- First name -->
+        <mat-form-field appearance="fill">
+            <mat-label>First name</mat-label>
+            <input matInput formControlName="firstName"/>
+            <mat-error *ngIf="managerForm.invalid">{{ validator.validateRequired('firstName') }}</mat-error>
+        </mat-form-field>
+        <!-- Last name -->
+        <mat-form-field appearance="fill">
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="lastName"/>
+            <mat-error *ngIf="managerForm.invalid">{{ validator.validateRequired('lastName') }}</mat-error>
+        </mat-form-field>
+        <!-- Email address -->
+        <mat-form-field appearance="fill">
+            <mat-label>Email address</mat-label>
+            <input matInput placeholder="Ex. pat@example.com" formControlName="emailAddress"/>
+            <mat-error *ngIf="managerForm.invalid">{{ validator.validateEmail('emailAddress') }}</mat-error>
+        </mat-form-field>
+        <!-- Username -->
+        <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username"/>
+            <mat-error *ngIf="managerForm.invalid">{{  validator.validate3To30('username') }}</mat-error>
+        </mat-form-field>
+        <!-- New password -->
+        <mat-form-field appearance="fill">
+            <mat-label>New password</mat-label>
+            <input matInput [type]="hideNew ? 'password' : 'text'" formControlName="newPassword"/>
+            <button mat-icon-button matSuffix type="button"
+            (click)="hideNew = !hideNew" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideNew"
+            >
+            <mat-icon>{{ hideNew ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            <mat-error *ngIf="managerForm.invalid">{{ validator.validate3To30('newPassword')}}</mat-error>
+        </mat-form-field>
+        <!-- Repeat password -->
+        <mat-form-field appearance="fill">
+            <mat-label>Repeat password</mat-label>
+            <input matInput [type]="hideRepeat ? 'password' : 'text'" formControlName="repeatPassword"/>
+            <button mat-icon-button matSuffix type="button"
+            (click)="hideRepeat = !hideRepeat" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideRepeat"
+            >
+            <mat-icon>{{ hideRepeat ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            <mat-error *ngIf="managerForm.invalid">{{ validator.validate3To30('repeatPassword')}}</mat-error>
+        </mat-form-field>
+        <!-- Salary -->
+        <mat-form-field appearance="fill">
+            <mat-label>Salary</mat-label>
+            <input matInput type="number" formControlName="salary"/>
+            <mat-error *ngIf="managerForm.invalid">{{ validator.validateRequired('salary') }}</mat-error>
+        </mat-form-field>
+        <!-- Phone number -->
+        <mat-form-field appearance="fill">
+            <mat-label>Phone number</mat-label>
+            <input matInput formControlName="phoneNumber"/>
+            <mat-error *ngIf="managerForm.invalid">{{ validator.validatePhoneNumber('phoneNumber')}}</mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-divider [ngStyle]="{'margin-top' : '5vh'}"></mat-divider>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button color='primary' (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color='primary' (click)="onSave()" cdkFocusInitial>Save</button>
+</mat-dialog-actions> 

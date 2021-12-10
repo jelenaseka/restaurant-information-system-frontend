@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/autentification/services/auth.service';
+import { JwtDecoderService } from 'src/app/autentification/services/jwt-decoder.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,12 @@ import { AuthService } from 'src/app/autentification/services/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private _auth: AuthService) {}
+  _type: string | null = null;
+  constructor(private _auth: AuthService, private _jwt: JwtDecoderService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._type = this._jwt.getTypeFromToken();
+  }
 
   logout(): void {
     this._auth.logoutUser();

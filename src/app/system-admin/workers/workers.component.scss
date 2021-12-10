@@ -1,0 +1,80 @@
+.main-container {
+  height: 90vh;
+}
+
+.details-card {
+  margin-top: 2.5vh;
+  width: 30vw;
+  height: 82vh;
+  background-color: var(--card-color);
+}
+
+form {
+  margin-top: 3vh;
+}
+
+mat-form-field {
+  font-size: large;
+  width: 50%;
+}
+
+.search {
+  font-size: large;
+  width: 80%;
+  position: absolute;
+  left: 0px;
+  top: -40px;
+}
+
+button {
+  font-size: large;
+  width: 48%;
+}
+
+.buttons-container {
+  width: 50%;
+}
+
+mat-card {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+mat-icon {
+  margin-right: 10px;
+}
+
+.table-construction-container {
+  margin-top: 5vh;
+  position: relative;
+  width: 60vw;
+}
+
+.table-container {
+  margin-top: 10vh;
+  height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--card-color);
+  box-shadow: 0px 0px 10px rgba($color: #000000, $alpha: 0.5);
+}
+
+.add-button {
+  width: auto;
+  position: absolute;
+  right: 0px;
+  top: -10px;
+}
+
+.password-btn {
+  font-size: 1em;
+  margin-top: 5vh;
+  border: transparent;
+  background-color: transparent;
+  border-bottom: 1px solid blue;
+  width: auto;
+}
+
+.password-btn:hover {
+  cursor: pointer;
+}
