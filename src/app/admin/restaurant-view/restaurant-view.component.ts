@@ -124,7 +124,7 @@ export class RestaurantViewComponent implements OnInit {
 
   save() : void {
     let selectedId = this.rooms[this.selected.value].id;
-    this.roomService.save(this.rooms[this.selected.value].tables, selectedId).subscribe(() => {
+    this.roomService.updateRoomTables(this.rooms[this.selected.value].tables, selectedId).subscribe(() => {
       this.toastService.success("Room updated successfully.", 'Ok');
       this.turnOffEditMode();
     }, error => this.toastService.error(convertResponseError(error), 'Error'));

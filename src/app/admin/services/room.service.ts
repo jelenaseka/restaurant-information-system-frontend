@@ -13,16 +13,8 @@ export class RoomService {
 
   constructor(private http: HttpClient) { }
 
-  public save(tables: Table[], id : number)  : Observable<void>  {
-    return this.http.put<void>("/room/"+id, {tables:tables});
-  }
-
   public getActiveRooms() : Observable<RoomWithTables[]> {
     return this.http.get<RoomWithTables[]>("/room/");
-  }
-
-  public editRoomLayout(id: number, dto : RoomLayout) : Observable<void> {
-    return this.http.put<void>("/room/"+id+"/layout", dto);
   }
 
   public addRoom(room : RoomCreate) : Observable<string> {
@@ -32,7 +24,15 @@ export class RoomService {
   public updateRoomName(id : number, newName : string) : Observable<void> {
     return this.http.put<void>("/room/"+id+"/name", newName);
   }
+
+  public editRoomLayout(id: number, dto : RoomLayout) : Observable<void> {
+    return this.http.put<void>("/room/"+id+"/layout", dto);
+  }
   
+  public updateRoomTables(tables: Table[], id : number)  : Observable<void>  {
+    return this.http.put<void>("/room/"+id+"/tables", {tables:tables});
+  }
+
   public removeRoom(id : number) : Observable<void> {
     return this.http.delete<void>("/room/"+id);
   }
