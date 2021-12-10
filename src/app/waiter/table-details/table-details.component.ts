@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/autentification/services/auth.service';
 import { SocketResponse } from 'src/app/sockets/model/socket-response.model';
 import { SocketService } from 'src/app/sockets/socket.service';
 import { PincodeDialogComponent } from 'src/app/unregistered/pincode-dialog/pincode-dialog.component';
-import { AddOrderItemDialogComponent } from '../add-dish-item-dialog/add-dish-item-dialog.component';
 import { DishItem, DishItemCreateDTO, DishItemDTO, DishItemUpdateDTO, DrinkItems, DrinkItemsCreateDTO, DrinkItemsDTO, DrinkItemsUpdateDTO, OrderDTO, OrderItem, OrderItemDTO } from '../models/order.model';
 import { OrderItemDialogComponent } from '../order-item-dialog/order-item-dialog.component';
 import { OrderService } from '../services/order.service';
@@ -181,6 +180,16 @@ export class TableDetailsComponent implements OnInit {
     } else if (result instanceof DishItemCreateDTO) {
       this.socketService.sendMessage("/dish-item/create", JSON.stringify(result))
     }
+  }
+
+  deleteDrinkItems(id: number) {
+    this.iSentRequest = true;
+    this.socketService.sendMessage("/drink-items/delete/" + id, "")
+  }
+
+  deleteDishItem(id: number) {
+    this.iSentRequest = true;
+    this.socketService.sendMessage("/dish-item/delete/" + id, "")
   }
 
 }

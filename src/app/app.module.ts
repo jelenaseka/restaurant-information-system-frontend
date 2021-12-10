@@ -35,7 +35,6 @@ import { DrinkItemsService } from './bartender/services/drink-items.service';
 import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-dialog.component';
 import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-employee-dialog.component';
 import { TableDetailsComponent } from './waiter/table-details/table-details.component';
-import { AddOrderItemDialogComponent } from './waiter/add-dish-item-dialog/add-dish-item-dialog.component';
 import { OrderItemDialogComponent } from './waiter/order-item-dialog/order-item-dialog.component';
 
 @NgModule({
@@ -60,7 +59,6 @@ import { OrderItemDialogComponent } from './waiter/order-item-dialog/order-item-
     PincodeDialogComponent,
     AddEmployeeDialogComponent,
     TableDetailsComponent,
-    AddOrderItemDialogComponent,
     OrderItemDialogComponent,
   ],
   imports: [

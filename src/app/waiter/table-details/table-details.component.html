@@ -42,7 +42,7 @@
               <span fxFlex>{{item.name}}</span>
               <div fxFlex *ngIf="item.state === 'ON_HOLD'" style="text-align: end;">
                 <mat-icon color="primary" (click)="openEditOrderItemDialog(item)">edit</mat-icon>
-                <mat-icon color="warn">clear</mat-icon>
+                <mat-icon color="warn" (click)="deleteDrinkItems(item.id)">clear</mat-icon>
               </div>
               <div *ngIf="item.state === 'PREPARATION'" fxFlex style="text-align: end;">
                 <p style="font-size: 12px; color: grey;">PREPARING...</p>
@@ -72,7 +72,7 @@
               <div fxLayout="row" fxLayoutAlign="space-around center" fxFlex *ngIf="item.state === 'NEW'" style="text-align: end;">
                 <button mat-raised-button color="primary" (click)="changeDishItemState( order?.waiterId, item.id)">prepare</button>
                 <mat-icon color="primary" (click)="openEditOrderItemDialog(item)">edit</mat-icon>
-                <mat-icon color="warn">clear</mat-icon>
+                <mat-icon color="warn" (click)="deleteDishItem(item.id)">clear</mat-icon>
               </div>
               <div *ngIf="item.state === 'ON_HOLD'" fxFlex style="text-align: end;">
                 <p style="font-size: 12px; color: grey;">ON HOLD</p>

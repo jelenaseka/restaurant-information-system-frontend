@@ -57,6 +57,6 @@
   <button mat-button 
           [mat-dialog-close]="true" 
           (click)="editOrderItem()" 
-          [disabled]="orderItemCopy.items[0] == null || (itemType === 'DISH' && orderItemCopy.items[0].amount === 0)"
+          [disabled]="isDoneButtonDisabled()"
           cdkFocusInitial>Done</button>
 </mat-dialog-actions>

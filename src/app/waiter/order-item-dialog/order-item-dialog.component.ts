@@ -218,4 +218,19 @@ export class OrderItemDialogComponent implements OnInit {
   isRemoveButtonDisabled() {
     return (this.itemType === 'DISH' && this.orderItemRepresentation.id !== -1)
   }
+
+  isDoneButtonDisabled() {
+    let shouldDisable = false
+    if(this.orderItemCopy.items[0] == null || (this.itemType === 'DISH' && this.orderItemCopy.items[0].amount === 0)) {
+      shouldDisable = true
+    }
+    if(this.itemType === 'DRINK' && this.orderItemCopy.items.length > 0) {
+      this.orderItemCopy.items.forEach(item => {
+        if(item.amount === 0) {
+          shouldDisable = true
+        }
+      })
+    }
+    return shouldDisable;
+  }
 }
