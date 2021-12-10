@@ -9,7 +9,7 @@ import { ItemService } from 'src/app/services/item.service';
 import { ItemCategoryCreate } from '../models/item-category-create.model';
 import { ItemCategory } from '../models/item-category.model';
 import { convertResponseError } from 'src/app/error-converter.function';
-import { UserIdAndType } from '../models/user-id-and-type.model';
+import { UserIdAndType } from '../../unregistered/models/user-id-and-type.model';
 import { ItemDetails } from '../models/item-details.model';
 import { ItemUpdate } from '../models/item-update.model';
 

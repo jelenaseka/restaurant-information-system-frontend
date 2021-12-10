@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddManagerDialogComponent } from './add-manager-dialog.component';
+import { AddRegisteredUserDialogComponent } from './add-registered-user-dialog.component';
 
 describe('AddManagerDialogComponent', () => {
-  let component: AddManagerDialogComponent;
-  let fixture: ComponentFixture<AddManagerDialogComponent>;
+  let component: AddRegisteredUserDialogComponent;
+  let fixture: ComponentFixture<AddRegisteredUserDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddManagerDialogComponent ]
+      declarations: [ AddRegisteredUserDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddManagerDialogComponent);
+    fixture = TestBed.createComponent(AddRegisteredUserDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

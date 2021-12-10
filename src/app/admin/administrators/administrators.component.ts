@@ -4,15 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
-import { AddEmployeeDialogComponent } from 'src/app/manager/add-employee-dialog/add-employee-dialog.component';
-import { UnregistaredUserTable } from 'src/app/manager/employees/models/unregistared-user-table.model';
-import { UnregistaredUserDetails } from 'src/app/manager/employees/models/unregistered-user-details';
+import { AddRegisteredUserDialogComponent } from 'src/app/registered/add-registered-user-dialog/add-registered-user-dialog.component';
+import { RegisteredUserDetails } from 'src/app/registered/models/registered-user-details.model';
 import { ManagerService } from 'src/app/services/manager.service';
 import { ValidatorService } from 'src/app/services/validator.service';
-import { AddManagerDialogComponent } from 'src/app/system-admin/add-manager-dialog/add-manager-dialog.component';
 import { ChangePasswordDialogComponent } from 'src/app/system-admin/change-password-dialog/change-password-dialog.component';
-import { ManagerDetails } from 'src/app/system-admin/models/manager-details.model';
-import { UserIdAndType } from 'src/app/system-admin/models/user-id-and-type.model';
+import { UserIdAndType } from 'src/app/unregistered/models/user-id-and-type.model';
+import { UserTableInfo } from 'src/app/unregistered/models/user-table-info.model';
 
 @Component({
   selector: 'app-administrators',
@@ -20,11 +18,10 @@ import { UserIdAndType } from 'src/app/system-admin/models/user-id-and-type.mode
   styleUrls: ['./administrators.component.scss']
 })
 export class AdministratorsComponent implements OnInit {
-  //TODO: Preimenovati UnregistaredUserTable
-  dataSource: MatTableDataSource<UnregistaredUserTable>;
+  dataSource: MatTableDataSource<UserTableInfo>;
   selecteduserId: number = -1;
   isEnabledEditing: boolean = false;
-  system_admin: ManagerDetails | null = null;
+  system_admin: RegisteredUserDetails | null = null;
 
   form: FormGroup = new FormGroup({
     firstName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required,]),
@@ -46,7 +43,7 @@ export class AdministratorsComponent implements OnInit {
   }
 
   getDetails(data: UserIdAndType): void {
-    this._managerService.getManagerById(data.id).subscribe(
+    this._managerService.getRegisteredUserById(data.id).subscribe(
       (res) => {
         this.system_admin = res;
         this.form.patchValue(res);
@@ -67,7 +64,7 @@ export class AdministratorsComponent implements OnInit {
       this._enableFormEditing(false);
       return;
     }
-    this._managerService.updateManager(this.selecteduserId, this.form).subscribe(
+    this._managerService.updateRegisteredUser(this.selecteduserId, this.form).subscribe(
       () => {
         this._enableFormEditing(false);
         this._toastr.success('Details are saved successfully', 'Updated');
@@ -91,7 +88,7 @@ export class AdministratorsComponent implements OnInit {
   }
 
   public addSystemAdmin(): void {
-    const dialogRef = this._dialog.open(AddManagerDialogComponent);
+    const dialogRef = this._dialog.open(AddRegisteredUserDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == null) {

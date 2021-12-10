@@ -1,4 +1,4 @@
-export interface ManagerDetails {
+export interface RegisteredUserCreate {
     firstName: string;
     lastName: string;
     emailAddress: string;
@@ -6,4 +6,5 @@ export interface ManagerDetails {
     salary: number;
     type: string;
     username: string;
+    password: string;
   }

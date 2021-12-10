@@ -5,11 +5,11 @@ import { ToastrService } from 'ngx-toastr';
 import { ValidatorService } from 'src/app/services/validator.service';
 
 @Component({
-  selector: 'app-add-manager-dialog',
-  templateUrl: './add-manager-dialog.component.html',
-  styleUrls: ['./add-manager-dialog.component.scss']
+  selector: 'app-add-registered-user-dialog',
+  templateUrl: './add-registered-user-dialog.component.html',
+  styleUrls: ['./add-registered-user-dialog.component.scss']
 })
-export class AddManagerDialogComponent implements OnInit {
+export class AddRegisteredUserDialogComponent implements OnInit {
   hideNew: boolean = true;
   hideRepeat: boolean = true;
 
@@ -25,7 +25,7 @@ export class AddManagerDialogComponent implements OnInit {
     repeatPassword: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
   });
 
-  constructor(public dialogRef: MatDialogRef<AddManagerDialogComponent>, public validator: ValidatorService, public _toastr: ToastrService) { 
+  constructor(public dialogRef: MatDialogRef<AddRegisteredUserDialogComponent>, public validator: ValidatorService, public _toastr: ToastrService) { 
     this.validator.setForm(this.managerForm);
   }
 

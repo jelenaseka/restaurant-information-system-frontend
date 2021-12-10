@@ -5,14 +5,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { AddEmployeeDialogComponent } from 'src/app/manager/add-employee-dialog/add-employee-dialog.component';
-import { UnregistaredUserTable } from 'src/app/manager/employees/models/unregistared-user-table.model';
-import { UnregistaredUserDetails } from 'src/app/manager/employees/models/unregistered-user-details';
+import { UnregistaredUserDetails } from 'src/app/unregistered/models/unregistered-user-details';
+import { AddRegisteredUserDialogComponent } from 'src/app/registered/add-registered-user-dialog/add-registered-user-dialog.component';
+import { RegisteredUserDetails } from 'src/app/registered/models/registered-user-details.model';
 import { ManagerService } from 'src/app/services/manager.service';
 import { ValidatorService } from 'src/app/services/validator.service';
-import { AddManagerDialogComponent } from '../add-manager-dialog/add-manager-dialog.component';
+import { UserTableInfo } from 'src/app/unregistered/models/user-table-info.model';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
-import { ManagerDetails } from '../models/manager-details.model';
-import { UserIdAndType } from '../models/user-id-and-type.model';
+import { UserIdAndType } from '../../unregistered/models/user-id-and-type.model';
 
 @Component({
   selector: 'app-workers',
@@ -20,12 +20,12 @@ import { UserIdAndType } from '../models/user-id-and-type.model';
   styleUrls: ['./workers.component.scss']
 })
 export class WorkersComponent implements OnInit {
-  dataSource: MatTableDataSource<UnregistaredUserTable>;
-  clickedRow: UnregistaredUserTable | null;
+  dataSource: MatTableDataSource<UserTableInfo>;
+  clickedRow: UserTableInfo | null;
   selecteduserId: number;
   isEnabledEditing: boolean = false;
   unregistered: UnregistaredUserDetails | null;
-  manager: ManagerDetails | null;
+  manager: RegisteredUserDetails | null;
 
   unregisteredForm: FormGroup = new FormGroup({
     firstName: new FormControl({ value: '', disabled: !this.isEnabledEditing }, [Validators.required, Validators.minLength(3), Validators.maxLength(30),]),
@@ -75,7 +75,7 @@ export class WorkersComponent implements OnInit {
         }
       );
     } else {
-      this._managerService.getManagerById(data.id).subscribe(
+      this._managerService.getRegisteredUserById(data.id).subscribe(
         (res) => {
           this.validator.setForm(this.managerForm);
           this.unregistered = null;
@@ -119,7 +119,7 @@ export class WorkersComponent implements OnInit {
       this._enableFormEditing(false);
       return;
     }
-    this._managerService.updateManager(this.selecteduserId, this.managerForm).subscribe(
+    this._managerService.updateRegisteredUser(this.selecteduserId, this.managerForm).subscribe(
       () => {
         this._enableFormEditing(false);
         this._toastr.success('Details are saved successfully', 'Updated');
@@ -165,7 +165,7 @@ export class WorkersComponent implements OnInit {
   }
 
   public addManager(): void {
-    const dialogRef = this._dialog.open(AddManagerDialogComponent);
+    const dialogRef = this._dialog.open(AddRegisteredUserDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == null) {
