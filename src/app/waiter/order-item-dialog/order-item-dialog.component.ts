@@ -104,7 +104,8 @@ export class OrderItemDialogComponent implements OnInit {
         })
         let drinkItemsCreateDTO: DrinkItemsCreateDTO = new DrinkItemsCreateDTO(
           this.orderItemCopy.notes,
-          items)
+          items,
+          this.data.orderId)
         this.dialogRef.close(drinkItemsCreateDTO);
       } else {
         console.log(this.orderItemCopy)
@@ -114,7 +115,8 @@ export class OrderItemDialogComponent implements OnInit {
         let dishItemCreateDTO: DishItemCreateDTO = new DishItemCreateDTO(
           this.orderItemCopy.items[0].itemId,
           this.orderItemCopy.notes,
-          this.orderItemCopy.items[0].amount
+          this.orderItemCopy.items[0].amount,
+          this.data.orderId
         )
 
         this.dialogRef.close(dishItemCreateDTO)
@@ -130,14 +132,16 @@ export class OrderItemDialogComponent implements OnInit {
         let drinkItemsUpdateDTO: DrinkItemsUpdateDTO = new DrinkItemsUpdateDTO(
           this.orderItemRepresentation.id,
           this.orderItemCopy.notes,
-          items)
+          items,
+          this.data.orderId)
 
         this.dialogRef.close(drinkItemsUpdateDTO);
       } else {
         let dishItemUpdateDTO: DishItemUpdateDTO = new DishItemUpdateDTO(
           this.orderItemRepresentation.id,
           this.orderItemCopy.notes,
-          this.orderItemCopy.items[0].amount
+          this.orderItemCopy.items[0].amount,
+          this.data.orderId
         )
 
         this.dialogRef.close(dishItemUpdateDTO)
@@ -152,7 +156,16 @@ export class OrderItemDialogComponent implements OnInit {
   removeItem(orderItem: any) {
     console.log(orderItem)
     this.orderItemCopy.items = this.orderItemCopy.items.filter(item => {
-      return item.itemId !== orderItem.itemId && item.itemName !== orderItem.itemName
+      if(item.itemId !== orderItem.itemId && item.itemName !== orderItem.itemName) {
+        if(item.status !== ItemStatus.CREATE) {
+          item.status = ItemStatus.DELETE
+        }
+      }
+      if(item.itemId === -1) {
+        return item.id !== orderItem.id && item.itemName !== orderItem.itemName
+      } else {
+        return item.itemId !== orderItem.itemId && item.itemName !== orderItem.itemName
+      }
     })
   }
 

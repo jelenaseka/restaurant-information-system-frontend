@@ -181,10 +181,12 @@ export class DishItemCopy {
 export class DrinkItemsCreateDTO {
   notes: string;
   drinkItems: DrinkItemUpdateDTO[]
+  orderId: number;
 
-  constructor(notes: string, drinkItems: DrinkItemUpdateDTO[]) {
+  constructor(notes: string, drinkItems: DrinkItemUpdateDTO[], orderId: number) {
     this.notes = notes;
     this.drinkItems = drinkItems;
+    this.orderId = orderId;
   }
 }
 
@@ -192,11 +194,13 @@ export class DrinkItemsUpdateDTO {
   id: number;
   notes: string;
   drinkItems: DrinkItemUpdateDTO[]
+  orderId: number;
 
-  constructor(id: number, notes: string, drinkItems: DrinkItemUpdateDTO[]) {
+  constructor(id: number, notes: string, drinkItems: DrinkItemUpdateDTO[], orderId: number) {
     this.id = id;
     this.notes = notes;
     this.drinkItems = drinkItems;
+    this.orderId = orderId;
   }
 }
 
@@ -218,11 +222,13 @@ export class DishItemUpdateDTO {
   id: number;
   notes: string;
   amount: number;
+  orderId: number;
 
-  constructor(id: number, notes: string, amount: number) {
+  constructor(id: number, notes: string, amount: number, orderId: number) {
     this.id = id;
     this.notes = notes;
     this.amount = amount;
+    this.orderId = orderId;
   }
 }
 
@@ -230,10 +236,12 @@ export class DishItemCreateDTO {
   itemId: number;
   notes: string;
   amount: number;
+  orderId: number;
 
-  constructor(itemId: number, notes: string, amount: number) {
+  constructor(itemId: number, notes: string, amount: number, orderId: number) {
     this.itemId = itemId;
     this.notes = notes;
     this.amount = amount;
+    this.orderId = orderId;
   }
 }

@@ -62,6 +62,7 @@ export class TableDetailsComponent implements OnInit {
   }
 
   handleChange = (data : SocketResponse) => {
+    console.log('desi se')
     if(data.successfullyFinished) {
       this.getOrderByRestaurantTableNameIfWaiterValid();
       if(this.iSentRequest) {
@@ -165,26 +166,21 @@ export class TableDetailsComponent implements OnInit {
     });
   }
 
-  edit(result) {
-    if(result === "" || result === undefined) return
-      console.log('result: ',result)
-      if(result instanceof DrinkItemsUpdateDTO) {
-        //proveri id da znas jel create il update
-        console.log('update drink')
-      } else if(result instanceof DishItemUpdateDTO) {
-        console.log('update dish')
-      } else if (result instanceof DrinkItemsCreateDTO) {
-        console.log('create drink')
-      } else if (result instanceof DishItemCreateDTO) {
-        console.log('create dish')
-      }
-      // if(item instanceof DrinkItemsDTO) {
-      //   this.iSentRequest = true;
-      //   this.socketService.sendMessage("/drink-items/update/" + this.selectedItemId, JSON.stringify(result))
-      // } else {
-      //   this.iSentRequest = true;
-      //   this.socketService.sendMessage("/dish-item/update/" + this.selectedItemId, JSON.stringify(result))
-      // }
+  edit(result: any) {
+    if(result === "" || result === undefined) {
+      return
+    }
+    this.iSentRequest = true;
+    if(result instanceof DrinkItemsUpdateDTO) {
+      this.socketService.sendMessage("/drink-items/update/" + this.selectedItemId, JSON.stringify(result))
+    } else if(result instanceof DishItemUpdateDTO) {
+      this.socketService.sendMessage("/dish-item/update/" + this.selectedItemId, JSON.stringify(result))
+    } else if (result instanceof DrinkItemsCreateDTO) {
+      console.log('ivde')
+      this.socketService.sendMessage("/drink-items/create", JSON.stringify(result))
+    } else if (result instanceof DishItemCreateDTO) {
+      this.socketService.sendMessage("/dish-item/create", JSON.stringify(result))
+    }
   }
 
 }
