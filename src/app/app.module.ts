@@ -46,6 +46,7 @@ import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add
 import { ReportHomepageComponent } from './reports/report-homepage/report-homepage.component';
 import { BarChartComponent } from './reports/charts/bar-chart/bar-chart.component';
 import { LineChartComponent } from './reports/charts/line-chart/line-chart.component';
+import { MenuItemDialogComponent } from './system-admin/menu-item-dialog/menu-item-dialog.component';
 
 @NgModule({
   declarations: [
@@ -78,8 +79,9 @@ import { LineChartComponent } from './reports/charts/line-chart/line-chart.compo
     ChangePasswordDialogComponent,
     AddManagerDialogComponent,
     BarChartComponent,
-    LineChartComponent
-    ],
+    LineChartComponent,
+    MenuItemDialogComponent,
+  ],
   imports: [
     BrowserModule,
     DxChartModule,
