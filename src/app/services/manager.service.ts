@@ -24,6 +24,7 @@ export class ManagerService {
     );
   }
 
+  //TODO: Vidi da preimenujes, jer se ne koristi samo za managera
   public getManagerById(id: number): Observable<ManagerDetails> {
     return this.http.get<ManagerDetails>(
       `/registered-user/${id}`
@@ -32,6 +33,10 @@ export class ManagerService {
 
   public getWorkers(): Observable<UnregistaredUserTable[]> {
     return this.http.get<UnregistaredUserTable[]>('/user/table');
+  }
+
+  public getSystemAdmins(): Observable<UnregistaredUserTable[]> {
+    return this.http.get<UnregistaredUserTable[]>('/registered-user/system-admin/table');
   }
 
   public updateUser(id: number, form: FormGroup): Observable<UnregistaredUserDetails> {
@@ -55,8 +60,9 @@ export class ManagerService {
     );
   }
 
-  public addManager(form: FormGroup): Observable<ManagerCreate> {
-    const model = this._mapFormToManagerCreateModel(form);
+  //TODO: Ovo isto videti preimenovati
+  public addRegisteredUser(form: FormGroup, type: string): Observable<ManagerCreate> {
+    const model = this._mapFormToRegisteredUserCreateModel(form, type);
     return this.http.post<ManagerCreate>(
       `/registered-user`, model
     );
@@ -96,14 +102,14 @@ export class ManagerService {
     };
   }
 
-  private _mapFormToManagerCreateModel(form: FormGroup): ManagerCreate {
+  private _mapFormToRegisteredUserCreateModel(form: FormGroup, type: string): ManagerCreate {
     return {
       firstName: form.controls['firstName'].value,
       lastName: form.controls['lastName'].value,
       emailAddress: form.controls['emailAddress'].value,
       phoneNumber: form.controls['phoneNumber'].value,
       salary: form.controls['salary'].value,
-      type: "MANAGER",
+      type: type,
       username: form.controls['username'].value,
       password: form.controls['newPassword'].value,
     };

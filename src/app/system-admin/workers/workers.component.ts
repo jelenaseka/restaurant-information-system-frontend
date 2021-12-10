@@ -171,7 +171,7 @@ export class WorkersComponent implements OnInit {
       if (result == null) {
         return;
       }
-      this._managerService.addManager(result).subscribe(
+      this._managerService.addRegisteredUser(result, 'MANAGER').subscribe(
         () => {
           this._toastr.success('New manager added to database!', 'Created');
           this._getTableData();
