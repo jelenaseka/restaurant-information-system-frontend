@@ -42,11 +42,11 @@ import { MenuComponent } from './system-admin/menu/menu.component';
 import { AdministratorsComponent } from './admin/administrators/administrators.component';
 import { WorkersTableComponent } from './system-admin/workers-table/workers-table.component';
 import { ChangePasswordDialogComponent } from './system-admin/change-password-dialog/change-password-dialog.component';
-import { AddManagerDialogComponent } from './system-admin/add-manager-dialog/add-manager-dialog.component';
 import { ReportHomepageComponent } from './reports/report-homepage/report-homepage.component';
 import { BarChartComponent } from './reports/charts/bar-chart/bar-chart.component';
 import { LineChartComponent } from './reports/charts/line-chart/line-chart.component';
 import { MenuItemDialogComponent } from './system-admin/menu-item-dialog/menu-item-dialog.component';
+import { AddRegisteredUserDialogComponent } from './registered/add-registered-user-dialog/add-registered-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +77,7 @@ import { MenuItemDialogComponent } from './system-admin/menu-item-dialog/menu-it
     AdministratorsComponent,
     WorkersTableComponent,
     ChangePasswordDialogComponent,
-    AddManagerDialogComponent,
+    AddRegisteredUserDialogComponent,
     BarChartComponent,
     LineChartComponent,
     MenuItemDialogComponent,

@@ -5,7 +5,7 @@ import { convertResponseError } from 'src/app/error-converter.function';
 import { ItemService } from 'src/app/services/item.service';
 import { MenuItemDialogComponent } from '../menu-item-dialog/menu-item-dialog.component';
 import { MenuItem } from '../models/menu-item.model';
-import { UserIdAndType } from '../models/user-id-and-type.model';
+import { UserIdAndType } from '../../unregistered/models/user-id-and-type.model';
 
 @Component({
   selector: 'app-menu',

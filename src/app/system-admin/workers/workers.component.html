@@ -16,7 +16,8 @@
         </div>
     </div>
     <mat-card class="details-card" *ngIf="unregistered != null">
-        <h2>Details of unregistered user</h2>
+        <mat-card-title>Details of unregistered user</mat-card-title>
+        <mat-divider></mat-divider>
         <form class="form-container" [formGroup]="unregisteredForm" (ngSubmit)="saveUnregistered()"
         fxLayout="column" fxLayoutAlign="center center">
         <!-- First name -->
@@ -75,7 +76,8 @@
 
     <!-- Manager details-->
     <mat-card class="details-card" *ngIf="manager != null">
-            <h2>Manager details</h2>
+            <mat-card-title>Manager details</mat-card-title>
+            <mat-divider></mat-divider>
             <form class="form-container" [formGroup]="managerForm" (ngSubmit)="saveManager()"
             fxLayout="column" fxLayoutAlign="center center">
             <!-- First name -->

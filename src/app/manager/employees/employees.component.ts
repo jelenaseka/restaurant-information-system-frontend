@@ -6,10 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { ManagerService } from 'src/app/services/manager.service';
 import { ValidatorService } from 'src/app/services/validator.service';
-import { UserIdAndType } from 'src/app/system-admin/models/user-id-and-type.model';
+import { UserIdAndType } from 'src/app/unregistered/models/user-id-and-type.model';
+import { UserTableInfo } from 'src/app/unregistered/models/user-table-info.model';
 import { AddEmployeeDialogComponent } from '../add-employee-dialog/add-employee-dialog.component';
-import { UnregistaredUserTable } from './models/unregistared-user-table.model';
-import { UnregistaredUserDetails } from './models/unregistered-user-details';
+import { UnregistaredUserDetails } from '../../unregistered/models/unregistered-user-details';
 
 @Component({
   selector: 'app-employees',
@@ -17,7 +17,7 @@ import { UnregistaredUserDetails } from './models/unregistered-user-details';
   styleUrls: ['./employees.component.scss'],
 })
 export class EmployeesComponent implements OnInit {
-  dataSource: MatTableDataSource<UnregistaredUserTable>;
+  dataSource: MatTableDataSource<UserTableInfo>;
   selecteduserId: number;
   isEnabledEditing: boolean = false;
   user: UnregistaredUserDetails | null;

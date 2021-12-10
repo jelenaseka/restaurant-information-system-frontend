@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { UnregistaredUserTable } from '../../manager/employees/models/unregistared-user-table.model';
-import { UserIdAndType } from '../models/user-id-and-type.model';
+import { UserTableInfo } from 'src/app/unregistered/models/user-table-info.model';
+import { UserIdAndType } from '../../unregistered/models/user-id-and-type.model';
 
 @Component({
   selector: 'app-workers-table',
@@ -11,9 +11,9 @@ import { UserIdAndType } from '../models/user-id-and-type.model';
 export class WorkersTableComponent implements OnInit {
   displayedColumns: string[];
   @Input()
-  dataSource: MatTableDataSource<UnregistaredUserTable>;
+  dataSource: MatTableDataSource<UserTableInfo>;
   @Input()
-  clickedRow: UnregistaredUserTable | null;
+  clickedRow: UserTableInfo | null;
   @Output() selectedRowChanged;
 
   constructor() {
@@ -25,7 +25,7 @@ export class WorkersTableComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public rowChangedEmit(row: UnregistaredUserTable): void {
+  public rowChangedEmit(row: UserTableInfo): void {
     this.clickedRow = row;
     const userIdAndType: UserIdAndType = {
       id: this.clickedRow.id,
