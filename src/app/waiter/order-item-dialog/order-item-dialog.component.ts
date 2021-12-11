@@ -187,11 +187,10 @@ export class OrderItemDialogComponent implements OnInit {
   }
 
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-    console.log(this.itemsByCategory)
+    this.itemsByCategory = new ItemsForMenu('', [])
     let categoryAndItems = this.itemsForMenu.filter(item => item.category === this.categories[tabChangeEvent.index].name)[0];
     this.itemsByCategory.items = categoryAndItems.items
     this.itemsByCategory.category = categoryAndItems.category
-    
   }
 
   addItemToList(itemId: number, itemName: string) {
@@ -205,7 +204,6 @@ export class OrderItemDialogComponent implements OnInit {
   isAddButtonDisabled(itemId: number) {
     let shouldDisable = false
     if(this.itemType === 'DISH' && this.orderItemRepresentation.id !== -1) {
-      // posto se updatuje nema smisla da menja jelo, vec samo kolicinu
       shouldDisable = true
     }
     if(this.itemType === 'DISH' && this.orderItemCopy.items.length === 1) {

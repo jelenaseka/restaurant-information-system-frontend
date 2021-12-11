@@ -44,10 +44,11 @@
           </mat-list-item>
         </mat-list>
       </div>
-      <h2 style="text-align: center;">Notes</h2>
-      <div class="notes">
-        {{orderItemCopy.notes}}
-      </div>
+      <h2 style="text-align: center; margin-top: 20px;">Notes</h2>
+        <mat-form-field appearance="fill">
+          <mat-label>Textarea</mat-label>
+          <textarea matInput [(ngModel)]="orderItemCopy.notes"></textarea>
+        </mat-form-field>
     </div>
   </div>
   
