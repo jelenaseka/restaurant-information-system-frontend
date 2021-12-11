@@ -13,9 +13,14 @@ interface ItemForMenu {
   iconBase64: string
 }
 
-interface ItemsForMenu {
-  category: string,
-  items: ItemForMenu[]
+class ItemsForMenu {
+  category: string;
+  items: ItemForMenu[];
+
+  constructor(category: string, items: ItemForMenu[]) {
+    this.category = category;
+    this.items = items;
+  }
 }
 
 @Component({
@@ -28,10 +33,7 @@ export class OrderItemDialogComponent implements OnInit {
   orderItemRepresentation: OrderItemRepresentation
   orderItemCopy: OrderItemCopy
   itemsForMenu: ItemsForMenu[] = []
-  itemsByCategory: ItemsForMenu = {
-    category: '',
-    items: []
-  }
+  itemsByCategory: ItemsForMenu;
   categories: Category[] = []
 
   constructor(public dialogRef: MatDialogRef<OrderItemDialogComponent>,
@@ -40,6 +42,7 @@ export class OrderItemDialogComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.itemsByCategory = new ItemsForMenu('', [])
     this.getCategoriesAndItemsForMenu()
     this.itemType = this.data.orderItem instanceof DrinkItems ? 'DRINK' : 'DISH'
     console.log('item type: ',this.itemType)
@@ -184,10 +187,11 @@ export class OrderItemDialogComponent implements OnInit {
   }
 
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    console.log(this.itemsByCategory)
     let categoryAndItems = this.itemsForMenu.filter(item => item.category === this.categories[tabChangeEvent.index].name)[0];
     this.itemsByCategory.items = categoryAndItems.items
     this.itemsByCategory.category = categoryAndItems.category
-    console.log(this.itemsByCategory)
+    
   }
 
   addItemToList(itemId: number, itemName: string) {

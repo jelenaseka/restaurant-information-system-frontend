@@ -3,7 +3,7 @@
   <div fxLayout="row">
     <mat-tab-group fxFlex (selectedTabChange)="tabChanged($event)">
       <mat-tab *ngFor="let category of categories; let index = index" [label]="category.name">
-        <mat-card class="item-card" *ngFor="let item of itemsByCategory.items" fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-card class="item-card" *ngFor="let item of itemsByCategory?.items" fxLayout="row" fxLayoutAlign="space-between center">
           <mat-card-header>
               <img mat-card-avatar src={{item.iconBase64}}/>
               <mat-card-title>{{item.name}}</mat-card-title>

@@ -33,7 +33,6 @@ import { PincodeDialogComponent } from './unregistered/pincode-dialog/pincode-di
 import { AddEmployeeDialogComponent } from './manager/add-employee-dialog/add-employee-dialog.component';
 import { TableDetailsComponent } from './waiter/table-details/table-details.component';
 import { OrderItemDialogComponent } from './waiter/order-item-dialog/order-item-dialog.component';
-import { AddOrderItemDialogComponent } from './waiter/add-dish-item-dialog/add-dish-item-dialog.component';
 import { RestaurantViewComponent } from './admin/restaurant-view/restaurant-view.component';
 import { RoomnameDialogComponent } from './admin/roomname-dialog/roomname-dialog/roomname-dialog.component';
 import { RoomSpaceComponent } from './admin/room-space/room-space.component';
@@ -68,7 +67,6 @@ import { AddRegisteredUserDialogComponent } from './registered/add-registered-us
     AddEmployeeDialogComponent,
     TableDetailsComponent,
     OrderItemDialogComponent,
-    AddOrderItemDialogComponent,
     RestaurantViewComponent,
     RoomnameDialogComponent,
     RoomSpaceComponent,

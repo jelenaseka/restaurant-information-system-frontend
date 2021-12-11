@@ -182,6 +182,7 @@ export class DrinkItemsCreateDTO {
   notes: string;
   drinkItems: DrinkItemUpdateDTO[]
   orderId: number;
+  orderCreateDTO: any;
 
   constructor(notes: string, drinkItems: DrinkItemUpdateDTO[], orderId: number) {
     this.notes = notes;
@@ -237,6 +238,7 @@ export class DishItemCreateDTO {
   notes: string;
   amount: number;
   orderId: number;
+  orderCreateDTO: any;
 
   constructor(itemId: number, notes: string, amount: number, orderId: number) {
     this.itemId = itemId;
