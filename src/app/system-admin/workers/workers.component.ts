@@ -218,6 +218,12 @@ export class WorkersComponent implements OnInit {
     );
   }
 
+  public isUserDeleted(isDeleted: boolean) {
+    if (isDeleted) {
+      this._getTableData();
+    }
+  }
+
   public applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

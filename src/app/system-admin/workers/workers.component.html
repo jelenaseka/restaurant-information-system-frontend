@@ -12,7 +12,7 @@
             <button mat-menu-item (click)="addEmployee()">Employee</button>
         </mat-menu>
         <div class="table-container">
-            <app-workers-table [dataSource]="dataSource" [clickedRow]="clickedRow" (selectedRowChanged)="getDetails($event)"></app-workers-table>
+            <app-workers-table [dataSource]="dataSource" [clickedRow]="clickedRow" (selectedRowChanged)="getDetails($event)" (deletedRow)="isUserDeleted($event)"></app-workers-table>
         </div>
     </div>
     <mat-card class="details-card" *ngIf="unregistered != null">
