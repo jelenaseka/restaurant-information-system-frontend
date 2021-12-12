@@ -8,7 +8,7 @@
           </mat-form-field>
         <button mat-flat-button color="primary" (click)="addEmployee()" class="add-button"><mat-icon>person_add</mat-icon>Add</button>
         <div class="table-container">
-            <app-workers-table [dataSource]="dataSource" [clickedRow]="dataSource.data[0]" (selectedRowChanged)="getDetails($event)"></app-workers-table>
+            <app-workers-table [dataSource]="dataSource" [clickedRow]="dataSource.data[0]" (selectedRowChanged)="getDetails($event)" (deletedRow)="isUserDeleted($event)"></app-workers-table>
         </div>
     </div>
     <mat-card class="details-card">

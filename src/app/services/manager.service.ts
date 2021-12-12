@@ -77,6 +77,14 @@ export class ManagerService {
     );
   }
 
+  public deleteRegisteredUser(id: number): Observable<void> {
+    return this.http.delete<void>(`/registered-user/${id}`);
+  }
+
+  public deleteUnregisteredUser(id: number): Observable<void> {
+    return this.http.delete<void>(`/unregistered-user/${id}`);
+  }
+
   private _mapFormToUnregisteredModel(form: FormGroup): UnregistaredUserDetails {
     return {
       firstName: form.controls['firstName'].value,
