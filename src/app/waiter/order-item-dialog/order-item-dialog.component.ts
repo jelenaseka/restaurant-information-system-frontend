@@ -4,24 +4,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
+import { ItemService } from 'src/app/services/item.service';
+import { ItemsForMenu } from 'src/app/system-admin/models/items-for-menu.model';
 import { DishItem, DishItemCopy, DishItemCreateDTO, DishItemDTO, DishItemUpdateDTO, DrinkItemCopy, DrinkItems, DrinkItemsCreateDTO, DrinkItemsDTO, DrinkItemsUpdateDTO, DrinkItemUpdateDTO, ItemStatus, OrderItemCopy, OrderItemRepresentation } from '../models/order.model';
 import { Category, CategoryService } from '../services/category.service';
-
-interface ItemForMenu {
-  id: number,
-  name: string,
-  iconBase64: string
-}
-
-class ItemsForMenu {
-  category: string;
-  items: ItemForMenu[];
-
-  constructor(category: string, items: ItemForMenu[]) {
-    this.category = category;
-    this.items = items;
-  }
-}
 
 @Component({
   selector: 'app-order-item-dialog',
@@ -39,7 +25,7 @@ export class OrderItemDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<OrderItemDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private categoryService: CategoryService,
-    private http: HttpClient) { }
+    private itemService: ItemService) { }
 
   ngOnInit(): void {
     this.itemsByCategory = new ItemsForMenu('', [])
@@ -84,7 +70,7 @@ export class OrderItemDialogComponent implements OnInit {
       filter(item => item.type === this.itemType),
       mergeMap(item => {
         this.categories.push({name: item.name, type: item.type})
-        return this.getItemsForCategory(item.name)
+        return this.itemService.getItemsForCategory(item.name)
       })
     )
     .subscribe((data) => {
@@ -93,9 +79,6 @@ export class OrderItemDialogComponent implements OnInit {
     })
   }
 
-  getItemsForCategory(category: string): Observable<ItemForMenu[]> {
-    return this.http.get<ItemForMenu[]>("/item/category/" + category);
-  }
 
   editOrderItem() {
     if(this.orderItemRepresentation.id === -1) {

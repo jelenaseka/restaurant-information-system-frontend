@@ -5,6 +5,7 @@ import { ItemCategoryCreate } from '../system-admin/models/item-category-create.
 import { ItemCategory } from '../system-admin/models/item-category.model';
 import { ItemCreate } from '../system-admin/models/item-create.model';
 import { ItemDetails } from '../system-admin/models/item-details.model';
+import { ItemForMenu } from '../system-admin/models/item-for-menu.model';
 import { ItemUpdate } from '../system-admin/models/item-update.model';
 import { MenuItem } from '../system-admin/models/menu-item.model';
 
@@ -29,6 +30,10 @@ export class ItemService {
 
   public saveChanges(): Observable<void> {
     return this.http.post<void>('/item/save-changes', null);
+  }
+
+  getItemsForCategory(category: string): Observable<ItemForMenu[]> {
+    return this.http.get<ItemForMenu[]>("/item/category/" + category);
   }
 
   public deleteItem(id: number): Observable<string> {
