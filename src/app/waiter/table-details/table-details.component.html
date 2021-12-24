@@ -1,0 +1,275 @@
+<app-unregistered-header></app-unregistered-header>
+<div
+  fxLayout="row"
+  class="table-details-component"
+  [ngClass]="{ hidden: !isWaiter }"
+>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="space-between none"
+    fxFlex="20"
+    class="table-information"
+  >
+    <div class="primary-information">
+      <div class="primary-information-section">
+        <div fxLayout="row">
+          <mat-icon>date_range</mat-icon>
+          <span class="primary-information-label">CREATED AT</span>
+        </div>
+        <p class="primary-information-p">{{ order?.createdAt }}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="primary-information-section">
+        <div fxLayout="row">
+          <mat-icon>person</mat-icon>
+          <span class="primary-information-label">WAITER</span>
+        </div>
+        <p class="primary-information-p">{{ order?.waiter }}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="primary-information-section">
+        <div fxLayout="row">
+          <mat-icon>attach_money</mat-icon>
+          <span class="primary-information-label">TOTAL PRICE</span>
+        </div>
+        <p class="primary-information-p">{{ order?.totalPrice }}$</p>
+      </div>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between start"
+      class="primary-information-actions"
+    >
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="discard()"
+        [disabled]="order?.id === 0"
+      >
+        Discard
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="charge()"
+        [disabled]="order?.id === 0"
+      >
+        Charge
+      </button>
+    </div>
+  </div>
+  <div fxFlex fxLayout="column" fxLayoutAlign="space-between ">
+    <div fxLayout="row" fxFlex>
+      <div
+        fxFlex
+        class="table-details-list"
+        fxLayout="column"
+        fxLayoutAlign="space-between "
+      >
+        <div style="height: 100%">
+          <h2>Drinks</h2>
+          <mat-list
+            style="overflow-y: auto; height: 85%"
+            role="list"
+            class="table-details-mat-list"
+          >
+            <mat-list-item
+              role="listitem"
+              *ngFor="let item of order?.drinkItemsList"
+            >
+              <div
+                fxLayout="row"
+                fxLayoutAlign="space-between center"
+                style="width: 100%"
+              >
+                <span fxFlex>{{ item.name }}</span>
+                <div
+                  fxFlex
+                  *ngIf="item.state === 'ON_HOLD'"
+                  style="text-align: end"
+                >
+                  <button
+                    mat-button
+                    color="primary"
+                    (click)="openEditOrderItemDialog(item)"
+                  >
+                    <mat-icon color="primary">edit</mat-icon>
+                  </button>
+                  <button mat-button color="primary" (click)="deleteDrinkItems(item.id)">
+                    <mat-icon color="warn">clear</mat-icon>
+                  </button>
+                </div>
+                <div
+                  *ngIf="item.state === 'PREPARATION'"
+                  fxFlex
+                  style="text-align: end"
+                >
+                  <p style="font-size: 12px; color: grey">PREPARING...</p>
+                </div>
+                <div
+                  *ngIf="item.state === 'READY'"
+                  fxFlex
+                  style="text-align: end"
+                >
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    (click)="changeDrinkItemsState(order?.waiterId, item.id)"
+                  >
+                    Deliver
+                  </button>
+                </div>
+                <div
+                  *ngIf="item.state === 'DELIVERED'"
+                  fxFlex
+                  style="text-align: end"
+                >
+                  <p style="font-size: 12px; color: green">DONE</p>
+                </div>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          class="action-buttons"
+        >
+          <button
+            mat-button
+            color="primary"
+            (click)="deliverAllDrinks()"
+            [disabled]="deliverAllDrinksIsDisabled()"
+          >
+            Deliver all
+          </button>
+          <button mat-button>
+            <mat-icon color="primary" (click)="openCreateDrinkItemsDialog()">add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div
+        fxFlex
+        class="table-details-list"
+        fxLayout="column"
+        fxLayoutAlign="space-between "
+      >
+        <div style="height: 100%">
+          <h2>Dishes</h2>
+          <mat-list
+            style="overflow-y: auto; height: 85%"
+            role="list"
+            class="table-details-mat-list"
+          >
+            <mat-list-item
+              role="listitem"
+              *ngFor="let item of order?.dishItemList"
+            >
+              <div
+                fxLayout="row"
+                fxLayoutAlign="space-between center"
+                style="width: 100%"
+              >
+                <span fxFlex>{{ item.orderedItem.itemName }}</span>
+                <div
+                  fxFlex
+                  fxLayout="row"
+                  fxLayoutAlign="end center"
+                  *ngIf="item.state === 'NEW'"
+                >
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    (click)="changeDishItemState(order?.waiterId, item.id)"
+                  >
+                    prepare
+                  </button>
+                  <button
+                    mat-button
+                    color="primary"
+                    (click)="openEditOrderItemDialog(item)"
+                  >
+                    <mat-icon color="primary">edit</mat-icon>
+                  </button>
+
+                  <button mat-button color="primary" (click)="deleteDishItem(item.id)">
+                    <mat-icon color="warn">clear</mat-icon>
+                  </button>
+                </div>
+                <div
+                  *ngIf="item.state === 'ON_HOLD'"
+                  fxFlex
+                  style="text-align: end"
+                >
+                  <button
+                    mat-button
+                    color="primary"
+                    (click)="openEditOrderItemDialog(item)"
+                  >
+                    <mat-icon color="primary">edit</mat-icon>
+                  </button>
+
+                  <button mat-button color="primary" (click)="deleteDishItem(item.id)">
+                    <mat-icon color="warn">clear</mat-icon>
+                  </button>
+                </div>
+                <div
+                  *ngIf="item.state === 'PREPARATION'"
+                  fxFlex
+                  style="text-align: end"
+                >
+                  <p style="font-size: 12px; color: grey">PREPARING...</p>
+                </div>
+                <div
+                  *ngIf="item.state === 'READY'"
+                  fxFlex
+                  style="text-align: end"
+                >
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    (click)="changeDishItemState(order?.waiterId, item.id)"
+                  >
+                    Deliver
+                  </button>
+                </div>
+                <div
+                  *ngIf="item.state === 'DELIVERED'"
+                  fxFlex
+                  style="text-align: end"
+                >
+                  <!-- <mat-icon style="color: green;">done</mat-icon> -->
+                  <p style="font-size: 12px; color: green">DONE</p>
+                </div>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          class="action-buttons"
+        >
+          <button
+            mat-button
+            color="primary"
+            (click)="deliverAllDishes()"
+            [disabled]="deliverAllDishesIsDisabled()"
+          >
+            Deliver all
+          </button>
+          <button mat-button>
+            <mat-icon color="primary" (click)="openCreateDishItemDialog()">add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: end; margin: 0 10px 10px 0">
+      <button mat-raised-button color="primary" [routerLink]="['/home/waiter']">
+        Back to room
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+.main-container {
+    height: 90vh;
+}
+
+.items-container {
+    position: relative;
+    width: 35vw;
+    height: 80vh;
+    background-color: var(--card-color);
+    box-shadow: 0px 0px 5px lightslategray;
+}
+
+.item-card {
+    position: relative;
+    margin-top: 15px;
+}
+
+mat-card-actions {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+}
+
+mat-card-actions button {
+    padding: 5px;
+    font-size: large;
+}
+
+img {
+    background-size: cover;
+}
+
+.main-buttons-container {
+    width: 10vw;
+    height: 80vh;
+}
+
+.main-buttons-container button {
+    font-size: x-large;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.main-buttons-container button:first-child {
+    margin-bottom: 30px;
+}
+
+.item-card-container {
+    overflow-y: auto;
+    margin-top: 25px;
+    height: 82%;
+}
+
+.clear-button {
+    position: absolute;
+    right: 0;
+    top: 30%;
+}
+
+.edit-button {
+    position: absolute;
+    right: 50px;
+    top: 30%;
+}
+

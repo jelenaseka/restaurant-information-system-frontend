@@ -1,2 +1,46 @@
 <app-unregistered-header></app-unregistered-header>
-<p>waiter-homepage works!</p>
+<div fxLayout="column" class="page">
+  <div
+    fxLayout="row"
+    style="margin-right: 15px"
+    fxLayoutAlign.gt-sm="space-between center"
+  >
+    <mat-tab-group
+      [selectedIndex]="selected.value"
+      (selectedIndexChange)="this.selected.setValue($event)"
+    >
+      <mat-tab
+        *ngFor="let room of rooms; let index = index"
+        [label]="room.name"
+      >
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div fxFlex fxLayout="row" fxLayoutAlign="start stretch">
+    <div fxFlex fxLayout="column" class="form-div" id="floor-div">
+      <div
+        *ngFor="let i of [].constructor(getRows()); index as i_index"
+        fxFlex
+        fxLayout="row"
+        class="transaprent-element"
+      >
+        <div
+          class="transaprent-element"
+          *ngFor="let j of [].constructor(getColumns()); index as j_index"
+          fxFlex
+          fxLayout="column"
+        >
+          <app-room-space
+            [isInWaiter]="true"
+            [editMode]="true"
+            [tables]="this.rooms[this.selected.value].tables"
+            [row]="i_index"
+            [column]="j_index"
+            fxFlex
+            class="transaprent-element"
+          ></app-room-space>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

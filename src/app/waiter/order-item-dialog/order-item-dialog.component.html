@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>Install Angular</h2>
+<mat-dialog-content class="mat-typography">
+  <div fxLayout="row">
+    <mat-tab-group fxFlex (selectedTabChange)="tabChanged($event)">
+      <mat-tab *ngFor="let category of categories; let index = index" [label]="category.name">
+        <mat-card class="item-card" *ngFor="let item of itemsByCategory?.items" fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-card-header>
+              <img mat-card-avatar src={{item.iconBase64}}/>
+              <mat-card-title>{{item.name}}</mat-card-title>
+          </mat-card-header>
+          <button mat-icon-button color="primary" (click)="addItemToList(item.id, item.name)"
+          [disabled]="isAddButtonDisabled(item.id)">
+              <mat-icon>add</mat-icon>
+          </button>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+    <div fxFlex>
+
+    </div>
+    <div fxFlex fxLayout="column">
+      <div>
+        <h2 style="text-align: center;">Items</h2>
+        <mat-list role="list">
+          <mat-list-item role="listitem" *ngFor="let item of orderItemCopy.items">
+            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+              <div>
+                {{item.itemName}}
+              </div>
+              
+              <div fxLayout="row" fxLayoutAlign="space-around center">
+                <button mat-button (click)="decrementAmount(item)" [disabled]="item.amount === 0">
+                  <mat-icon color="primary">remove</mat-icon>
+                </button>
+                <div>
+                  <input matInput style="width: 20px" readonly [value]="item.amount"/>
+                </div>
+                <button mat-button (click)="incrementAmount(item)">
+                  <mat-icon color="primary">add</mat-icon>
+                </button>
+                <button mat-raised-button color="warn" (click)="removeItem(item)" [disabled]="isRemoveButtonDisabled()">Remove</button>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <h2 style="text-align: center; margin-top: 20px;">Notes</h2>
+        <mat-form-field appearance="fill">
+          <mat-label>Textarea</mat-label>
+          <textarea matInput [(ngModel)]="orderItemCopy.notes"></textarea>
+        </mat-form-field>
+    </div>
+  </div>
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="resetChanges()">Cancel</button>
+  <button mat-button 
+          [mat-dialog-close]="true" 
+          (click)="editOrderItem()" 
+          [disabled]="isDoneButtonDisabled()"
+          cdkFocusInitial>Done</button>
+</mat-dialog-actions>
