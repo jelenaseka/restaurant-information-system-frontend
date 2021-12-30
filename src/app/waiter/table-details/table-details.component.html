@@ -43,6 +43,7 @@
     >
       <button
         mat-raised-button
+        id="discardOrderButton"
         color="warn"
         (click)="discard()"
         [disabled]="order?.id === 0"
@@ -51,6 +52,7 @@
       </button>
       <button
         mat-raised-button
+        id="chargeOrderButton"
         color="primary"
         (click)="charge()"
         [disabled]="order?.id === 0"

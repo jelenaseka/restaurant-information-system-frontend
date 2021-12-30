@@ -43,6 +43,7 @@ export class OrderItemDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.itemsByCategory = new ItemsForMenu('', [])
+    console.log('u initu za dijalog')
     this.getCategoriesAndItemsForMenu()
     this.itemType = this.data.orderItem instanceof DrinkItems ? 'DRINK' : 'DISH'
     console.log('item type: ',this.itemType)
@@ -78,6 +79,7 @@ export class OrderItemDialogComponent implements OnInit {
   }
 
   getCategoriesAndItemsForMenu(): void {
+    console.log('na pocetku dobavljanja')
     let i = 0
     this.categoryService.getCategories().pipe(
       mergeMap((data) => data),
@@ -89,6 +91,7 @@ export class OrderItemDialogComponent implements OnInit {
     )
     .subscribe((data) => {
       this.itemsForMenu.push({category: this.categories[i].name, items: data})
+      console.log('dobavio')
       i = i + 1
     })
   }
@@ -186,9 +189,17 @@ export class OrderItemDialogComponent implements OnInit {
     }
   }
 
-  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+  async tabChanged(tabChangeEvent: MatTabChangeEvent): Promise<void> {
+    const sleep = async () => {
+      return new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    if(this.itemsForMenu.length === 0) {
+      await sleep();
+    }
     this.itemsByCategory = new ItemsForMenu('', [])
-    let categoryAndItems = this.itemsForMenu.filter(item => item.category === this.categories[tabChangeEvent.index].name)[0];
+    let categoryAndItems = this.itemsForMenu.find(item => item.category === this.categories[tabChangeEvent.index].name)
+    console.log(categoryAndItems)
+    if(categoryAndItems === undefined) return
     this.itemsByCategory.items = categoryAndItems.items
     this.itemsByCategory.category = categoryAndItems.category
   }

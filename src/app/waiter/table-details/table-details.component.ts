@@ -37,7 +37,6 @@ export class TableDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
       this.tableIdFromRoute = params['table'];
-
       this.socketService.connect("order", this.handleChange);
       this.pinCode = "";
       this.openPinCodeDialog();
