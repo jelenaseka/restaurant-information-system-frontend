@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/autentification/services/auth.service';
+import { convertResponseError } from 'src/app/error-converter.function';
 import { SocketResponse } from 'src/app/sockets/model/socket-response.model';
 import { SocketService } from 'src/app/sockets/socket.service';
 import { PincodeDialogComponent } from 'src/app/unregistered/pincode-dialog/pincode-dialog.component';
@@ -37,7 +38,6 @@ export class TableDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
       this.tableIdFromRoute = params['table'];
-
       this.socketService.connect("order", this.handleChange);
       this.pinCode = "";
       this.openPinCodeDialog();
@@ -78,6 +78,8 @@ export class TableDetailsComponent implements OnInit, OnDestroy {
             }
           }, (err: any) => {
             this.router.navigate(['/home/waiter'])
+            this.toastService.error(convertResponseError(err), 'Ok')
+
           });
       }
   }

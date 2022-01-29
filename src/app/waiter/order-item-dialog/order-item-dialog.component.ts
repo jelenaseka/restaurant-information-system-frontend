@@ -4,24 +4,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
+import { ItemService } from 'src/app/services/item.service';
+import { ItemsForMenu } from 'src/app/system-admin/models/items-for-menu.model';
 import { DishItem, DishItemCopy, DishItemCreateDTO, DishItemDTO, DishItemUpdateDTO, DrinkItemCopy, DrinkItems, DrinkItemsCreateDTO, DrinkItemsDTO, DrinkItemsUpdateDTO, DrinkItemUpdateDTO, ItemStatus, OrderItemCopy, OrderItemRepresentation } from '../models/order.model';
 import { Category, CategoryService } from '../services/category.service';
-
-interface ItemForMenu {
-  id: number,
-  name: string,
-  iconBase64: string
-}
-
-class ItemsForMenu {
-  category: string;
-  items: ItemForMenu[];
-
-  constructor(category: string, items: ItemForMenu[]) {
-    this.category = category;
-    this.items = items;
-  }
-}
 
 @Component({
   selector: 'app-order-item-dialog',
@@ -39,10 +25,11 @@ export class OrderItemDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<OrderItemDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private categoryService: CategoryService,
-    private http: HttpClient) { }
+    private itemService: ItemService) { }
 
   ngOnInit(): void {
     this.itemsByCategory = new ItemsForMenu('', [])
+    console.log('u initu za dijalog')
     this.getCategoriesAndItemsForMenu()
     this.itemType = this.data.orderItem instanceof DrinkItems ? 'DRINK' : 'DISH'
     console.log('item type: ',this.itemType)
@@ -78,24 +65,23 @@ export class OrderItemDialogComponent implements OnInit {
   }
 
   getCategoriesAndItemsForMenu(): void {
+    console.log('na pocetku dobavljanja')
     let i = 0
     this.categoryService.getCategories().pipe(
       mergeMap((data) => data),
       filter(item => item.type === this.itemType),
       mergeMap(item => {
         this.categories.push({name: item.name, type: item.type})
-        return this.getItemsForCategory(item.name)
+        return this.itemService.getItemsForCategory(item.name)
       })
     )
     .subscribe((data) => {
       this.itemsForMenu.push({category: this.categories[i].name, items: data})
+      console.log('dobavio')
       i = i + 1
     })
   }
 
-  getItemsForCategory(category: string): Observable<ItemForMenu[]> {
-    return this.http.get<ItemForMenu[]>("/item/category/" + category);
-  }
 
   editOrderItem() {
     if(this.orderItemRepresentation.id === -1) {
@@ -186,9 +172,17 @@ export class OrderItemDialogComponent implements OnInit {
     }
   }
 
-  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+  async tabChanged(tabChangeEvent: MatTabChangeEvent): Promise<void> {
+    const sleep = async () => {
+      return new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    if(this.itemsForMenu.length === 0) {
+      await sleep();
+    }
     this.itemsByCategory = new ItemsForMenu('', [])
-    let categoryAndItems = this.itemsForMenu.filter(item => item.category === this.categories[tabChangeEvent.index].name)[0];
+    let categoryAndItems = this.itemsForMenu.find(item => item.category === this.categories[tabChangeEvent.index].name)
+    console.log(categoryAndItems)
+    if(categoryAndItems === undefined) return
     this.itemsByCategory.items = categoryAndItems.items
     this.itemsByCategory.category = categoryAndItems.category
   }

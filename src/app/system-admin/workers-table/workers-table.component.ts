@@ -39,8 +39,9 @@ export class WorkersTableComponent implements OnInit {
     this.selectedRowChanged.emit(userIdAndType);
   }
 
-  public rowDeletedEmit(row: UserTableInfo): void {
-    if (row.type === 'MANAGER' || row.type === 'SYSTEM_ADMIN') {
+  public rowDeletedEmit(row: UserTableInfo, event: any): void {
+    event.stopPropagation();
+    if (row.type === 'manager' || row.type === 'system_admin') {
       this._managerService.deleteRegisteredUser(row.id).subscribe(
         () => {
           this.deletedRow.emit(true);
